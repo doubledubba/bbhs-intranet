@@ -4,4 +4,8 @@
 
 {% block body %}
 <h1>Welcome to the Chaperone system!</h1>
+
+{% if user.is_authenticated %}
+<h1> You are authenticated!</h1>
+{% endif %}
 {% endblock body %}
