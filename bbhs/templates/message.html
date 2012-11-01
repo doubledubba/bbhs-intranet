@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% if Title %}
+{% block title %}{{ Title }}{% endblock title %}
+{% endif %}
+
+{% block body %}
+{% if msg %}
+{{ msg }}
+{% else %}
+<h1>This is a placeholder template.</h1>
+{% endif %}
+{% endblock body %}

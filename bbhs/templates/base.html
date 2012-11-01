@@ -42,20 +42,20 @@
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="icon-user"></i>
                 {{ user.username }}
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="/logout/">Sign out</a></li>
             {% else %}
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="/login/">
                 <i class="icon-user"></i>
                 Sign in
-            {% endif %}
-
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-                {% if user.is_authenticated %}
-              <li><a href="/logout/">Sign out</a></li>
-                {% else %}
               <li><a href="/login/">Sign in</a></li>
-              {% endif %}
+            {% endif %}
+
             </ul>
           </div>
 
