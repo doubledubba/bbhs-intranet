@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django import forms
 from django.contrib.auth import authenticate, login, logout
 
+Message = lambda request, msg: render(request, 'message.html', {'msg': msg})
 
 def index(request):
     return render(request, 'index.html')
@@ -24,9 +25,9 @@ def loginView(request):
                     login(request, user)
                     return HttpResponseRedirect('/') # Redirect after POST
                 else:
-                    return HttpResponse('Your account has been disabled!')
+                    return Message(request, 'Your account has been disabled!')
             else:
-                return HttpResponse('Your username and password were wrong')
+                return Message(request, 'Your username and password were wrong')
 
     else:
         form = LoginForm() # An unbound form
@@ -35,7 +36,8 @@ def loginView(request):
         'form': form,
     })
 
+
 def logoutView(request):
     logout(request)
-    return render(request, 'message.html', {'msg': 'Logged out!'})
+    return Message(request, 'Logged out!')
 

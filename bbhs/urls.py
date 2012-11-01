@@ -3,8 +3,6 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-from django.contrib.auth.views import logout
-
 urlpatterns = patterns('bbhs.views',
     url(r'^$', 'index'),
     url(r'^login/$', 'loginView'),
