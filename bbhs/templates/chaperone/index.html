@@ -6,6 +6,38 @@
 <h1>Welcome to the Chaperone system!</h1>
 
 {% if user.is_authenticated %}
-<h1> You are authenticated!</h1>
+<b> You are authenticated!</b><br>
 {% endif %}
+
+
+<table border="1" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Admin</th>
+            <th>Date</th>
+            <th>Volunteers Needed</th>
+            <th>Volunteers Registered</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+ 
+
+    <tbody>
+{% for event in events %}
+        <tr>
+
+            <td>{{ event.name }}</td>
+            <td>{{ event.admin }}</td>
+            <td>{{ event.date }}</td>
+            <td>{{ event.volunteersNeeded }}</td>
+            <td>{{ event.volunteersRegistered }}</td>
+            <td>{{ event.description }}</td>
+ 
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
 {% endblock body %}

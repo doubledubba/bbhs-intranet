@@ -14,6 +14,7 @@ class LoginForm(forms.Form):
 
 
 def loginView(request):
+    redirectUrl = request.GET.get('next') or '/'
     if request.method == 'POST': # If the form has been submitted...
         form = LoginForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
@@ -23,7 +24,7 @@ def loginView(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect('/') # Redirect after POST
+                    return HttpResponseRedirect(redirectUrl) # Redirect after POST
                 else:
                     return Message(request, 'Your account has been disabled!')
             else:

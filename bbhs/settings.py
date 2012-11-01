@@ -12,6 +12,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 AUTH_PROFILE_MODULE = 'chaperone.UserProfile'
+LOGIN_URL = '/login/'
 
 DATABASES = {
     'default': {
