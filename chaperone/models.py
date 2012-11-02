@@ -43,7 +43,8 @@ class Event(models.Model):
             self.volunteersRegistered = volunteer.pk
         else:
             self.volunteersRegistered += ',%d' % volunteer.pk
-        volunteer.eventsNeeded += 0
+        volunteer.eventsNeeded -= 0
+        self.volunteersNeeded -= 0
         self.save()
         print 'Added:', volunteer
 
