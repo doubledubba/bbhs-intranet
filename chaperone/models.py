@@ -8,7 +8,7 @@ from django.utils.timezone import utc
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
-    events = models.IntegerField(null=True)
+    eventsNeeded = models.IntegerField(null=True)
 
     def __unicode__(self):
         return self.user.username
@@ -19,7 +19,7 @@ class Event(models.Model):
     admin = models.ForeignKey(UserProfile)
     date = models.DateTimeField()
     volunteersNeeded = models.IntegerField()
-    volunteersRegistered = models.IntegerField()
+    volunteersRegistered = models.CommaSeparatedIntegerField(max_length=80, blank=True)
     description = models.TextField(blank=True)
 
     volunteersNeeded.verbose_name = 'Volunteers Needed'
@@ -32,6 +32,14 @@ class Event(models.Model):
     @staticmethod
     def future_events(now=datetime.utcnow().replace(tzinfo=utc)):
         return Event.objects.filter(date__gte=now).order_by('date')
+
+    def addVolunteer(self, volunteer):
+        if not self.volunteersRegistered:
+            self.volunteersRegistered = volunteer.pk
+        else:
+            self.volunteersRegistered += ',%d' % volunteer.pk
+        self.save()
+        print 'Added:', volunteer
 
 
 def create_user_profile(sender, instance, created, **kwargs):
