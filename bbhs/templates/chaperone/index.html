@@ -17,7 +17,7 @@
             <th class="numeric">Admin</th>
             <th class="numeric">Date</th>
             <th class="numeric">Volunteers Needed</th>
-            <th class="numeric">Volunteers Registered</th>
+            <th class="numeric"># of Volunteers Registered</th>
             <th class="numeric">Description</th>
         </tr>
     </thead>
@@ -27,11 +27,11 @@
 {% for event in events %}
         <tr>
 
-            <td>{{ event.name }}</td>
+            <td><a href="{{ event.get_absolute_url}}">{{ event.name }}</a></td>
             <td>{{ event.admin }}</td>
             <td>{{ event.date }}</td>
             <td>{{ event.volunteersNeeded }}</td>
-            <td>{{ event.volunteersRegistered }}</td>
+            <td>{{ event.lenVolunteers }}</td>
             <td>{{ event.description }}</td>
  
         </tr>

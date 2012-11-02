@@ -29,18 +29,35 @@ class Event(models.Model):
         return '%s on %s with %s' % (self.name, self.date.strftime('%c'),
                 self.admin)
 
+    def get_absolute_url(self):
+        return '/chaperone/signup/%d' % self.pk
+
     @staticmethod
     def future_events(now=datetime.utcnow().replace(tzinfo=utc)):
+        '''Returns a list of future events'''
         return Event.objects.filter(date__gte=now).order_by('date')
 
     def addVolunteer(self, volunteer):
+        '''Registers a volunteer'''
         if not self.volunteersRegistered:
             self.volunteersRegistered = volunteer.pk
         else:
             self.volunteersRegistered += ',%d' % volunteer.pk
+        volunteer.eventsNeeded += 0
         self.save()
         print 'Added:', volunteer
 
+    def lenVolunteers(self): # add to admin
+        '''Returns the amount of registered volunteers'''
+        volunteerIDs = self.volunteersRegistered.split(',')
+        return len(volunteerIDs)
+
+    lenVolunteers.short_description = '# of volunteers'
+
+    def volunteerRegistered(self, volunteer):
+        ''' Returns True if the user is already signed up.'''
+        registered = str(volunteer.pk) in self.volunteersRegistered
+        return registered
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
