@@ -11,7 +11,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-AUTH_PROFILE_MODULE = 'chaperone.UserProfile'
+AUTH_PROFILE_MODULE = 'intranet.UserProfile'
 LOGIN_URL = '/login/'
 
 DATABASES = {
