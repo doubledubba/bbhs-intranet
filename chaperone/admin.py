@@ -17,13 +17,8 @@ class UserProfileInline(admin.StackedInline):
 class UserAdmin(UserAdmin):
     inlines = (UserProfileInline, )
 
-
-class EventAdmin(admin.ModelAdmin):
-    list_display = ['name', 'admin', 'date', 'volunteersNeeded',
-            'lenVolunteers', 'description']
-
 # Re-register UserAdmin
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
-admin.site.register(Event, EventAdmin)
+admin.site.register(Event)
