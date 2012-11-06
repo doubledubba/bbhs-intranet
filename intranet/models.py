@@ -6,7 +6,7 @@ from django.db.models.signals import post_save
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
-    eventsNeeded = models.IntegerField(null=True)
+    eventsNeeded = models.IntegerField()
     eventsNeeded.verbose_name = 'Events Needed'
 
     def __unicode__(self):
