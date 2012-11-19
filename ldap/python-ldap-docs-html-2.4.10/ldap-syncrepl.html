@@ -1,0 +1,217 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ldap.syncrepl Implementation of a syncrepl consumer &mdash; python-ldap 2.4.10.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.4.10.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="python-ldap 2.4.10.0 documentation" href="index.html" />
+    <link rel="next" title="ldif LDIF parser and generator" href="ldif.html" />
+    <link rel="prev" title="ldap.schema Handling LDAPv3 schema" href="ldap-schema.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldif.html" title="ldif LDIF parser and generator"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ldap-schema.html" title="ldap.schema Handling LDAPv3 schema"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">python-ldap 2.4.10.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-ldap.syncrepl">
+<span id="ldap-syncrepl-implementation-of-a-syncrepl-consumer"></span><h1><a class="reference internal" href="#module-ldap.syncrepl" title="ldap.syncrepl: Implementation of a syncrepl consumer"><tt class="xref py py-mod docutils literal"><span class="pre">ldap.syncrepl</span></tt></a> Implementation of a syncrepl consumer<a class="headerlink" href="#module-ldap.syncrepl" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><span class="target" id="index-0"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc4533.html"><strong>RFC 4533</strong></a> - Lightweight Directory Access Protocol (v3): Content Synchronization Operation</p>
+</div>
+<p>This requires <tt class="xref py py-mod docutils literal"><span class="pre">pyasn1</span></tt> and <tt class="xref py py-mod docutils literal"><span class="pre">pyasn1_modules</span></tt> to be installed.</p>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<p>This module defines the following classes:</p>
+<dl class="class">
+<dt id="ldap.syncrepl.SyncreplConsumer">
+<em class="property">class </em><tt class="descclassname">ldap.syncrepl.</tt><tt class="descname">SyncreplConsumer</tt><a class="headerlink" href="#ldap.syncrepl.SyncreplConsumer" title="Permalink to this definition">¶</a></dt>
+<dd><p>SyncreplConsumer - LDAP syncrepl consumer object.</p>
+<dl class="method">
+<dt id="ldap.syncrepl.SyncreplConsumer.syncrepl_delete">
+<tt class="descname">syncrepl_delete</tt><big>(</big><em>uuids</em><big>)</big><a class="headerlink" href="#ldap.syncrepl.SyncreplConsumer.syncrepl_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called by syncrepl_poll() to delete entries. A list
+of UUIDs of the entries to be deleted is given in the
+uuids parameter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.syncrepl.SyncreplConsumer.syncrepl_entry">
+<tt class="descname">syncrepl_entry</tt><big>(</big><em>dn</em>, <em>attrs</em>, <em>uuid</em><big>)</big><a class="headerlink" href="#ldap.syncrepl.SyncreplConsumer.syncrepl_entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called by syncrepl_poll() for any added or modified entries.</p>
+<p>The provided uuid is used to identify the provided entry in
+any future modification (including dn modification), deletion,
+and presentation operations.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.syncrepl.SyncreplConsumer.syncrepl_get_cookie">
+<tt class="descname">syncrepl_get_cookie</tt><big>(</big><big>)</big><a class="headerlink" href="#ldap.syncrepl.SyncreplConsumer.syncrepl_get_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called by syncrepl_search() to retreive the cookie stored by syncrepl_set_cookie()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.syncrepl.SyncreplConsumer.syncrepl_poll">
+<tt class="descname">syncrepl_poll</tt><big>(</big><em>msgid=-1</em>, <em>timeout=None</em>, <em>all=0</em><big>)</big><a class="headerlink" href="#ldap.syncrepl.SyncreplConsumer.syncrepl_poll" title="Permalink to this definition">¶</a></dt>
+<dd><p>polls for and processes responses to the syncrepl_search() operation.
+Returns False when operation finishes, True if it is in progress, or
+raises an exception on error.</p>
+<p>If timeout is specified, raises ldap.TIMEOUT in the event of a timeout.</p>
+<p>If all is set to a nonzero value, poll() will return only when finished
+or when an exception is raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.syncrepl.SyncreplConsumer.syncrepl_present">
+<tt class="descname">syncrepl_present</tt><big>(</big><em>uuids</em>, <em>refreshDeletes=False</em><big>)</big><a class="headerlink" href="#ldap.syncrepl.SyncreplConsumer.syncrepl_present" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called by syncrepl_poll() whenever entry UUIDs are presented to the client.
+syncrepl_present() is given a list of entry UUIDs (uuids) and a flag
+(refreshDeletes) which indicates whether the server explicitly deleted
+non-present entries during the refresh operation.</p>
+<p>If called with a list of uuids, the syncrepl_present() implementation
+should record those uuids as present in the directory.</p>
+<p>If called with uuids set to None and refreshDeletes set to False,
+syncrepl_present() should delete all non-present entries from the local
+mirror, and reset the list of recorded uuids.</p>
+<p>If called with uuids set to None and refreshDeletes set to True,
+syncrepl_present() should reset the list of recorded uuids, without
+deleting any entries.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.syncrepl.SyncreplConsumer.syncrepl_search">
+<tt class="descname">syncrepl_search</tt><big>(</big><em>base</em>, <em>scope</em>, <em>mode='refreshOnly'</em>, <em>cookie=None</em>, <em>**search_args</em><big>)</big><a class="headerlink" href="#ldap.syncrepl.SyncreplConsumer.syncrepl_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts syncrepl search operation.</p>
+<p>base, scope, and search_args are passed along to
+self.search_ext unmodified (aside from adding a Sync
+Request control to any serverctrls provided).</p>
+<p>mode provides syncrepl mode. Can be &#8216;refreshOnly&#8217;
+to finish after synchronization, or
+&#8216;refreshAndPersist&#8217; to persist (continue to
+receive updates) after synchronization.</p>
+<p>cookie: an opaque value representing the replication
+state of the client.  Subclasses should override
+the syncrepl_set_cookie() and syncrepl_get_cookie()
+methods to store the cookie appropriately, rather than
+passing it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.syncrepl.SyncreplConsumer.syncrepl_set_cookie">
+<tt class="descname">syncrepl_set_cookie</tt><big>(</big><em>cookie</em><big>)</big><a class="headerlink" href="#ldap.syncrepl.SyncreplConsumer.syncrepl_set_cookie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called by syncrepl_poll() to store a new cookie provided by the server.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">ldap.syncrepl</span></tt> Implementation of a syncrepl consumer</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ldap-schema.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">ldap.schema</span></tt> Handling LDAPv3 schema</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ldif.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">ldif</span></tt> LDIF parser and generator</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/ldap-syncrepl.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldif.html" title="ldif LDIF parser and generator"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ldap-schema.html" title="ldap.schema Handling LDAPv3 schema"
+             >previous</a> |</li>
+        <li><a href="index.html">python-ldap 2.4.10.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2011, python-ldap project team.
+      Last updated on Aug 09, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

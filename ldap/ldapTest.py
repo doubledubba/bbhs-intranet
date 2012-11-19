@@ -33,10 +33,8 @@ To do:
 
 import ldap
 
-server = '10.10.10.201'
-port = 389
-who = 'CN=Administrator,CN=Users,DC=testad'
-cred = 'cookies'
+from config import server, port, who, cred
+# Basic settings
 
 try:
     l = ldap.open(server, port)

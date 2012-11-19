@@ -1,0 +1,242 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ldif LDIF parser and generator &mdash; python-ldap 2.4.10.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.4.10.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="python-ldap 2.4.10.0 documentation" href="index.html" />
+    <link rel="next" title="ldapurl LDAP URL handling" href="ldapurl.html" />
+    <link rel="prev" title="ldap.syncrepl Implementation of a syncrepl consumer" href="ldap-syncrepl.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldapurl.html" title="ldapurl LDAP URL handling"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ldap-syncrepl.html" title="ldap.syncrepl Implementation of a syncrepl consumer"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">python-ldap 2.4.10.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-ldif">
+<span id="ldif-ldif-parser-and-generator"></span><h1><a class="reference internal" href="#module-ldif" title="ldif: Parses and generates LDIF files"><tt class="xref py py-mod docutils literal"><span class="pre">ldif</span></tt></a> LDIF parser and generator<a class="headerlink" href="#module-ldif" title="Permalink to this headline">¶</a></h1>
+<p>This module parses and generates LDAP data in the format LDIF.    It is
+implemented in pure Python and does not rely on any non-standard modules.
+Therefore it can be used stand-alone without the rest of the python-ldap
+package.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><span class="target" id="index-0"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc2849.html"><strong>RFC 2849</strong></a> - The LDAP Data Interchange Format (LDIF) - Technical Specification</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ldif.CreateLDIF">
+<tt class="descclassname">ldif.</tt><tt class="descname">CreateLDIF</tt><big>(</big><em>dn</em>, <em>record</em>, <em>base64_attrs=None</em>, <em>cols=76</em><big>)</big><a class="headerlink" href="#ldif.CreateLDIF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create LDIF single formatted record including trailing empty line.
+This is a compability function. Use is deprecated!</p>
+<dl class="docutils">
+<dt>dn</dt>
+<dd>string-representation of distinguished name</dd>
+<dt>record</dt>
+<dd>Either a dictionary holding the LDAP entry {attrtype:record}
+or a list with a modify list like for LDAPObject.modify().</dd>
+<dt>base64_attrs</dt>
+<dd>list of attribute types to be base64-encoded in any case</dd>
+<dt>cols</dt>
+<dd>Specifies how many columns a line may have before it&#8217;s
+folded into many lines.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="ldif.ParseLDIF">
+<tt class="descclassname">ldif.</tt><tt class="descname">ParseLDIF</tt><big>(</big><em>f</em>, <em>ignore_attrs=None</em>, <em>maxentries=0</em><big>)</big><a class="headerlink" href="#ldif.ParseLDIF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse LDIF records read from file.
+This is a compability function. Use is deprecated!</p>
+</dd></dl>
+
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="ldif.LDIFWriter">
+<em class="property">class </em><tt class="descclassname">ldif.</tt><tt class="descname">LDIFWriter</tt><big>(</big><em>output_file</em>, <em>base64_attrs=None</em>, <em>cols=76</em>, <em>line_sep='n'</em><big>)</big><a class="headerlink" href="#ldif.LDIFWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write LDIF entry or change records to file object
+Copy LDIF input to a file output object containing all data retrieved
+via URLs</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ldif.LDIFParser">
+<em class="property">class </em><tt class="descclassname">ldif.</tt><tt class="descname">LDIFParser</tt><big>(</big><em>input_file</em>, <em>ignored_attr_types=None</em>, <em>max_entries=0</em>, <em>process_url_schemes=None</em>, <em>line_sep='n'</em><big>)</big><a class="headerlink" href="#ldif.LDIFParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for a LDIF parser. Applications should sub-class this
+class and override method handle() to implement something meaningful.</p>
+<p>Public class attributes:</p>
+<dl class="docutils">
+<dt>records_read</dt>
+<dd>Counter for records processed so far</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="ldif.LDIFRecordList">
+<em class="property">class </em><tt class="descclassname">ldif.</tt><tt class="descname">LDIFRecordList</tt><big>(</big><em>input_file</em>, <em>ignored_attr_types=None</em>, <em>max_entries=0</em>, <em>process_url_schemes=None</em><big>)</big><a class="headerlink" href="#ldif.LDIFRecordList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect all records of LDIF input into a single list.
+of 2-tuples (dn,entry). It can be a memory hog!</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ldif.LDIFCopy">
+<em class="property">class </em><tt class="descclassname">ldif.</tt><tt class="descname">LDIFCopy</tt><big>(</big><em>input_file</em>, <em>output_file</em>, <em>ignored_attr_types=None</em>, <em>max_entries=0</em>, <em>process_url_schemes=None</em>, <em>base64_attrs=None</em>, <em>cols=76</em>, <em>line_sep='n'</em><big>)</big><a class="headerlink" href="#ldif.LDIFCopy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy LDIF input to LDIF output containing all data retrieved
+via URLs</p>
+</dd></dl>
+
+</div>
+<div class="section" id="example">
+<span id="ldif-example"></span><h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>The following example demonstrates how to write LDIF output
+of an LDAP entry with <a class="reference internal" href="#module-ldif" title="ldif: Parses and generates LDIF files"><tt class="xref py py-mod docutils literal"><span class="pre">ldif</span></tt></a> module.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span><span class="nn">ldif</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">entry</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;objectClass&#39;</span><span class="p">:[</span><span class="s">&#39;top&#39;</span><span class="p">,</span><span class="s">&#39;person&#39;</span><span class="p">],</span><span class="s">&#39;cn&#39;</span><span class="p">:[</span><span class="s">&#39;Michael Stroeder&#39;</span><span class="p">],</span><span class="s">&#39;sn&#39;</span><span class="p">:[</span><span class="s">&#39;Stroeder&#39;</span><span class="p">]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dn</span><span class="o">=</span><span class="s">&#39;cn=Michael Stroeder,ou=Test&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ldif_writer</span><span class="o">=</span><span class="n">ldif</span><span class="o">.</span><span class="n">LDIFWriter</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ldif_writer</span><span class="o">.</span><span class="n">unparse</span><span class="p">(</span><span class="n">dn</span><span class="p">,</span><span class="n">entry</span><span class="p">)</span>
+<span class="go">dn: cn=Michael Stroeder,ou=Test</span>
+<span class="go">cn: Michael Stroeder</span>
+<span class="go">objectClass: top</span>
+<span class="go">objectClass: person</span>
+<span class="go">sn: Stroeder</span>
+</pre></div>
+</div>
+<p>The following example demonstrates how to parse an LDIF file
+with <a class="reference internal" href="#module-ldif" title="ldif: Parses and generates LDIF files"><tt class="xref py py-mod docutils literal"><span class="pre">ldif</span></tt></a> module, skip some entries and write the result to stdout.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">ldif</span> <span class="kn">import</span> <span class="n">LDIFParser</span><span class="p">,</span><span class="n">LDIFWriter</span>
+
+<span class="n">SKIP_DN</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;uid=foo,ou=People,dc=example,dc=com&quot;</span><span class="p">,</span>
+   <span class="s">&quot;uid=bar,ou=People,dc=example,dc=com&quot;</span><span class="p">]</span>
+
+<span class="k">class</span> <span class="nc">MyLDIF</span><span class="p">(</span><span class="n">LDIFParser</span><span class="p">):</span>
+   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">input</span><span class="p">,</span><span class="n">output</span><span class="p">):</span>
+      <span class="n">LDIFParser</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">input</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">LDIFWriter</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+
+   <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dn</span><span class="p">,</span><span class="n">entry</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">dn</span> <span class="ow">in</span> <span class="n">SKIP_DN</span><span class="p">:</span>
+        <span class="k">return</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">unparse</span><span class="p">(</span><span class="n">dn</span><span class="p">,</span><span class="n">entry</span><span class="p">)</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">MyLDIF</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&quot;input.ldif&quot;</span><span class="p">,</span> <span class="s">&#39;rb&#39;</span><span class="p">),</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">ldif</span></tt> LDIF parser and generator</a><ul>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ldap-syncrepl.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">ldap.syncrepl</span></tt> Implementation of a syncrepl consumer</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ldapurl.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">ldapurl</span></tt> LDAP URL handling</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/ldif.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldapurl.html" title="ldapurl LDAP URL handling"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ldap-syncrepl.html" title="ldap.syncrepl Implementation of a syncrepl consumer"
+             >previous</a> |</li>
+        <li><a href="index.html">python-ldap 2.4.10.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2011, python-ldap project team.
+      Last updated on Aug 09, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

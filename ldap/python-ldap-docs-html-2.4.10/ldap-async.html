@@ -1,0 +1,318 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ldap.async Stream-processing of large search results &mdash; python-ldap 2.4.10.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.4.10.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="python-ldap 2.4.10.0 documentation" href="index.html" />
+    <link rel="next" title="ldap.controls High-level access to LDAPv3 extended controls" href="ldap-controls.html" />
+    <link rel="prev" title="ldap LDAP library interface module" href="ldap.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldap-controls.html" title="ldap.controls High-level access to LDAPv3 extended controls"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ldap.html" title="ldap LDAP library interface module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">python-ldap 2.4.10.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-ldap.async">
+<span id="ldap-async-stream-processing-of-large-search-results"></span><h1><a class="reference internal" href="#module-ldap.async" title="ldap.async: Framework for stream-processing of large search results."><tt class="xref py py-mod docutils literal"><span class="pre">ldap.async</span></tt></a> Stream-processing of large search results<a class="headerlink" href="#module-ldap.async" title="Permalink to this headline">¶</a></h1>
+<p>With newer Python versions one might want to consider using
+<a class="reference internal" href="ldap-resiter.html#module-ldap.resiter" title="ldap.resiter: Generator for stream-processing of large search results."><tt class="xref py py-mod docutils literal"><span class="pre">ldap.resiter</span></tt></a> instead.</p>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="ldap.async.AsyncSearchHandler">
+<em class="property">class </em><tt class="descclassname">ldap.async.</tt><tt class="descname">AsyncSearchHandler</tt><big>(</big><em>l</em><big>)</big><a class="headerlink" href="#ldap.async.AsyncSearchHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for stream-processsing LDAP search results</p>
+<p>Arguments:</p>
+<dl class="docutils">
+<dt>l</dt>
+<dd>LDAPObject instance</dd>
+</dl>
+<dl class="method">
+<dt id="ldap.async.AsyncSearchHandler.postProcessing">
+<tt class="descname">postProcessing</tt><big>(</big><big>)</big><a class="headerlink" href="#ldap.async.AsyncSearchHandler.postProcessing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do anything you want after receiving and processing results</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.async.AsyncSearchHandler.preProcessing">
+<tt class="descname">preProcessing</tt><big>(</big><big>)</big><a class="headerlink" href="#ldap.async.AsyncSearchHandler.preProcessing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do anything you want after starting search but
+before receiving and processing results</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.async.AsyncSearchHandler.processResults">
+<tt class="descname">processResults</tt><big>(</big><em>ignoreResultsNumber=0</em>, <em>processResultsCount=0</em>, <em>timeout=-1</em><big>)</big><a class="headerlink" href="#ldap.async.AsyncSearchHandler.processResults" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>ignoreResultsNumber</dt>
+<dd>Don&#8217;t process the first ignoreResultsNumber results.</dd>
+<dt>processResultsCount</dt>
+<dd>If non-zero this parameters indicates the number of results
+processed is limited to processResultsCount.</dd>
+<dt>timeout</dt>
+<dd>See parameter timeout of ldap.LDAPObject.result()</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.async.AsyncSearchHandler.startSearch">
+<tt class="descname">startSearch</tt><big>(</big><em>searchRoot</em>, <em>searchScope</em>, <em>filterStr</em>, <em>attrList=None</em>, <em>attrsOnly=0</em>, <em>timeout=-1</em>, <em>sizelimit=0</em>, <em>serverctrls=None</em>, <em>clientctrls=None</em><big>)</big><a class="headerlink" href="#ldap.async.AsyncSearchHandler.startSearch" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>searchRoot</dt>
+<dd>See parameter base of method LDAPObject.search()</dd>
+<dt>searchScope</dt>
+<dd>See parameter scope of method LDAPObject.search()</dd>
+<dt>filterStr</dt>
+<dd>See parameter filter of method LDAPObject.search()</dd>
+<dt>attrList=None</dt>
+<dd>See parameter attrlist of method LDAPObject.search()</dd>
+<dt>attrsOnly</dt>
+<dd>See parameter attrsonly of method LDAPObject.search()</dd>
+<dt>timeout</dt>
+<dd>Maximum time the server shall use for search operation</dd>
+<dt>sizelimit</dt>
+<dd>Maximum number of entries a server should return
+(request client-side limit)</dd>
+<dt>serverctrls</dt>
+<dd>list of server-side LDAP controls</dd>
+<dt>clientctrls</dt>
+<dd>list of client-side LDAP controls</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ldap.async.List">
+<em class="property">class </em><tt class="descclassname">ldap.async.</tt><tt class="descname">List</tt><big>(</big><em>l</em><big>)</big><a class="headerlink" href="#ldap.async.List" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for collecting all search results.</p>
+<p>This does not seem to make sense in the first place but think
+of retrieving exactly a certain portion of the available search
+results.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ldap.async.Dict">
+<em class="property">class </em><tt class="descclassname">ldap.async.</tt><tt class="descname">Dict</tt><big>(</big><em>l</em><big>)</big><a class="headerlink" href="#ldap.async.Dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for collecting all search results into a dictionary {dn:entry}</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ldap.async.IndexedDict">
+<em class="property">class </em><tt class="descclassname">ldap.async.</tt><tt class="descname">IndexedDict</tt><big>(</big><em>l</em>, <em>indexed_attrs=None</em><big>)</big><a class="headerlink" href="#ldap.async.IndexedDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for collecting all search results into a dictionary {dn:entry}
+and maintain case-sensitive equality indexes to entries</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ldap.async.LDIFWriter">
+<em class="property">class </em><tt class="descclassname">ldap.async.</tt><tt class="descname">LDIFWriter</tt><big>(</big><em>l</em>, <em>writer_obj</em>, <em>headerStr=''</em>, <em>footerStr=''</em><big>)</big><a class="headerlink" href="#ldap.async.LDIFWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for writing a stream LDAP search results to a LDIF file</p>
+<p>Arguments:</p>
+<dl class="docutils">
+<dt>l</dt>
+<dd>LDAPObject instance</dd>
+<dt>writer_obj</dt>
+<dd>Either a file-like object or a ldif.LDIFWriter instance used for output</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="ldap.async.DSMLWriter">
+<em class="property">class </em><tt class="descclassname">ldap.async.</tt><tt class="descname">DSMLWriter</tt><big>(</big><em>l</em>, <em>writer_obj</em>, <em>headerStr=''</em>, <em>footerStr=''</em><big>)</big><a class="headerlink" href="#ldap.async.DSMLWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for writing a stream LDAP search results to a DSML file</p>
+<p>Arguments:</p>
+<dl class="docutils">
+<dt>l</dt>
+<dd>LDAPObject instance</dd>
+<dt>writer_obj</dt>
+<dd>Either a file-like object or a dsml.DSMLWriter instance used for output</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="examples">
+<span id="ldap-async-example"></span><h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="using-ldap-async-list">
+<span id="ldap-async-example-list"></span><h3>Using ldap.async.List<a class="headerlink" href="#using-ldap-async-list" title="Permalink to this headline">¶</a></h3>
+<p>This example demonstrates how to use class ldap.async.List for
+retrieving partial search results even though the exception
+<a class="reference internal" href="ldap.html#ldap.SIZELIMIT_EXCEEDED" title="ldap.SIZELIMIT_EXCEEDED"><tt class="xref py py-exc docutils literal"><span class="pre">ldap.SIZELIMIT_EXCEEDED</span></tt></a> was raised because a server side limit was hit.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span><span class="nn">ldap</span><span class="o">,</span><span class="nn">ldap.async</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">ldap</span><span class="o">.</span><span class="n">async</span><span class="o">.</span><span class="n">List</span><span class="p">(</span>
+  <span class="n">ldap</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="s">&#39;ldap://localhost&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">s</span><span class="o">.</span><span class="n">startSearch</span><span class="p">(</span>
+  <span class="s">&#39;dc=stroeder,dc=com&#39;</span><span class="p">,</span>
+  <span class="n">ldap</span><span class="o">.</span><span class="n">SCOPE_SUBTREE</span><span class="p">,</span>
+  <span class="s">&#39;(objectClass=*)&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+  <span class="n">partial</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">processResults</span><span class="p">()</span>
+<span class="k">except</span> <span class="n">ldap</span><span class="o">.</span><span class="n">SIZELIMIT_EXCEEDED</span><span class="p">:</span>
+  <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Warning: Server-side size limit exceeded.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">partial</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Warning: Only partial results received.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+  <span class="s">&#39;</span><span class="si">%d</span><span class="s"> results received.</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">allResults</span><span class="p">)</span>
+  <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-ldap-async-ldifwriter">
+<span id="ldap-async-example-ldifwriter"></span><h3>Using ldap.async.LDIFWriter<a class="headerlink" href="#using-ldap-async-ldifwriter" title="Permalink to this headline">¶</a></h3>
+<p>This example demonstrates how to use class ldap.async.LDIFWriter
+for writing search results as LDIF to stdout.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span><span class="nn">ldap</span><span class="o">,</span><span class="nn">ldap.async</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">ldap</span><span class="o">.</span><span class="n">async</span><span class="o">.</span><span class="n">LDIFWriter</span><span class="p">(</span>
+  <span class="n">ldap</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="s">&#39;ldap://localhost:1390&#39;</span><span class="p">),</span>
+  <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span>
+<span class="p">)</span>
+
+<span class="n">s</span><span class="o">.</span><span class="n">startSearch</span><span class="p">(</span>
+  <span class="s">&#39;dc=stroeder,dc=com&#39;</span><span class="p">,</span>
+  <span class="n">ldap</span><span class="o">.</span><span class="n">SCOPE_SUBTREE</span><span class="p">,</span>
+  <span class="s">&#39;(objectClass=*)&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+  <span class="n">partial</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">processResults</span><span class="p">()</span>
+<span class="k">except</span> <span class="n">ldap</span><span class="o">.</span><span class="n">SIZELIMIT_EXCEEDED</span><span class="p">:</span>
+  <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Warning: Server-side size limit exceeded.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">partial</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;Warning: Only partial results received.</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+<span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+  <span class="s">&#39;</span><span class="si">%d</span><span class="s"> results received.</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">endResultBreak</span><span class="o">-</span><span class="n">s</span><span class="o">.</span><span class="n">beginResultsDropped</span>
+  <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">ldap.async</span></tt> Stream-processing of large search results</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#using-ldap-async-list">Using ldap.async.List</a></li>
+<li><a class="reference internal" href="#using-ldap-async-ldifwriter">Using ldap.async.LDIFWriter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ldap.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">ldap</span></tt> LDAP library interface module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ldap-controls.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">ldap.controls</span></tt> High-level access to LDAPv3 extended controls</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/ldap-async.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldap-controls.html" title="ldap.controls High-level access to LDAPv3 extended controls"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ldap.html" title="ldap LDAP library interface module"
+             >previous</a> |</li>
+        <li><a href="index.html">python-ldap 2.4.10.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2011, python-ldap project team.
+      Last updated on Aug 09, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

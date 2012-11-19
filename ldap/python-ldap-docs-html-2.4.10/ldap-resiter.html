@@ -1,0 +1,169 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ldap.resiter Generator for stream-processing of large search results &mdash; python-ldap 2.4.10.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.4.10.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="python-ldap 2.4.10.0 documentation" href="index.html" />
+    <link rel="next" title="ldap.schema Handling LDAPv3 schema" href="ldap-schema.html" />
+    <link rel="prev" title="ldap.modlist Generate modify lists" href="ldap-modlist.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldap-schema.html" title="ldap.schema Handling LDAPv3 schema"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ldap-modlist.html" title="ldap.modlist Generate modify lists"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">python-ldap 2.4.10.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-ldap.resiter">
+<span id="ldap-resiter-generator-for-stream-processing-of-large-search-results"></span><h1><a class="reference internal" href="#module-ldap.resiter" title="ldap.resiter: Generator for stream-processing of large search results."><tt class="xref py py-mod docutils literal"><span class="pre">ldap.resiter</span></tt></a> Generator for stream-processing of large search results<a class="headerlink" href="#module-ldap.resiter" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="ldap-resiter-classes"></span><dl class="class">
+<dt id="ldap.resiter.ResultProcessor">
+<em class="property">class </em><tt class="descclassname">ldap.resiter.</tt><tt class="descname">ResultProcessor</tt><a class="headerlink" href="#ldap.resiter.ResultProcessor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This is a mix-in class to be used with class <a class="reference internal" href="ldap.html#ldap.LDAPObject" title="ldap.LDAPObject"><tt class="xref py py-class docutils literal"><span class="pre">ldap.LDAPObject</span></tt></a> or
+derived classes which has these methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="ldap.resiter.ResultProcessor.allresults">
+<tt class="descclassname">ResultProcessor.</tt><tt class="descname">allresults</tt><big>(</big><em>msgid</em>, <em>timeout=-1</em><big>)</big><a class="headerlink" href="#ldap.resiter.ResultProcessor.allresults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator function which returns an iterator for processing all LDAP operation
+results of the given msgid retrieved with LDAPObject.result3() -&gt; 4-tuple</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+<div class="section" id="examples">
+<span id="ldap-resiter-example"></span><h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="using-ldap-resiter-resultprocessor">
+<span id="ldap-resiter-resultprocessor-example"></span><h2>Using ldap.resiter.ResultProcessor<a class="headerlink" href="#using-ldap-resiter-resultprocessor" title="Permalink to this headline">¶</a></h2>
+<p>This example demonstrates how to use mix-in class ldap.resiter.ResultProcessor for
+retrieving results formerly requested with <a class="reference internal" href="ldap.html#ldap.LDAPObject.search" title="ldap.LDAPObject.search"><tt class="xref py py-meth docutils literal"><span class="pre">ldap.LDAPObject.search()</span></tt></a> and
+processing them in a for-loop.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span><span class="nn">ldap</span><span class="o">,</span><span class="nn">ldap.resiter</span>
+
+<span class="k">class</span> <span class="nc">MyLDAPObject</span><span class="p">(</span><span class="n">ldap</span><span class="o">.</span><span class="n">ldapobject</span><span class="o">.</span><span class="n">LDAPObject</span><span class="p">,</span><span class="n">ldap</span><span class="o">.</span><span class="n">resiter</span><span class="o">.</span><span class="n">ResultProcessor</span><span class="p">):</span>
+  <span class="k">pass</span>
+
+<span class="n">l</span> <span class="o">=</span> <span class="n">MyLDAPObject</span><span class="p">(</span><span class="s">&#39;ldap://localhost&#39;</span><span class="p">)</span>
+
+<span class="c"># Asynchronous search method</span>
+<span class="n">msg_id</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;dc=stroeder,dc=com&#39;</span><span class="p">,</span><span class="n">ldap</span><span class="o">.</span><span class="n">SCOPE_SUBTREE</span><span class="p">,</span><span class="s">&#39;(objectClass=*)&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">res_type</span><span class="p">,</span><span class="n">res_data</span><span class="p">,</span><span class="n">res_msgid</span><span class="p">,</span><span class="n">res_controls</span> <span class="ow">in</span> <span class="n">l</span><span class="o">.</span><span class="n">allresults</span><span class="p">(</span><span class="n">msg_id</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">dn</span><span class="p">,</span><span class="n">entry</span> <span class="ow">in</span> <span class="n">res_data</span><span class="p">:</span>
+    <span class="c"># process dn and entry</span>
+    <span class="k">print</span> <span class="n">dn</span><span class="p">,</span><span class="n">entry</span><span class="p">[</span><span class="s">&#39;objectClass&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">ldap.resiter</span></tt> Generator for stream-processing of large search results</a></li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#using-ldap-resiter-resultprocessor">Using ldap.resiter.ResultProcessor</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ldap-modlist.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">ldap.modlist</span></tt> Generate modify lists</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ldap-schema.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">ldap.schema</span></tt> Handling LDAPv3 schema</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/ldap-resiter.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldap-schema.html" title="ldap.schema Handling LDAPv3 schema"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ldap-modlist.html" title="ldap.modlist Generate modify lists"
+             >previous</a> |</li>
+        <li><a href="index.html">python-ldap 2.4.10.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2011, python-ldap project team.
+      Last updated on Aug 09, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

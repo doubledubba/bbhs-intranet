@@ -1,0 +1,569 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ldap.schema Handling LDAPv3 schema &mdash; python-ldap 2.4.10.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.4.10.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="python-ldap 2.4.10.0 documentation" href="index.html" />
+    <link rel="next" title="ldap.syncrepl Implementation of a syncrepl consumer" href="ldap-syncrepl.html" />
+    <link rel="prev" title="ldap.resiter Generator for stream-processing of large search results" href="ldap-resiter.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldap-syncrepl.html" title="ldap.syncrepl Implementation of a syncrepl consumer"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ldap-resiter.html" title="ldap.resiter Generator for stream-processing of large search results"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">python-ldap 2.4.10.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-ldap.schema">
+<span id="ldap-schema-handling-ldapv3-schema"></span><h1><a class="reference internal" href="#module-ldap.schema" title="ldap.schema"><tt class="xref py py-mod docutils literal"><span class="pre">ldap.schema</span></tt></a> Handling LDAPv3 schema<a class="headerlink" href="#module-ldap.schema" title="Permalink to this headline">¶</a></h1>
+<p>This module deals with schema information usually retrieved from
+a special subschema subentry provided by the server.
+It is closely modeled along the directory information model described
+in the following RFC with which you should make yourself familiar
+when trying to use this module:</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><span class="target" id="index-0"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc4512.html"><strong>RFC 4512</strong></a> - Lightweight Directory Access Protocol (LDAP): Directory Information Models</p>
+</div>
+<div class="section" id="module-ldap.schema.subentry">
+<span id="ldap-schema-subentry-processing-ldapv3-subschema-subentry"></span><h2><a class="reference internal" href="#module-ldap.schema.subentry" title="ldap.schema.subentry"><tt class="xref py py-mod docutils literal"><span class="pre">ldap.schema.subentry</span></tt></a> Processing LDAPv3 subschema subentry<a class="headerlink" href="#module-ldap.schema.subentry" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="ldap.schema.subentry.NOT_HUMAN_READABLE_LDAP_SYNTAXES">
+<tt class="descclassname">ldap.schema.subentry.</tt><tt class="descname">NOT_HUMAN_READABLE_LDAP_SYNTAXES</tt><a class="headerlink" href="#ldap.schema.subentry.NOT_HUMAN_READABLE_LDAP_SYNTAXES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary where the keys are the OIDs of LDAP syntaxes known to be
+not human-readable when displayed to a console without conversion
+and which cannot be decoded to a <tt class="xref py py-data docutils literal"><span class="pre">types.UnicodeType</span></tt>.</p>
+</dd></dl>
+
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="ldap.schema.subentry.urlfetch">
+<tt class="descclassname">ldap.schema.subentry.</tt><tt class="descname">urlfetch</tt><big>(</big><em>uri</em>, <em>trace_level=0</em><big>)</big><a class="headerlink" href="#ldap.schema.subentry.urlfetch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches a parsed schema entry by uri.</p>
+<p>If uri is a LDAP URL the LDAP server is queried directly.
+Otherwise uri is assumed to point to a LDIF file which
+is loaded with urllib.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="ldap.schema.subentry.SubSchema">
+<em class="property">class </em><tt class="descclassname">ldap.schema.subentry.</tt><tt class="descname">SubSchema</tt><big>(</big><em>sub_schema_sub_entry</em>, <em>check_uniqueness=1</em><big>)</big><a class="headerlink" href="#ldap.schema.subentry.SubSchema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<dl class="docutils">
+<dt>sub_schema_sub_entry</dt>
+<dd>Dictionary usually returned by LDAP search or the LDIF parser
+containing the sub schema sub entry</dd>
+<dt>check_uniqueness</dt>
+<dd><p class="first">Defines whether uniqueness of OIDs and NAME is checked.</p>
+<dl class="last docutils">
+<dt>0</dt>
+<dd>no check</dd>
+<dt>1</dt>
+<dd>check but add schema description with work-around</dd>
+<dt>2</dt>
+<dd>check and raise exception if non-unique OID or NAME is found</dd>
+</dl>
+</dd>
+</dl>
+<p>Class attributes:</p>
+<dl class="docutils">
+<dt>sed</dt>
+<dd>Dictionary holding the subschema information as pre-parsed
+SchemaElement objects (do not access directly!)</dd>
+<dt>name2oid</dt>
+<dd>Dictionary holding the mapping from NAMEs to OIDs
+(do not access directly!)</dd>
+<dt>non_unique_oids</dt>
+<dd>List of OIDs used at least twice in the subschema</dd>
+<dt>non_unique_names</dt>
+<dd>List of NAMEs used at least twice in the subschema for the same schema element</dd>
+</dl>
+<dl class="method">
+<dt id="ldap.schema.subentry.SubSchema.attribute_types">
+<tt class="descname">attribute_types</tt><big>(</big><em>object_class_list</em>, <em>attr_type_filter=None</em>, <em>raise_keyerror=1</em>, <em>ignore_dit_content_rule=0</em><big>)</big><a class="headerlink" href="#ldap.schema.subentry.SubSchema.attribute_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a 2-tuple of all must and may attributes including
+all inherited attributes of superior object classes
+by walking up classes along the SUP attribute.</p>
+<p>The attributes are stored in a ldap.cidict.cidict dictionary.</p>
+<dl class="docutils">
+<dt>object_class_list</dt>
+<dd>list of strings specifying object class names or OIDs</dd>
+<dt>attr_type_filter</dt>
+<dd>list of 2-tuples containing lists of class attributes
+which has to be matched</dd>
+<dt>raise_keyerror</dt>
+<dd>All KeyError exceptions for non-existent schema elements
+are ignored</dd>
+<dt>ignore_dit_content_rule</dt>
+<dd>A DIT content rule governing the structural object class
+is ignored</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.schema.subentry.SubSchema.get_applicable_aux_classes">
+<tt class="descname">get_applicable_aux_classes</tt><big>(</big><em>nameoroid</em><big>)</big><a class="headerlink" href="#ldap.schema.subentry.SubSchema.get_applicable_aux_classes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of the applicable AUXILIARY object classes
+for a STRUCTURAL object class specified by &#8216;nameoroid&#8217;
+if the object class is governed by a DIT content rule.
+If there&#8217;s no DIT content rule all available AUXILIARY
+object classes are returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.schema.subentry.SubSchema.get_inheritedattr">
+<tt class="descname">get_inheritedattr</tt><big>(</big><em>se_class</em>, <em>nameoroid</em>, <em>name</em><big>)</big><a class="headerlink" href="#ldap.schema.subentry.SubSchema.get_inheritedattr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a possibly inherited attribute specified by name
+of a schema element specified by nameoroid.
+Returns None if class attribute is not set at all.</p>
+<p>Raises KeyError if no schema element is found by nameoroid.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.schema.subentry.SubSchema.get_inheritedobj">
+<tt class="descname">get_inheritedobj</tt><big>(</big><em>se_class</em>, <em>nameoroid</em>, <em>inherited=None</em><big>)</big><a class="headerlink" href="#ldap.schema.subentry.SubSchema.get_inheritedobj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a schema element by name or OID with all class attributes
+set including inherited class attributes</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.schema.subentry.SubSchema.get_obj">
+<tt class="descname">get_obj</tt><big>(</big><em>se_class</em>, <em>nameoroid</em>, <em>default=None</em>, <em>raise_keyerror=0</em><big>)</big><a class="headerlink" href="#ldap.schema.subentry.SubSchema.get_obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a schema element by name or OID</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.schema.subentry.SubSchema.get_structural_oc">
+<tt class="descname">get_structural_oc</tt><big>(</big><em>oc_list</em><big>)</big><a class="headerlink" href="#ldap.schema.subentry.SubSchema.get_structural_oc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns OID of structural object class in oc_list
+if any is present. Returns None else.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.schema.subentry.SubSchema.get_syntax">
+<tt class="descname">get_syntax</tt><big>(</big><em>nameoroid</em><big>)</big><a class="headerlink" href="#ldap.schema.subentry.SubSchema.get_syntax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the syntax of an attribute type specified by name or OID</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.schema.subentry.SubSchema.getoid">
+<tt class="descname">getoid</tt><big>(</big><em>se_class</em>, <em>nameoroid</em>, <em>raise_keyerror=0</em><big>)</big><a class="headerlink" href="#ldap.schema.subentry.SubSchema.getoid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an OID by name or OID</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.schema.subentry.SubSchema.ldap_entry">
+<tt class="descname">ldap_entry</tt><big>(</big><big>)</big><a class="headerlink" href="#ldap.schema.subentry.SubSchema.ldap_entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary containing the sub schema sub entry</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.schema.subentry.SubSchema.listall">
+<tt class="descname">listall</tt><big>(</big><em>schema_element_class</em>, <em>schema_element_filters=None</em><big>)</big><a class="headerlink" href="#ldap.schema.subentry.SubSchema.listall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of OIDs of all available schema
+elements of a given schema element class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.schema.subentry.SubSchema.tree">
+<tt class="descname">tree</tt><big>(</big><em>schema_element_class</em>, <em>schema_element_filters=None</em><big>)</big><a class="headerlink" href="#ldap.schema.subentry.SubSchema.tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a ldap.cidict.cidict dictionary representing the
+tree structure of the schema elements.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-ldap.schema.models">
+<span id="ldap-schema-models-schema-elements"></span><h2><a class="reference internal" href="#module-ldap.schema.models" title="ldap.schema.models"><tt class="xref py py-mod docutils literal"><span class="pre">ldap.schema.models</span></tt></a> Schema elements<a class="headerlink" href="#module-ldap.schema.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="ldap.schema.models.Entry">
+<em class="property">class </em><tt class="descclassname">ldap.schema.models.</tt><tt class="descname">Entry</tt><big>(</big><em>schema</em>, <em>dn</em>, <em>entry</em><big>)</big><a class="headerlink" href="#ldap.schema.models.Entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Schema-aware implementation of an LDAP entry class.</p>
+<p>Mainly it holds the attributes in a string-keyed dictionary with
+the OID as key.</p>
+<dl class="method">
+<dt id="ldap.schema.models.Entry.attribute_types">
+<tt class="descname">attribute_types</tt><big>(</big><em>attr_type_filter=None</em>, <em>raise_keyerror=1</em><big>)</big><a class="headerlink" href="#ldap.schema.models.Entry.attribute_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience wrapper around SubSchema.attribute_types() which
+passes object classes of this particular entry as argument to
+SubSchema.attribute_types()</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ldap.schema.models.SchemaElement">
+<em class="property">class </em><tt class="descclassname">ldap.schema.models.</tt><tt class="descname">SchemaElement</tt><big>(</big><em>schema_element_str=None</em><big>)</big><a class="headerlink" href="#ldap.schema.models.SchemaElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for all schema element classes. Not used directly!</p>
+<p>Arguments:</p>
+<dl class="docutils">
+<dt>schema_element_str</dt>
+<dd>String which contains the schema element description to be parsed.</dd>
+</dl>
+<p>Class attributes:</p>
+<dl class="docutils">
+<dt>schema_attribute</dt>
+<dd>LDAP attribute type containing a certain schema element description</dd>
+<dt>token_defaults</dt>
+<dd>Dictionary internally used by the schema element parser
+containing the defaults for certain schema description key-words</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="ldap.schema.models.AttributeType">
+<em class="property">class </em><tt class="descclassname">ldap.schema.models.</tt><tt class="descname">AttributeType</tt><big>(</big><em>schema_element_str=None</em><big>)</big><a class="headerlink" href="#ldap.schema.models.AttributeType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<dl class="docutils">
+<dt>schema_element_str</dt>
+<dd>String containing an AttributeTypeDescription</dd>
+</dl>
+<p>Class attributes:</p>
+<dl class="docutils">
+<dt>oid</dt>
+<dd>OID assigned to the attribute type</dd>
+<dt>names</dt>
+<dd>This list of strings contains all NAMEs of the attribute type</dd>
+<dt>desc</dt>
+<dd>This string contains description text (DESC) of the attribute type</dd>
+<dt>obsolete</dt>
+<dd>Integer flag (0 or 1) indicating whether the attribute type is marked
+as OBSOLETE in the schema</dd>
+<dt>single_value</dt>
+<dd>Integer flag (0 or 1) indicating whether the attribute must
+have only one value</dd>
+<dt>syntax</dt>
+<dd>String contains OID of the LDAP syntax assigned to the attribute type</dd>
+<dt>no_user_mod</dt>
+<dd>Integer flag (0 or 1) indicating whether the attribute is modifiable
+by a client application</dd>
+<dt>equality</dt>
+<dd>String contains NAME or OID of the matching rule used for
+checking whether attribute values are equal</dd>
+<dt>substr</dt>
+<dd>String contains NAME or OID of the matching rule used for
+checking whether an attribute value contains another value</dd>
+<dt>ordering</dt>
+<dd>String contains NAME or OID of the matching rule used for
+checking whether attribute values are lesser-equal than</dd>
+<dt>usage</dt>
+<dd>USAGE of an attribute type:
+0 = userApplications
+1 = directoryOperation,
+2 = distributedOperation,
+3 = dSAOperation</dd>
+<dt>sup</dt>
+<dd>This list of strings contains NAMEs or OIDs of attribute types
+this attribute type is derived from</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="ldap.schema.models.ObjectClass">
+<em class="property">class </em><tt class="descclassname">ldap.schema.models.</tt><tt class="descname">ObjectClass</tt><big>(</big><em>schema_element_str=None</em><big>)</big><a class="headerlink" href="#ldap.schema.models.ObjectClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<dl class="docutils">
+<dt>schema_element_str</dt>
+<dd>String containing an ObjectClassDescription</dd>
+</dl>
+<p>Class attributes:</p>
+<dl class="docutils">
+<dt>oid</dt>
+<dd>OID assigned to the object class</dd>
+<dt>names</dt>
+<dd>This list of strings contains all NAMEs of the object class</dd>
+<dt>desc</dt>
+<dd>This string contains description text (DESC) of the object class</dd>
+<dt>obsolete</dt>
+<dd>Integer flag (0 or 1) indicating whether the object class is marked
+as OBSOLETE in the schema</dd>
+<dt>must</dt>
+<dd>This list of strings contains NAMEs or OIDs of all attributes
+an entry of the object class must have</dd>
+<dt>may</dt>
+<dd>This list of strings contains NAMEs or OIDs of additional attributes
+an entry of the object class may have</dd>
+<dt>kind</dt>
+<dd>Kind of an object class:
+0 = ABSTRACT,
+1 = STRUCTURAL,
+2 = AUXILIARY</dd>
+<dt>sup</dt>
+<dd>This list of strings contains NAMEs or OIDs of object classes
+this object class is derived from</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="ldap.schema.models.MatchingRule">
+<em class="property">class </em><tt class="descclassname">ldap.schema.models.</tt><tt class="descname">MatchingRule</tt><big>(</big><em>schema_element_str=None</em><big>)</big><a class="headerlink" href="#ldap.schema.models.MatchingRule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<dl class="docutils">
+<dt>schema_element_str</dt>
+<dd>String containing an MatchingRuleDescription</dd>
+</dl>
+<p>Class attributes:</p>
+<dl class="docutils">
+<dt>oid</dt>
+<dd>OID assigned to the matching rule</dd>
+<dt>names</dt>
+<dd>This list of strings contains all NAMEs of the matching rule</dd>
+<dt>desc</dt>
+<dd>This string contains description text (DESC) of the matching rule</dd>
+<dt>obsolete</dt>
+<dd>Integer flag (0 or 1) indicating whether the matching rule is marked
+as OBSOLETE in the schema</dd>
+<dt>syntax</dt>
+<dd>String contains OID of the LDAP syntax this matching rule is usable with</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="ldap.schema.models.MatchingRuleUse">
+<em class="property">class </em><tt class="descclassname">ldap.schema.models.</tt><tt class="descname">MatchingRuleUse</tt><big>(</big><em>schema_element_str=None</em><big>)</big><a class="headerlink" href="#ldap.schema.models.MatchingRuleUse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<dl class="docutils">
+<dt>schema_element_str</dt>
+<dd>String containing an MatchingRuleUseDescription</dd>
+</dl>
+<p>Class attributes:</p>
+<dl class="docutils">
+<dt>oid</dt>
+<dd>OID of the accompanying matching rule</dd>
+<dt>names</dt>
+<dd>This list of strings contains all NAMEs of the matching rule</dd>
+<dt>desc</dt>
+<dd>This string contains description text (DESC) of the matching rule</dd>
+<dt>obsolete</dt>
+<dd>Integer flag (0 or 1) indicating whether the matching rule is marked
+as OBSOLETE in the schema</dd>
+<dt>applies</dt>
+<dd>This list of strings contains NAMEs or OIDs of attribute types
+for which this matching rule is used</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="ldap.schema.models.DITContentRule">
+<em class="property">class </em><tt class="descclassname">ldap.schema.models.</tt><tt class="descname">DITContentRule</tt><big>(</big><em>schema_element_str=None</em><big>)</big><a class="headerlink" href="#ldap.schema.models.DITContentRule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<dl class="docutils">
+<dt>schema_element_str</dt>
+<dd>String containing an DITContentRuleDescription</dd>
+</dl>
+<p>Class attributes:</p>
+<dl class="docutils">
+<dt>oid</dt>
+<dd>OID of the accompanying structural object class</dd>
+<dt>names</dt>
+<dd>This list of strings contains all NAMEs of the DIT content rule</dd>
+<dt>desc</dt>
+<dd>This string contains description text (DESC) of the DIT content rule</dd>
+<dt>obsolete</dt>
+<dd>Integer flag (0 or 1) indicating whether the DIT content rule is marked
+as OBSOLETE in the schema</dd>
+<dt>aux</dt>
+<dd>This list of strings contains NAMEs or OIDs of all auxiliary
+object classes usable in an entry of the object class</dd>
+<dt>must</dt>
+<dd>This list of strings contains NAMEs or OIDs of all attributes
+an entry of the object class must have which may extend the
+list of required attributes of the object classes of an entry</dd>
+<dt>may</dt>
+<dd>This list of strings contains NAMEs or OIDs of additional attributes
+an entry of the object class may have which may extend the
+list of optional attributes of the object classes of an entry</dd>
+<dt>nots</dt>
+<dd>This list of strings contains NAMEs or OIDs of attributes which
+may not be present in an entry of the object class</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="ldap.schema.models.NameForm">
+<em class="property">class </em><tt class="descclassname">ldap.schema.models.</tt><tt class="descname">NameForm</tt><big>(</big><em>schema_element_str=None</em><big>)</big><a class="headerlink" href="#ldap.schema.models.NameForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<dl class="docutils">
+<dt>schema_element_str</dt>
+<dd>String containing an NameFormDescription</dd>
+</dl>
+<p>Class attributes:</p>
+<dl class="docutils">
+<dt>oid</dt>
+<dd>OID of the name form</dd>
+<dt>names</dt>
+<dd>This list of strings contains all NAMEs of the name form</dd>
+<dt>desc</dt>
+<dd>This string contains description text (DESC) of the name form</dd>
+<dt>obsolete</dt>
+<dd>Integer flag (0 or 1) indicating whether the name form is marked
+as OBSOLETE in the schema</dd>
+<dt>form</dt>
+<dd>List of strings with NAMEs or OIDs of associated name forms</dd>
+<dt>oc</dt>
+<dd>String with NAME or OID of structural object classes this name form
+is usable with</dd>
+<dt>must</dt>
+<dd>This list of strings contains NAMEs or OIDs of all attributes
+an RDN must contain</dd>
+<dt>may</dt>
+<dd>This list of strings contains NAMEs or OIDs of additional attributes
+an RDN may contain</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="ldap.schema.models.DITStructureRule">
+<em class="property">class </em><tt class="descclassname">ldap.schema.models.</tt><tt class="descname">DITStructureRule</tt><big>(</big><em>schema_element_str=None</em><big>)</big><a class="headerlink" href="#ldap.schema.models.DITStructureRule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments:</p>
+<dl class="docutils">
+<dt>schema_element_str</dt>
+<dd>String containing an DITStructureRuleDescription</dd>
+</dl>
+<p>Class attributes:</p>
+<dl class="docutils">
+<dt>ruleid</dt>
+<dd>rule ID of the DIT structure rule (only locally unique)</dd>
+<dt>names</dt>
+<dd>This list of strings contains all NAMEs of the DIT structure rule</dd>
+<dt>desc</dt>
+<dd>This string contains description text (DESC) of the DIT structure rule</dd>
+<dt>obsolete</dt>
+<dd>Integer flag (0 or 1) indicating whether the DIT content rule is marked
+as OBSOLETE in the schema</dd>
+<dt>form</dt>
+<dd>List of strings with NAMEs or OIDs of associated name forms</dd>
+<dt>sup</dt>
+<dd>List of strings with NAMEs or OIDs of allowed structural object classes
+of superior entries in the DIT</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="examples-for-ldap-schema">
+<span id="ldap-schema-example"></span><h2>Examples for ldap.schema<a class="headerlink" href="#examples-for-ldap-schema" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">ldap.schema</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">ldap.schema</span></tt> Handling LDAPv3 schema</a><ul>
+<li><a class="reference internal" href="#module-ldap.schema.subentry"><tt class="docutils literal"><span class="pre">ldap.schema.subentry</span></tt> Processing LDAPv3 subschema subentry</a><ul>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-ldap.schema.models"><tt class="docutils literal"><span class="pre">ldap.schema.models</span></tt> Schema elements</a></li>
+<li><a class="reference internal" href="#examples-for-ldap-schema">Examples for ldap.schema</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ldap-resiter.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">ldap.resiter</span></tt> Generator for stream-processing of large search results</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ldap-syncrepl.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">ldap.syncrepl</span></tt> Implementation of a syncrepl consumer</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/ldap-schema.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldap-syncrepl.html" title="ldap.syncrepl Implementation of a syncrepl consumer"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ldap-resiter.html" title="ldap.resiter Generator for stream-processing of large search results"
+             >previous</a> |</li>
+        <li><a href="index.html">python-ldap 2.4.10.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2011, python-ldap project team.
+      Last updated on Aug 09, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,201 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>dsml DSMLv1 parser and generator &mdash; python-ldap 2.4.10.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.4.10.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="python-ldap 2.4.10.0 documentation" href="index.html" />
+    <link rel="prev" title="ldapurl LDAP URL handling" href="ldapurl.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldapurl.html" title="ldapurl LDAP URL handling"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">python-ldap 2.4.10.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="dsml-dsmlv1-parser-and-generator">
+<h1><tt class="xref py py-mod docutils literal"><span class="pre">dsml</span></tt> DSMLv1 parser and generator<a class="headerlink" href="#dsml-dsmlv1-parser-and-generator" title="Permalink to this headline">¶</a></h1>
+<p>This module parses and generates LDAP data in the format DSMLv1. It is
+implemented in pure Python and does not rely on any non-standard modules.
+Therefore it can be used stand-alone without the rest of the python-ldap
+package.</p>
+<dl class="class">
+<dt id="dsml.DSMLWriter">
+<em class="property">class </em><tt class="descclassname">dsml.</tt><tt class="descname">DSMLWriter</tt><big>(</big><em>f</em>, <em>base64_attrs=</em><span class="optional">[</span><span class="optional">]</span>, <em>dsml_comment=''</em>, <em>indent='    '</em><big>)</big><a class="headerlink" href="#dsml.DSMLWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for writing LDAP entry records to a DSMLv1 file.</p>
+<p>Arguments:</p>
+<dl class="docutils">
+<dt>f</dt>
+<dd>File object for output.</dd>
+<dt>base64_attrs</dt>
+<dd>Attribute types to be base64-encoded.</dd>
+<dt>dsml_comment</dt>
+<dd>Text placed in comment lines behind &lt;dsml:dsml&gt;.</dd>
+<dt>indent</dt>
+<dd>String used for indentiation of next nested level.</dd>
+</dl>
+<dl class="method">
+<dt id="dsml.DSMLWriter.writeFooter">
+<tt class="descname">writeFooter</tt><big>(</big><big>)</big><a class="headerlink" href="#dsml.DSMLWriter.writeFooter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the footer</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dsml.DSMLWriter.writeHeader">
+<tt class="descname">writeHeader</tt><big>(</big><big>)</big><a class="headerlink" href="#dsml.DSMLWriter.writeHeader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the header</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dsml.DSMLWriter.writeRecord">
+<tt class="descname">writeRecord</tt><big>(</big><em>dn</em>, <em>entry</em><big>)</big><a class="headerlink" href="#dsml.DSMLWriter.writeRecord" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>dn</dt>
+<dd>string-representation of distinguished name</dd>
+<dt>entry</dt>
+<dd>dictionary holding the LDAP entry {attr:data}</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="dsml.DSMLParser">
+<em class="property">class </em><tt class="descclassname">dsml.</tt><tt class="descname">DSMLParser</tt><big>(</big><em>input_file</em>, <em>ContentHandlerClass</em>, <em>ignored_attr_types=None</em>, <em>max_entries=0</em><big>)</big><a class="headerlink" href="#dsml.DSMLParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for a DSMLv1 parser. Applications should sub-class this
+class and override method handle() to implement something meaningful.</p>
+<p>Public class attributes:</p>
+<dl class="docutils">
+<dt>records_read</dt>
+<dd>Counter for records processed so far</dd>
+</dl>
+<p>Arguments:</p>
+<dl class="docutils">
+<dt>input_file</dt>
+<dd>File-object to read the DSMLv1 input from</dd>
+<dt>ignored_attr_types</dt>
+<dd>Attributes with these attribute type names will be ignored.</dd>
+<dt>max_entries</dt>
+<dd>If non-zero specifies the maximum number of entries to be
+read from f.</dd>
+<dt>line_sep</dt>
+<dd>String used as line separator</dd>
+</dl>
+<dl class="method">
+<dt id="dsml.DSMLParser.handle">
+<tt class="descname">handle</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#dsml.DSMLParser.handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process a single DSMLv1 entry record. This method should be
+implemented by applications using DSMLParser.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="dsml.DSMLParser.parse">
+<tt class="descname">parse</tt><big>(</big><big>)</big><a class="headerlink" href="#dsml.DSMLParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Continously read and parse DSML records</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="example">
+<span id="dsml-example"></span><h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">dsml</span></tt> DSMLv1 parser and generator</a><ul>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ldapurl.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">ldapurl</span></tt> LDAP URL handling</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/dsml.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldapurl.html" title="ldapurl LDAP URL handling"
+             >previous</a> |</li>
+        <li><a href="index.html">python-ldap 2.4.10.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2011, python-ldap project team.
+      Last updated on Aug 09, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

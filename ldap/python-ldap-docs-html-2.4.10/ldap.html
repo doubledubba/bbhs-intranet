@@ -1,0 +1,1591 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ldap LDAP library interface module &mdash; python-ldap 2.4.10.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.4.10.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="python-ldap 2.4.10.0 documentation" href="index.html" />
+    <link rel="next" title="ldap.async Stream-processing of large search results" href="ldap-async.html" />
+    <link rel="prev" title="Building and installing" href="installing.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldap-async.html" title="ldap.async Stream-processing of large search results"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installing.html" title="Building and installing"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">python-ldap 2.4.10.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-ldap">
+<span id="ldap-ldap-library-interface-module"></span><h1><a class="reference internal" href="#module-ldap" title="ldap: Access to an underlying LDAP C library. (Posix, Windows)"><tt class="xref py py-mod docutils literal"><span class="pre">ldap</span></tt></a> LDAP library interface module<a class="headerlink" href="#module-ldap" title="Permalink to this headline">¶</a></h1>
+<p>This module provides access to the LDAP  (Lightweight Directory Access Protocol)
+C API implemented  in OpenLDAP 2.3 or newer.  It is similar to the C API, with
+the notable differences  that lists are manipulated via Python  list operations
+and errors appear as exceptions.    For far more detailed information on the C
+interface,   please see the (expired) draft-ietf-ldapext-ldap-c-api-04.    This
+documentation is current for the Python LDAP module, version  2.4.10.0.  Source
+and binaries are available from <a class="reference external" href="http://www.python-ldap.org/">http://www.python-ldap.org/</a>.</p>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>This module defines the following functions:</p>
+<dl class="function">
+<dt id="ldap.initialize">
+<tt class="descclassname">ldap.</tt><tt class="descname">initialize</tt><big>(</big><em>uri</em><span class="optional">[</span>, <em>trace_level=0</em><span class="optional">[</span>, <em>trace_file=sys.stdout</em><span class="optional">[</span>, <em>trace_stack_limit=None</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; LDAPObject object<a class="headerlink" href="#ldap.initialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes a new connection object for accessing the given LDAP server,
+and return an LDAP object (see <a class="reference internal" href="#ldap-objects"><em>LDAPObject classes</em></a>) used to perform operations
+on that server.  Parameter <em>uri</em> has to be a valid LDAP URL.</p>
+<p>Note that the C wrapper function :py:func:_ldap.initialize() is called which calls
+the OpenLDAP funtion ldap_initialize(). Calling this function just initializes
+the LDAP connection struct in the C API - nothing else. The first call to
+an operation method (bind, search etc.) then really opens the connection.
+Before that nothing is sent on the wire.</p>
+<p>The optional arguments are for generating debug log information:
+<em>trace_level</em> specifies the amount of information being logged,
+<em>trace_file</em> specifies a file-like object as target of the debug log and
+<em>trace_stack_limit</em> specifies the stack limit of tracebacks in debug log.</p>
+<p>Possible values for <em>trace_level</em> are
+<tt class="xref py py-const docutils literal"><span class="pre">0</span></tt> for no logging,
+<tt class="xref py py-const docutils literal"><span class="pre">1</span></tt> for only logging the method calls with arguments,
+<tt class="xref py py-const docutils literal"><span class="pre">2</span></tt> for logging the method calls with arguments and the complete results and
+<tt class="xref py py-const docutils literal"><span class="pre">9</span></tt> for also logging the traceback of method calls.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><span class="target" id="index-0"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc4516.html"><strong>RFC 4516</strong></a> - Lightweight Directory Access Protocol (LDAP): Uniform Resource Locator</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ldap.open">
+<tt class="descclassname">ldap.</tt><tt class="descname">open</tt><big>(</big><em>host</em><span class="optional">[</span>, <em>port=PORT</em><span class="optional">]</span><big>)</big> &rarr; LDAPObject object<a class="headerlink" href="#ldap.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a new connection with an LDAP server, and return an LDAP object  (see
+<a class="reference internal" href="#ldap-objects"><em>LDAPObject classes</em></a>) used to perform operations on that server.  <em>host</em> is a
+string containing solely the host name. <em>port</em> is an integer specifying the
+port where the LDAP server is  listening (default is 389).</p>
+<p>Note: Using this function is deprecated.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ldap.get_option">
+<tt class="descclassname">ldap.</tt><tt class="descname">get_option</tt><big>(</big><em>option</em><big>)</big> &rarr; int|string<a class="headerlink" href="#ldap.get_option" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function returns the value of the global option specified by <em>option</em>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ldap.set_option">
+<tt class="descclassname">ldap.</tt><tt class="descname">set_option</tt><big>(</big><em>option</em>, <em>invalue</em><big>)</big> &rarr; None<a class="headerlink" href="#ldap.set_option" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function sets the value of the global option specified by <em>option</em> to
+<em>invalue</em>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="constants">
+<span id="ldap-constants"></span><h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<p>The module defines various constants. Note that some constants depend
+on the build options and which underlying libs were used or even on
+the version of the libs. So before using those constants the application has
+to explicitly check whether they are available.</p>
+<div class="section" id="general">
+<h3>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h3>
+<dl class="data">
+<dt id="ldap.PORT">
+<tt class="descclassname">ldap.</tt><tt class="descname">PORT</tt><a class="headerlink" href="#ldap.PORT" title="Permalink to this definition">¶</a></dt>
+<dd><p>The assigned TCP port number (389) that LDAP servers listen on.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="ldap.SASL_AVAIL">
+<tt class="descclassname">ldap.</tt><tt class="descname">SASL_AVAIL</tt><a class="headerlink" href="#ldap.SASL_AVAIL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integer where a non-zero value indicates that python-ldap was built with
+support for SASL (Cyrus-SASL).</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="ldap.TLS_AVAIL">
+<tt class="descclassname">ldap.</tt><tt class="descname">TLS_AVAIL</tt><a class="headerlink" href="#ldap.TLS_AVAIL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integer where a non-zero value indicates that python-ldap was built with
+support for SSL/TLS (OpenSSL or similar libs).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="options">
+<span id="ldap-options"></span><h3>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><em class="manpage">ldap.conf{5}</em> and <em class="manpage">ldap_get_options{3}</em></p>
+</div>
+<p>For use with functions :py:func:set_option() and :py:func:get_option()
+and methods :py:method:LDAPObject.set_option() and :py:method:LDAPObject.get_option() the
+following option identifiers are defined as constants:</p>
+<dl class="data">
+<dt id="ldap.OPT_API_FEATURE_INFO">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_API_FEATURE_INFO</tt><a class="headerlink" href="#ldap.OPT_API_FEATURE_INFO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_API_INFO">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_API_INFO</tt><a class="headerlink" href="#ldap.OPT_API_INFO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_CLIENT_CONTROLS">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_CLIENT_CONTROLS</tt><a class="headerlink" href="#ldap.OPT_CLIENT_CONTROLS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_DEBUG_LEVEL">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_DEBUG_LEVEL</tt><a class="headerlink" href="#ldap.OPT_DEBUG_LEVEL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the debug level within the underlying LDAP C lib.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_DEFBASE">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_DEFBASE</tt><a class="headerlink" href="#ldap.OPT_DEFBASE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_DEREF">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_DEREF</tt><a class="headerlink" href="#ldap.OPT_DEREF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies how alias derefencing is done within the underlying LDAP C lib.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_ERROR_STRING">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_ERROR_STRING</tt><a class="headerlink" href="#ldap.OPT_ERROR_STRING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_DIAGNOSTIC_MESSAGE">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_DIAGNOSTIC_MESSAGE</tt><a class="headerlink" href="#ldap.OPT_DIAGNOSTIC_MESSAGE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_HOST_NAME">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_HOST_NAME</tt><a class="headerlink" href="#ldap.OPT_HOST_NAME" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_MATCHED_DN">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_MATCHED_DN</tt><a class="headerlink" href="#ldap.OPT_MATCHED_DN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_NETWORK_TIMEOUT">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_NETWORK_TIMEOUT</tt><a class="headerlink" href="#ldap.OPT_NETWORK_TIMEOUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_PROTOCOL_VERSION">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_PROTOCOL_VERSION</tt><a class="headerlink" href="#ldap.OPT_PROTOCOL_VERSION" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the LDAP protocol version used for a connection. This is mapped to
+object attribute <cite>ldap.LDAPObject.protocol_version</cite></p>
+</dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_REFERRALS">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_REFERRALS</tt><a class="headerlink" href="#ldap.OPT_REFERRALS" title="Permalink to this definition">¶</a></dt>
+<dd><p>int specifying whether referrals should be automatically chased within
+the underlying LDAP C lib.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_REFHOPLIMIT">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_REFHOPLIMIT</tt><a class="headerlink" href="#ldap.OPT_REFHOPLIMIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_RESTART">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_RESTART</tt><a class="headerlink" href="#ldap.OPT_RESTART" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_SERVER_CONTROLS">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_SERVER_CONTROLS</tt><a class="headerlink" href="#ldap.OPT_SERVER_CONTROLS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_SIZELIMIT">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_SIZELIMIT</tt><a class="headerlink" href="#ldap.OPT_SIZELIMIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_SUCCESS">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_SUCCESS</tt><a class="headerlink" href="#ldap.OPT_SUCCESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_TIMELIMIT">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_TIMELIMIT</tt><a class="headerlink" href="#ldap.OPT_TIMELIMIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_TIMEOUT">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_TIMEOUT</tt><a class="headerlink" href="#ldap.OPT_TIMEOUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_URI">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_URI</tt><a class="headerlink" href="#ldap.OPT_URI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="section" id="sasl-options">
+<span id="ldap-sasl-options"></span><h4>SASL options<a class="headerlink" href="#sasl-options" title="Permalink to this headline">¶</a></h4>
+<dl class="data">
+<dt id="ldap.OPT_X_SASL_AUTHCID">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_SASL_AUTHCID</tt><a class="headerlink" href="#ldap.OPT_X_SASL_AUTHCID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_SASL_AUTHZID">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_SASL_AUTHZID</tt><a class="headerlink" href="#ldap.OPT_X_SASL_AUTHZID" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_SASL_MECH">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_SASL_MECH</tt><a class="headerlink" href="#ldap.OPT_X_SASL_MECH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_SASL_NOCANON">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_SASL_NOCANON</tt><a class="headerlink" href="#ldap.OPT_X_SASL_NOCANON" title="Permalink to this definition">¶</a></dt>
+<dd><p>If set to zero SASL host name canonicalization is disabled.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_SASL_REALM">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_SASL_REALM</tt><a class="headerlink" href="#ldap.OPT_X_SASL_REALM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_SASL_SECPROPS">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_SASL_SECPROPS</tt><a class="headerlink" href="#ldap.OPT_X_SASL_SECPROPS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_SASL_SSF">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_SASL_SSF</tt><a class="headerlink" href="#ldap.OPT_X_SASL_SSF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_SASL_SSF_EXTERNAL">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_SASL_SSF_EXTERNAL</tt><a class="headerlink" href="#ldap.OPT_X_SASL_SSF_EXTERNAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_SASL_SSF_MAX">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_SASL_SSF_MAX</tt><a class="headerlink" href="#ldap.OPT_X_SASL_SSF_MAX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_SASL_SSF_MIN">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_SASL_SSF_MIN</tt><a class="headerlink" href="#ldap.OPT_X_SASL_SSF_MIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="tls-options">
+<span id="ldap-tls-options"></span><h4>TLS options<a class="headerlink" href="#tls-options" title="Permalink to this headline">¶</a></h4>
+<dl class="data">
+<dt id="ldap.OPT_X_TLS">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_TLS</tt><a class="headerlink" href="#ldap.OPT_X_TLS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_TLS_ALLOW">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_TLS_ALLOW</tt><a class="headerlink" href="#ldap.OPT_X_TLS_ALLOW" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_TLS_CACERTDIR">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_TLS_CACERTDIR</tt><a class="headerlink" href="#ldap.OPT_X_TLS_CACERTDIR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_TLS_CACERTFILE">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_TLS_CACERTFILE</tt><a class="headerlink" href="#ldap.OPT_X_TLS_CACERTFILE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_TLS_CERTFILE">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_TLS_CERTFILE</tt><a class="headerlink" href="#ldap.OPT_X_TLS_CERTFILE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_TLS_CIPHER_SUITE">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_TLS_CIPHER_SUITE</tt><a class="headerlink" href="#ldap.OPT_X_TLS_CIPHER_SUITE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_TLS_CTX">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_TLS_CTX</tt><a class="headerlink" href="#ldap.OPT_X_TLS_CTX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_TLS_DEMAND">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_TLS_DEMAND</tt><a class="headerlink" href="#ldap.OPT_X_TLS_DEMAND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_TLS_HARD">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_TLS_HARD</tt><a class="headerlink" href="#ldap.OPT_X_TLS_HARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_TLS_KEYFILE">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_TLS_KEYFILE</tt><a class="headerlink" href="#ldap.OPT_X_TLS_KEYFILE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_TLS_NEVER">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_TLS_NEVER</tt><a class="headerlink" href="#ldap.OPT_X_TLS_NEVER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_TLS_RANDOM_FILE">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_TLS_RANDOM_FILE</tt><a class="headerlink" href="#ldap.OPT_X_TLS_RANDOM_FILE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_TLS_REQUIRE_CERT">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_TLS_REQUIRE_CERT</tt><a class="headerlink" href="#ldap.OPT_X_TLS_REQUIRE_CERT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_TLS_TRY">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_TLS_TRY</tt><a class="headerlink" href="#ldap.OPT_X_TLS_TRY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="keepalive-options">
+<span id="ldap-keepalive-options"></span><h4>Keepalive options<a class="headerlink" href="#keepalive-options" title="Permalink to this headline">¶</a></h4>
+<dl class="data">
+<dt id="ldap.OPT_X_KEEPALIVE_IDLE">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_KEEPALIVE_IDLE</tt><a class="headerlink" href="#ldap.OPT_X_KEEPALIVE_IDLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_KEEPALIVE_PROBES">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_KEEPALIVE_PROBES</tt><a class="headerlink" href="#ldap.OPT_X_KEEPALIVE_PROBES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.OPT_X_KEEPALIVE_INTERVAL">
+<tt class="descclassname">ldap.</tt><tt class="descname">OPT_X_KEEPALIVE_INTERVAL</tt><a class="headerlink" href="#ldap.OPT_X_KEEPALIVE_INTERVAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+<div class="section" id="dn-format-flags">
+<span id="ldap-dn-flags"></span><h3>DN format flags<a class="headerlink" href="#dn-format-flags" title="Permalink to this headline">¶</a></h3>
+<p>This constants are used for DN-parsing functions found in
+sub-module <a class="reference internal" href="ldap-dn.html#module-ldap.dn" title="ldap.dn: LDAP Distinguished Name handling."><tt class="xref py py-mod docutils literal"><span class="pre">ldap.dn</span></tt></a>.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><em class="manpage">ldap_str2dn{3}</em></p>
+</div>
+<dl class="data">
+<dt id="ldap.DN_FORMAT_LDAP">
+<tt class="descclassname">ldap.</tt><tt class="descname">DN_FORMAT_LDAP</tt><a class="headerlink" href="#ldap.DN_FORMAT_LDAP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.DN_FORMAT_LDAPV3">
+<tt class="descclassname">ldap.</tt><tt class="descname">DN_FORMAT_LDAPV3</tt><a class="headerlink" href="#ldap.DN_FORMAT_LDAPV3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.DN_FORMAT_LDAPV2">
+<tt class="descclassname">ldap.</tt><tt class="descname">DN_FORMAT_LDAPV2</tt><a class="headerlink" href="#ldap.DN_FORMAT_LDAPV2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.DN_FORMAT_DCE">
+<tt class="descclassname">ldap.</tt><tt class="descname">DN_FORMAT_DCE</tt><a class="headerlink" href="#ldap.DN_FORMAT_DCE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.DN_FORMAT_UFN">
+<tt class="descclassname">ldap.</tt><tt class="descname">DN_FORMAT_UFN</tt><a class="headerlink" href="#ldap.DN_FORMAT_UFN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.DN_FORMAT_AD_CANONICAL">
+<tt class="descclassname">ldap.</tt><tt class="descname">DN_FORMAT_AD_CANONICAL</tt><a class="headerlink" href="#ldap.DN_FORMAT_AD_CANONICAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.DN_FORMAT_MASK">
+<tt class="descclassname">ldap.</tt><tt class="descname">DN_FORMAT_MASK</tt><a class="headerlink" href="#ldap.DN_FORMAT_MASK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.DN_PRETTY">
+<tt class="descclassname">ldap.</tt><tt class="descname">DN_PRETTY</tt><a class="headerlink" href="#ldap.DN_PRETTY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.DN_SKIP">
+<tt class="descclassname">ldap.</tt><tt class="descname">DN_SKIP</tt><a class="headerlink" href="#ldap.DN_SKIP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.DN_P_NOLEADTRAILSPACES">
+<tt class="descclassname">ldap.</tt><tt class="descname">DN_P_NOLEADTRAILSPACES</tt><a class="headerlink" href="#ldap.DN_P_NOLEADTRAILSPACES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.DN_P_NOSPACEAFTERRDN">
+<tt class="descclassname">ldap.</tt><tt class="descname">DN_P_NOSPACEAFTERRDN</tt><a class="headerlink" href="#ldap.DN_P_NOSPACEAFTERRDN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="ldap.DN_PEDANTIC">
+<tt class="descclassname">ldap.</tt><tt class="descname">DN_PEDANTIC</tt><a class="headerlink" href="#ldap.DN_PEDANTIC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+<div class="section" id="exceptions">
+<span id="ldap-exceptions"></span><h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
+<p>The module defines the following exceptions:</p>
+<dl class="exception">
+<dt id="ldap.LDAPError">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">LDAPError</tt><a class="headerlink" href="#ldap.LDAPError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the base class of all execeptions raised by the module <a class="reference internal" href="#module-ldap" title="ldap: Access to an underlying LDAP C library. (Posix, Windows)"><tt class="xref py py-mod docutils literal"><span class="pre">ldap</span></tt></a>.
+Unlike the C interface, errors are not returned as result codes, but
+are instead turned into exceptions, raised as soon an the error condition
+is detected.</p>
+<p>The exceptions are accompanied by a dictionary possibly
+containing an string value for the key <tt class="xref py py-const docutils literal"><span class="pre">desc</span></tt>
+(giving an English description of the error class)
+and/or a string value for the key <tt class="xref py py-const docutils literal"><span class="pre">info</span></tt>
+(giving a string containing more information that the server may have sent).</p>
+<p>A third possible field of this dictionary is <tt class="xref py py-const docutils literal"><span class="pre">matched</span></tt> and
+is set to a truncated form of the name provided or alias dereferenced
+for the lowest entry (object or alias) that was matched.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.ADMINLIMIT_EXCEEDED">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">ADMINLIMIT_EXCEEDED</tt><a class="headerlink" href="#ldap.ADMINLIMIT_EXCEEDED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="ldap.AFFECTS_MULTIPLE_DSAS">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">AFFECTS_MULTIPLE_DSAS</tt><a class="headerlink" href="#ldap.AFFECTS_MULTIPLE_DSAS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="ldap.ALIAS_DEREF_PROBLEM">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">ALIAS_DEREF_PROBLEM</tt><a class="headerlink" href="#ldap.ALIAS_DEREF_PROBLEM" title="Permalink to this definition">¶</a></dt>
+<dd><p>A problem was encountered when dereferencing an alias.
+(Sets the <tt class="xref py py-const docutils literal"><span class="pre">matched</span></tt> field.)</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.ALIAS_PROBLEM">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">ALIAS_PROBLEM</tt><a class="headerlink" href="#ldap.ALIAS_PROBLEM" title="Permalink to this definition">¶</a></dt>
+<dd><p>An alias in the directory points to a nonexistent entry.
+(Sets the <tt class="xref py py-const docutils literal"><span class="pre">matched</span></tt> field.)</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.ALREADY_EXISTS">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">ALREADY_EXISTS</tt><a class="headerlink" href="#ldap.ALREADY_EXISTS" title="Permalink to this definition">¶</a></dt>
+<dd><p>The entry already exists. E.g. the <em>dn</em> specified with <tt class="xref py py-meth docutils literal"><span class="pre">add()</span></tt>
+already exists in the DIT.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.AUTH_UNKNOWN">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">AUTH_UNKNOWN</tt><a class="headerlink" href="#ldap.AUTH_UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd><p>The authentication method specified to <tt class="xref py py-meth docutils literal"><span class="pre">bind()</span></tt> is not known.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.BUSY">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">BUSY</tt><a class="headerlink" href="#ldap.BUSY" title="Permalink to this definition">¶</a></dt>
+<dd><p>The DSA is busy.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.CLIENT_LOOP">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">CLIENT_LOOP</tt><a class="headerlink" href="#ldap.CLIENT_LOOP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="ldap.COMPARE_FALSE">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">COMPARE_FALSE</tt><a class="headerlink" href="#ldap.COMPARE_FALSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A compare operation returned false.
+(This exception should never be seen because <tt class="xref py py-meth docutils literal"><span class="pre">compare()</span></tt> returns
+a boolean result.)</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.COMPARE_TRUE">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">COMPARE_TRUE</tt><a class="headerlink" href="#ldap.COMPARE_TRUE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A compare operation returned true.
+(This exception should never be seen because <tt class="xref py py-meth docutils literal"><span class="pre">compare()</span></tt> returns
+a boolean result.)</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.CONFIDENTIALITY_REQUIRED">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">CONFIDENTIALITY_REQUIRED</tt><a class="headerlink" href="#ldap.CONFIDENTIALITY_REQUIRED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates that the session is not protected by a protocol such
+as Transport Layer Security (TLS), which provides session
+confidentiality.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.CONNECT_ERROR">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">CONNECT_ERROR</tt><a class="headerlink" href="#ldap.CONNECT_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="ldap.CONSTRAINT_VIOLATION">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">CONSTRAINT_VIOLATION</tt><a class="headerlink" href="#ldap.CONSTRAINT_VIOLATION" title="Permalink to this definition">¶</a></dt>
+<dd><p>An attribute value specified or an operation started violates some
+server-side constraint
+(e.g., a postalAddress has too many lines or a line that is too long
+or a password is expired).</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.CONTROL_NOT_FOUND">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">CONTROL_NOT_FOUND</tt><a class="headerlink" href="#ldap.CONTROL_NOT_FOUND" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="ldap.DECODING_ERROR">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">DECODING_ERROR</tt><a class="headerlink" href="#ldap.DECODING_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd><p>An error was encountered decoding a result from the LDAP server.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.ENCODING_ERROR">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">ENCODING_ERROR</tt><a class="headerlink" href="#ldap.ENCODING_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd><p>An error was encountered encoding parameters to send to the LDAP server.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.FILTER_ERROR">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">FILTER_ERROR</tt><a class="headerlink" href="#ldap.FILTER_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd><p>An invalid filter was supplied to <tt class="xref py py-meth docutils literal"><span class="pre">search()</span></tt>
+(e.g. unbalanced parentheses).</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.INAPPROPRIATE_AUTH">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">INAPPROPRIATE_AUTH</tt><a class="headerlink" href="#ldap.INAPPROPRIATE_AUTH" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inappropriate authentication was specified (e.g. <tt class="xref py py-const docutils literal"><span class="pre">AUTH_SIMPLE</span></tt>
+was specified and the entry does not have a userPassword attribute).</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.INAPPROPRIATE_MATCHING">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">INAPPROPRIATE_MATCHING</tt><a class="headerlink" href="#ldap.INAPPROPRIATE_MATCHING" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter type not supported for the specified attribute.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.INSUFFICIENT_ACCESS">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">INSUFFICIENT_ACCESS</tt><a class="headerlink" href="#ldap.INSUFFICIENT_ACCESS" title="Permalink to this definition">¶</a></dt>
+<dd><p>The user has insufficient access to perform the operation.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.INVALID_CREDENTIALS">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">INVALID_CREDENTIALS</tt><a class="headerlink" href="#ldap.INVALID_CREDENTIALS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invalid credentials were presented during <tt class="xref py py-meth docutils literal"><span class="pre">bind()</span></tt> or
+<tt class="xref py py-meth docutils literal"><span class="pre">simple_bind()</span></tt>.
+(e.g., the wrong password).</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.INVALID_DN_SYNTAX">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">INVALID_DN_SYNTAX</tt><a class="headerlink" href="#ldap.INVALID_DN_SYNTAX" title="Permalink to this definition">¶</a></dt>
+<dd><p>A syntactically invalid DN was specified. (Sets the <tt class="xref py py-const docutils literal"><span class="pre">matched</span></tt> field.)</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.INVALID_SYNTAX">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">INVALID_SYNTAX</tt><a class="headerlink" href="#ldap.INVALID_SYNTAX" title="Permalink to this definition">¶</a></dt>
+<dd><p>An attribute value specified by the client did not comply to the
+syntax defined in the server-side schema.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.IS_LEAF">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">IS_LEAF</tt><a class="headerlink" href="#ldap.IS_LEAF" title="Permalink to this definition">¶</a></dt>
+<dd><p>The object specified is a leaf of the diretcory tree.
+Sets the <tt class="xref py py-const docutils literal"><span class="pre">matched</span></tt> field of the exception dictionary value.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.LOCAL_ERROR">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">LOCAL_ERROR</tt><a class="headerlink" href="#ldap.LOCAL_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some local error occurred. This is usually due to failed memory allocation.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.LOOP_DETECT">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">LOOP_DETECT</tt><a class="headerlink" href="#ldap.LOOP_DETECT" title="Permalink to this definition">¶</a></dt>
+<dd><p>A loop was detected.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.MORE_RESULTS_TO_RETURN">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">MORE_RESULTS_TO_RETURN</tt><a class="headerlink" href="#ldap.MORE_RESULTS_TO_RETURN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="ldap.NAMING_VIOLATION">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">NAMING_VIOLATION</tt><a class="headerlink" href="#ldap.NAMING_VIOLATION" title="Permalink to this definition">¶</a></dt>
+<dd><p>A naming violation occurred. This is raised e.g. if the LDAP server
+has constraints about the tree naming.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.NO_OBJECT_CLASS_MODS">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">NO_OBJECT_CLASS_MODS</tt><a class="headerlink" href="#ldap.NO_OBJECT_CLASS_MODS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modifying the objectClass attribute as requested is not allowed
+(e.g. modifying structural object class of existing entry).</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.NOT_ALLOWED_ON_NONLEAF">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">NOT_ALLOWED_ON_NONLEAF</tt><a class="headerlink" href="#ldap.NOT_ALLOWED_ON_NONLEAF" title="Permalink to this definition">¶</a></dt>
+<dd><p>The operation is not allowed on a non-leaf object.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.NOT_ALLOWED_ON_RDN">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">NOT_ALLOWED_ON_RDN</tt><a class="headerlink" href="#ldap.NOT_ALLOWED_ON_RDN" title="Permalink to this definition">¶</a></dt>
+<dd><p>The operation is not allowed on an RDN.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.NOT_SUPPORTED">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">NOT_SUPPORTED</tt><a class="headerlink" href="#ldap.NOT_SUPPORTED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="ldap.NO_MEMORY">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">NO_MEMORY</tt><a class="headerlink" href="#ldap.NO_MEMORY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt>
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">NO_OBJECT_CLASS_MODS</tt></dt>
+<dd><p>Object class modifications are not allowed.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.NO_RESULTS_RETURNED">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">NO_RESULTS_RETURNED</tt><a class="headerlink" href="#ldap.NO_RESULTS_RETURNED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="ldap.NO_SUCH_ATTRIBUTE">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">NO_SUCH_ATTRIBUTE</tt><a class="headerlink" href="#ldap.NO_SUCH_ATTRIBUTE" title="Permalink to this definition">¶</a></dt>
+<dd><p>The attribute type specified does not exist in the entry.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.NO_SUCH_OBJECT">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">NO_SUCH_OBJECT</tt><a class="headerlink" href="#ldap.NO_SUCH_OBJECT" title="Permalink to this definition">¶</a></dt>
+<dd><p>The specified object does not exist in the directory.
+Sets the <tt class="xref py py-const docutils literal"><span class="pre">matched</span></tt> field of the exception dictionary value.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.OBJECT_CLASS_VIOLATION">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">OBJECT_CLASS_VIOLATION</tt><a class="headerlink" href="#ldap.OBJECT_CLASS_VIOLATION" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object class violation occurred when the LDAP server checked
+the data sent by the client against the server-side schema
+(e.g. a &#8220;must&#8221; attribute was missing in the entry data).</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.OPERATIONS_ERROR">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">OPERATIONS_ERROR</tt><a class="headerlink" href="#ldap.OPERATIONS_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd><p>An operations error occurred.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.OTHER">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">OTHER</tt><a class="headerlink" href="#ldap.OTHER" title="Permalink to this definition">¶</a></dt>
+<dd><p>An unclassified error occurred.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.PARAM_ERROR">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">PARAM_ERROR</tt><a class="headerlink" href="#ldap.PARAM_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ldap routine was called with a bad parameter.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.PARTIAL_RESULTS">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">PARTIAL_RESULTS</tt><a class="headerlink" href="#ldap.PARTIAL_RESULTS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Partial results only returned. This exception is raised if
+a referral is received when using LDAPv2.
+(This exception should never be seen with LDAPv3.)</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.PROTOCOL_ERROR">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">PROTOCOL_ERROR</tt><a class="headerlink" href="#ldap.PROTOCOL_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd><p>A violation of the LDAP protocol was detected.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.RESULTS_TOO_LARGE">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">RESULTS_TOO_LARGE</tt><a class="headerlink" href="#ldap.RESULTS_TOO_LARGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>The result does not fit into a UDP packet. This happens only when using
+UDP-based CLDAP (connection-less LDAP) which is not supported anyway.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.SASL_BIND_IN_PROGRESS">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">SASL_BIND_IN_PROGRESS</tt><a class="headerlink" href="#ldap.SASL_BIND_IN_PROGRESS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="ldap.SERVER_DOWN">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">SERVER_DOWN</tt><a class="headerlink" href="#ldap.SERVER_DOWN" title="Permalink to this definition">¶</a></dt>
+<dd><p>The  LDAP  library  can&#8217;t  contact the LDAP server.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.SIZELIMIT_EXCEEDED">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">SIZELIMIT_EXCEEDED</tt><a class="headerlink" href="#ldap.SIZELIMIT_EXCEEDED" title="Permalink to this definition">¶</a></dt>
+<dd><p>An LDAP size limit was exceeded.
+This could be due to a <tt class="docutils literal"><span class="pre">sizelimit</span></tt> configuration on the LDAP server.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.STRONG_AUTH_NOT_SUPPORTED">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">STRONG_AUTH_NOT_SUPPORTED</tt><a class="headerlink" href="#ldap.STRONG_AUTH_NOT_SUPPORTED" title="Permalink to this definition">¶</a></dt>
+<dd><p>The LDAP server does not support strong authentication.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.STRONG_AUTH_REQUIRED">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">STRONG_AUTH_REQUIRED</tt><a class="headerlink" href="#ldap.STRONG_AUTH_REQUIRED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Strong authentication is required  for the operation.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.TIMELIMIT_EXCEEDED">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">TIMELIMIT_EXCEEDED</tt><a class="headerlink" href="#ldap.TIMELIMIT_EXCEEDED" title="Permalink to this definition">¶</a></dt>
+<dd><p>An LDAP time limit was exceeded.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.TIMEOUT">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">TIMEOUT</tt><a class="headerlink" href="#ldap.TIMEOUT" title="Permalink to this definition">¶</a></dt>
+<dd><p>A timelimit was exceeded while waiting for a result from the server.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.TYPE_OR_VALUE_EXISTS">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">TYPE_OR_VALUE_EXISTS</tt><a class="headerlink" href="#ldap.TYPE_OR_VALUE_EXISTS" title="Permalink to this definition">¶</a></dt>
+<dd><p>An  attribute  type or attribute value specified already
+exists in the entry.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.UNAVAILABLE">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">UNAVAILABLE</tt><a class="headerlink" href="#ldap.UNAVAILABLE" title="Permalink to this definition">¶</a></dt>
+<dd><p>The DSA is unavailable.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.UNAVAILABLE_CRITICAL_EXTENSION">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">UNAVAILABLE_CRITICAL_EXTENSION</tt><a class="headerlink" href="#ldap.UNAVAILABLE_CRITICAL_EXTENSION" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates that the LDAP server was unable to satisfy a request
+because one or more critical extensions were not available. Either
+the server does not support the control or the control is not appropriate
+for the operation type.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.UNDEFINED_TYPE">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">UNDEFINED_TYPE</tt><a class="headerlink" href="#ldap.UNDEFINED_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>An attribute type used is not defined in the server-side schema.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.UNWILLING_TO_PERFORM">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">UNWILLING_TO_PERFORM</tt><a class="headerlink" href="#ldap.UNWILLING_TO_PERFORM" title="Permalink to this definition">¶</a></dt>
+<dd><p>The  DSA is  unwilling to perform the operation.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="ldap.USER_CANCELLED">
+<em class="property">exception </em><tt class="descclassname">ldap.</tt><tt class="descname">USER_CANCELLED</tt><a class="headerlink" href="#ldap.USER_CANCELLED" title="Permalink to this definition">¶</a></dt>
+<dd><p>The operation was cancelled via the <tt class="xref py py-meth docutils literal"><span class="pre">abandon()</span></tt> method.</p>
+</dd></dl>
+
+<p>The above exceptions are raised when a result code from an underlying API
+call does not indicate success.</p>
+</div>
+<div class="section" id="ldapobject-classes">
+<span id="ldap-objects"></span><h2>LDAPObject classes<a class="headerlink" href="#ldapobject-classes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="ldap.LDAPObject">
+<em class="property">class </em><tt class="descclassname">ldap.</tt><tt class="descname">LDAPObject</tt><a class="headerlink" href="#ldap.LDAPObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instances of <a class="reference internal" href="#ldap.LDAPObject" title="ldap.LDAPObject"><tt class="xref py py-class docutils literal"><span class="pre">LDAPObject</span></tt></a> are returned by <a class="reference internal" href="#ldap.initialize" title="ldap.initialize"><tt class="xref py py-func docutils literal"><span class="pre">initialize()</span></tt></a>
+and <a class="reference internal" href="#ldap.open" title="ldap.open"><tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt></a> (deprecated). The connection is automatically unbound
+and closed when the LDAP object is deleted. Internally <a class="reference internal" href="#ldap.LDAPObject" title="ldap.LDAPObject"><tt class="xref py py-class docutils literal"><span class="pre">LDAPObject</span></tt></a>
+is set to <a class="reference internal" href="#ldap.SimpleLDAPObject" title="ldap.SimpleLDAPObject"><tt class="xref py py-class docutils literal"><span class="pre">SimpleLDAPObject</span></tt></a> by default.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ldap.SimpleLDAPObject">
+<em class="property">class </em><tt class="descclassname">ldap.</tt><tt class="descname">SimpleLDAPObject</tt><big>(</big><em>uri</em><span class="optional">[</span>, <em>trace_level=0</em><span class="optional">[</span>, <em>trace_file=sys.stdout</em><span class="optional">[</span>, <em>trace_stack_limit=5</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#ldap.SimpleLDAPObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instances of <a class="reference internal" href="#ldap.LDAPObject" title="ldap.LDAPObject"><tt class="xref py py-class docutils literal"><span class="pre">LDAPObject</span></tt></a> are returned by <a class="reference internal" href="#ldap.initialize" title="ldap.initialize"><tt class="xref py py-func docutils literal"><span class="pre">initialize()</span></tt></a>
+and <a class="reference internal" href="#ldap.open" title="ldap.open"><tt class="xref py py-func docutils literal"><span class="pre">open()</span></tt></a> (deprecated). The connection is automatically unbound
+and closed  when the LDAP object is deleted.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="ldap.ReconnectLDAPObject">
+<em class="property">class </em><tt class="descclassname">ldap.</tt><tt class="descname">ReconnectLDAPObject</tt><big>(</big><em>uri [, trace_level=0 [, trace_file=sys.stdout [, trace_stack_limit=5] [, retry_max=1 [, retry_delay=60.0]]]]</em><big>)</big><a class="headerlink" href="#ldap.ReconnectLDAPObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is derived from <a class="reference internal" href="#ldap.SimpleLDAPObject" title="ldap.SimpleLDAPObject"><tt class="xref py py-class docutils literal"><span class="pre">SimpleLDAPObject</span></tt></a> and used for automatic
+reconnects when using the synchronous request methods (see below). This class
+also implements the pickle protocol.</p>
+<p>For automatic reconnects it has additional arguments:</p>
+<p><em>retry_max</em> specifies the number of reconnect attempts before
+re-raising the <a class="reference internal" href="#ldap.SERVER_DOWN" title="ldap.SERVER_DOWN"><tt class="xref py py-exc docutils literal"><span class="pre">ldap.SERVER_DOWN</span></tt></a> exception.</p>
+<p><em>retry_delay</em> specifies the time in seconds between reconnect attempts.</p>
+</dd></dl>
+
+<div class="section" id="arguments-for-ldapv3-controls">
+<h3>Arguments for LDAPv3 controls<a class="headerlink" href="#arguments-for-ldapv3-controls" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="ldap-controls.html#module-ldap.controls" title="ldap.controls: High-level access to LDAPv3 extended controls."><tt class="xref py py-mod docutils literal"><span class="pre">ldap.controls</span></tt></a> module can be used for constructing and
+decoding LDAPv3 controls. These arguments are available in the methods
+with names ending in <tt class="xref py py-const docutils literal"><span class="pre">_ext</span></tt> or <tt class="xref py py-const docutils literal"><span class="pre">_ext_s</span></tt>:</p>
+<dl class="docutils">
+<dt><em>serverctrls</em></dt>
+<dd>is a list of <a class="reference internal" href="ldap-controls.html#ldap.controls.LDAPControl" title="ldap.controls.LDAPControl"><tt class="xref py py-class docutils literal"><span class="pre">ldap.controls.LDAPControl</span></tt></a> instances sent to the server along
+with the LDAP request (see module <a class="reference internal" href="ldap-controls.html#module-ldap.controls" title="ldap.controls: High-level access to LDAPv3 extended controls."><tt class="xref py py-mod docutils literal"><span class="pre">ldap.controls</span></tt></a>). These are
+controls which alter the behaviour of the server when processing the
+request if the control is supported by the server. The effect of controls
+might differ depending on the type of LDAP request or controls might not
+be applicable with certain LDAP requests at all.</dd>
+<dt><em>clientctrls</em></dt>
+<dd>is a list of <a class="reference internal" href="ldap-controls.html#ldap.controls.LDAPControl" title="ldap.controls.LDAPControl"><tt class="xref py py-class docutils literal"><span class="pre">ldap.controls.LDAPControl</span></tt></a> instances passed to the
+client API and alter the behaviour of the client when processing the
+request.</dd>
+</dl>
+</div>
+<div class="section" id="sending-ldap-requests">
+<h3>Sending LDAP requests<a class="headerlink" href="#sending-ldap-requests" title="Permalink to this headline">¶</a></h3>
+<p>Most methods on LDAP objects initiate an asynchronous request to the
+LDAP server and return a message id that can be used later to retrieve
+the result with <tt class="xref py py-meth docutils literal"><span class="pre">result()</span></tt>.</p>
+<p>Methods with names ending in <tt class="xref py py-const docutils literal"><span class="pre">_s</span></tt> are the synchronous form
+and wait for and return with the server&#8217;s result, or with
+<tt class="xref py py-const docutils literal"><span class="pre">None</span></tt> if no data is expected.</p>
+<p><a class="reference internal" href="#ldap.LDAPObject" title="ldap.LDAPObject"><tt class="xref py py-class docutils literal"><span class="pre">LDAPObject</span></tt></a> instances have the following methods:</p>
+<dl class="method">
+<dt id="ldap.LDAPObject.abandon">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">abandon</tt><big>(</big><em>msgid</em><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.abandon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.abandon_ext">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">abandon_ext</tt><big>(</big><em>msgid</em><span class="optional">[</span>, <em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.abandon_ext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abandons an LDAP operation in progress without waiting for a LDAP response.
+The <em>msgid</em> argument should be the message ID of an outstanding LDAP
+operation as returned by the asynchronous methods <a class="reference internal" href="#ldap.LDAPObject.search" title="ldap.LDAPObject.search"><tt class="xref py py-meth docutils literal"><span class="pre">search()</span></tt></a>, <a class="reference internal" href="#ldap.LDAPObject.modify" title="ldap.LDAPObject.modify"><tt class="xref py py-meth docutils literal"><span class="pre">modify()</span></tt></a>, etc.
+The caller can expect that the result of an abandoned operation will not be
+returned from a future call to <a class="reference internal" href="#ldap.LDAPObject.result" title="ldap.LDAPObject.result"><tt class="xref py py-meth docutils literal"><span class="pre">result()</span></tt></a>.</p>
+<p><em>serverctrls</em> and <em>clientctrls</em> like described above.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.add">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">add</tt><big>(</big><em>dn</em>, <em>modlist</em><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.add_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">add_s</tt><big>(</big><em>dn</em>, <em>modlist</em><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.add_s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.add_ext">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">add_ext</tt><big>(</big><em>dn</em>, <em>modlist</em><span class="optional">[</span>, <em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.add_ext" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.add_ext_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">add_ext_s</tt><big>(</big><em>dn</em>, <em>modlist</em><span class="optional">[</span>, <em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.add_ext_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs an LDAP add operation. The <em>dn</em> argument is the distinguished
+name (DN) of the entry to add, and <em>modlist</em> is a list of attributes to be
+added. The modlist is similar the one passed to <a class="reference internal" href="#ldap.LDAPObject.modify" title="ldap.LDAPObject.modify"><tt class="xref py py-meth docutils literal"><span class="pre">modify()</span></tt></a>, except that the
+operation integer is omitted from the tuples in modlist. You might want to
+look into sub-module refmodule{ldap.modlist} for generating the modlist.</p>
+<p>The asynchronous methods <a class="reference internal" href="#ldap.LDAPObject.add" title="ldap.LDAPObject.add"><tt class="xref py py-meth docutils literal"><span class="pre">add()</span></tt></a> and <a class="reference internal" href="#ldap.LDAPObject.add_ext" title="ldap.LDAPObject.add_ext"><tt class="xref py py-meth docutils literal"><span class="pre">add_ext()</span></tt></a>
+return the message ID of the initiated request.</p>
+<p><em>serverctrls</em> and <em>clientctrls</em> like described above.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.bind">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">bind</tt><big>(</big><em>who</em>, <em>cred</em>, <em>method</em><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.bind" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.bind_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">bind_s</tt><big>(</big><em>who</em>, <em>cred</em>, <em>method</em><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.bind_s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.simple_bind">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">simple_bind</tt><big>(</big><span class="optional">[</span><em>who=''</em><span class="optional">[</span>, <em>cred=''</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.simple_bind" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.simple_bind_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">simple_bind_s</tt><big>(</big><span class="optional">[</span><em>who=''</em><span class="optional">[</span>, <em>cred=''</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.simple_bind_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>After an LDAP object is created, and before any other operations can be
+attempted over the connection, a bind operation must be performed.</p>
+<p>This method attempts to bind with the LDAP server using
+either simple authentication, or Kerberos (if available).
+The first and most general method, <a class="reference internal" href="#ldap.LDAPObject.bind" title="ldap.LDAPObject.bind"><tt class="xref py py-meth docutils literal"><span class="pre">bind()</span></tt></a>,
+takes a third parameter, <em>method</em> which can currently solely
+be <tt class="xref py py-const docutils literal"><span class="pre">AUTH_SIMPLE</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.sasl_interactive_bind_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">sasl_interactive_bind_s</tt><big>(</big><em>who</em>, <em>auth</em><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.sasl_interactive_bind_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>This call is used to bind to the directory with a SASL bind request.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.cancel">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">cancel</tt><big>(</big><em>cancelid</em><span class="optional">[</span>, <em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.cancel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send cancels extended operation for an LDAP operation specified by <em>cancelid</em>.
+The <em>cancelid</em> should be the message id of an outstanding LDAP operation as returned
+by the asynchronous methods search(), modify() etc.  The caller
+can expect that the result of an abandoned operation will not be
+returned from a future call to <a class="reference internal" href="#ldap.LDAPObject.result" title="ldap.LDAPObject.result"><tt class="xref py py-meth docutils literal"><span class="pre">result()</span></tt></a>.
+In opposite to <a class="reference internal" href="#ldap.LDAPObject.abandon" title="ldap.LDAPObject.abandon"><tt class="xref py py-meth docutils literal"><span class="pre">abandon()</span></tt></a> this extended operation gets an result from
+the server and thus should be preferred if the server supports it.</p>
+<p><em>serverctrls</em> and <em>clientctrls</em> like described above.</p>
+<p><span class="target" id="index-1"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc3909.html"><strong>RFC 3909</strong></a> - Lightweight Directory Access Protocol (LDAP): Cancel Operation</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.compare">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">compare</tt><big>(</big><em>dn</em>, <em>attr</em>, <em>value</em><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.compare" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.compare_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">compare_s</tt><big>(</big><em>dn</em>, <em>attr</em>, <em>value</em><big>)</big> &rarr; tuple<a class="headerlink" href="#ldap.LDAPObject.compare_s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.compare_ext">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">compare_ext</tt><big>(</big><em>dn</em>, <em>attr</em>, <em>value</em><span class="optional">[</span>, <em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.compare_ext" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.compare_ext_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">compare_ext_s</tt><big>(</big><em>dn</em>, <em>attr</em>, <em>value</em><span class="optional">[</span>, <em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; tuple<a class="headerlink" href="#ldap.LDAPObject.compare_ext_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform an LDAP comparison between the attribute named <em>attr</em> of
+entry <em>dn</em>, and the value <em>value</em>. The synchronous forms
+returns <tt class="xref py py-const docutils literal"><span class="pre">0</span></tt> for false, or <tt class="xref py py-const docutils literal"><span class="pre">1</span></tt> for true.
+The asynchronous forms returns the message ID of the initiated request,
+and the result of the asynchronous compare can be obtained using
+<a class="reference internal" href="#ldap.LDAPObject.result" title="ldap.LDAPObject.result"><tt class="xref py py-meth docutils literal"><span class="pre">result()</span></tt></a>.</p>
+<p>Note that the asynchronous technique yields the answer
+by raising the exception objects <a class="reference internal" href="#ldap.COMPARE_TRUE" title="ldap.COMPARE_TRUE"><tt class="xref py py-exc docutils literal"><span class="pre">ldap.COMPARE_TRUE</span></tt></a> or
+<a class="reference internal" href="#ldap.COMPARE_FALSE" title="ldap.COMPARE_FALSE"><tt class="xref py py-exc docutils literal"><span class="pre">ldap.COMPARE_FALSE</span></tt></a>.</p>
+<p><em>serverctrls</em> and <em>clientctrls</em> like described above.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A design fault in the LDAP API prevents <em>value</em>
+from containing <em>NULL</em> characters.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.delete">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">delete</tt><big>(</big><em>dn</em><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.delete_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">delete_s</tt><big>(</big><em>dn</em><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.delete_s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.delete_ext">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">delete_ext</tt><big>(</big><em>dn</em><span class="optional">[</span>, <em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.delete_ext" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.delete_ext_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">delete_ext_s</tt><big>(</big><em>dn</em><span class="optional">[</span>, <em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.delete_ext_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs an LDAP delete operation on <em>dn</em>. The asynchronous form
+returns the message id of the initiated request, and the result can be obtained
+from a subsequent call to <a class="reference internal" href="#ldap.LDAPObject.result" title="ldap.LDAPObject.result"><tt class="xref py py-meth docutils literal"><span class="pre">result()</span></tt></a>.</p>
+<p><em>serverctrls</em> and <em>clientctrls</em> like described above.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.extop">
+<tt class="descclassname">ldap.</tt><tt class="descname">extop</tt><big>(</big><em>extreq[,serverctrls=None[,clientctrls=None]]]</em><big>)</big> &rarr; int<a class="headerlink" href="#ldap.extop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.extop_s">
+<tt class="descclassname">ldap.</tt><tt class="descname">extop_s</tt><big>(</big><em>extreq[,serverctrls=None[,clientctrls=None[,extop_resp_class=None]]]]) -&gt; (respoid,respvalue</em><big>)</big><a class="headerlink" href="#ldap.extop_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs an LDAP extended operation. The asynchronous
+form returns the message id of the initiated request, and the
+result can be obtained from a subsequent call to <a class="reference internal" href="#ldap.extop_result" title="ldap.extop_result"><tt class="xref py py-meth docutils literal"><span class="pre">extop_result()</span></tt></a>.</p>
+<p>The <em>extreq</em> is an instance of class <a class="reference internal" href="ldap-extop.html#ldap.extop.ExtendedRequest" title="ldap.extop.ExtendedRequest"><tt class="xref py py-class docutils literal"><span class="pre">ldap.extop.ExtendedRequest</span></tt></a>
+containing the parameters for the extended operation request.</p>
+<p>If argument <em>extop_resp_class</em> is set to a sub-class of
+<a class="reference internal" href="ldap-extop.html#ldap.extop.ExtendedResponse" title="ldap.extop.ExtendedResponse"><tt class="xref py py-class docutils literal"><span class="pre">ldap.extop.ExtendedResponse</span></tt></a> this class is used to return an
+object of this class instead of a raw BER value in respvalue.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.extop_result">
+<tt class="descclassname">ldap.</tt><tt class="descname">extop_result</tt><big>(</big><em>self</em>, <em>msgid=ldap.RES_ANY</em>, <em>all=1</em>, <em>timeout=None) -&gt; (respoid</em>, <em>respvalue</em><big>)</big><a class="headerlink" href="#ldap.extop_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper method around <tt class="xref py py-meth docutils literal"><span class="pre">result4()</span></tt> just for retrieving
+the result of an extended operation sent before.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.modify">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">modify</tt><big>(</big><em>dn</em>, <em>modlist</em><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.modify" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.modify_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">modify_s</tt><big>(</big><em>dn</em>, <em>modlist</em><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.modify_s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.modify_ext">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">modify_ext</tt><big>(</big><em>dn</em>, <em>modlist</em><span class="optional">[</span>, <em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.modify_ext" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.modify_ext_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">modify_ext_s</tt><big>(</big><em>dn</em>, <em>modlist</em><span class="optional">[</span>, <em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.modify_ext_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs an LDAP modify operation on an entry&#8217;s attributes.
+The <em>dn</em> argument is the distinguished name (DN) of the entry to modify,
+and <em>modlist</em> is a list of modifications to make to that entry.</p>
+<p>Each element in the list <em>modlist</em> should be a tuple of the form
+<em>(mod_op,mod_type,mod_vals)</em>,
+where <em>mod_op</em> indicates the operation (one of <tt class="xref py py-const docutils literal"><span class="pre">ldap.MOD_ADD</span></tt>,
+<tt class="xref py py-const docutils literal"><span class="pre">ldap.MOD_DELETE</span></tt>, or <tt class="xref py py-const docutils literal"><span class="pre">ldap.MOD_REPLACE</span></tt>),
+<em>mod_type</em> is a string indicating the attribute type name, and
+<em>mod_vals</em> is either a string value or a list of string values to add,
+delete or replace respectively.  For the delete operation, <em>mod_vals</em>
+may be <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt> indicating that all attributes are to be deleted.</p>
+<p><em>serverctrls</em> and <em>clientctrls</em> like described above.</p>
+<p>The asynchronous methods <a class="reference internal" href="#ldap.LDAPObject.modify" title="ldap.LDAPObject.modify"><tt class="xref py py-meth docutils literal"><span class="pre">modify()</span></tt></a> and <a class="reference internal" href="#ldap.LDAPObject.modify_ext" title="ldap.LDAPObject.modify_ext"><tt class="xref py py-meth docutils literal"><span class="pre">modify_ext()</span></tt></a>
+return the message ID of the initiated request.</p>
+<p>You might want to look into sub-module <a class="reference internal" href="ldap-modlist.html#module-ldap.modlist" title="ldap.modlist"><tt class="xref py py-mod docutils literal"><span class="pre">ldap.modlist</span></tt></a> for
+generating <em>modlist</em>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.modrdn">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">modrdn</tt><big>(</big><em>dn</em>, <em>newrdn</em><span class="optional">[</span>, <em>delold=1</em><span class="optional">]</span><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.modrdn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.modrdn_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">modrdn_s</tt><big>(</big><em>dn</em>, <em>newrdn</em><span class="optional">[</span>, <em>delold=1</em><span class="optional">]</span><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.modrdn_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a <tt class="docutils literal"><span class="pre">modify</span> <span class="pre">RDN</span></tt> operation, (i.e. a renaming operation).
+These routines take <em>dn</em> (the DN of the entry whose RDN is to be changed,
+and <em>newrdn</em>, the new RDN to give to the entry. The optional parameter
+<em>delold</em> is used to specify whether the old RDN should be kept as an
+attribute of the entry or not.
+The asynchronous version returns the initiated message id.</p>
+<p>This operation is emulated by <a class="reference internal" href="#ldap.LDAPObject.rename" title="ldap.LDAPObject.rename"><tt class="xref py py-meth docutils literal"><span class="pre">rename()</span></tt></a> and <a class="reference internal" href="#ldap.LDAPObject.rename_s" title="ldap.LDAPObject.rename_s"><tt class="xref py py-meth docutils literal"><span class="pre">rename_s()</span></tt></a> methods
+since the modrdn2* routines in the C library are deprecated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.passwd">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">passwd</tt><big>(</big><em>user</em>, <em>oldpw</em>, <em>newpw</em><span class="optional">[</span>, <em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.passwd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.passwd_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">passwd_s</tt><big>(</big><em>user</em>, <em>oldpw</em>, <em>newpw</em><span class="optional">[</span>, <em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.passwd_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a <tt class="docutils literal"><span class="pre">LDAP</span> <span class="pre">Password</span> <span class="pre">Modify</span> <span class="pre">Extended</span> <span class="pre">Operation</span></tt> operation
+on the entry specified by <em>user</em>.
+The old password in <em>oldpw</em> is replaced with the new
+password in <em>newpw</em> by a LDAP server supporting this operation.</p>
+<p>If <em>oldpw</em> is not <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt> it has to match the old password
+of the specified <em>user</em> which is sometimes used when a user changes
+his own password.</p>
+<p><em>serverctrls</em> and <em>clientctrls</em> like described above.</p>
+<p>The asynchronous version returns the initiated message id.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><span class="target" id="index-2"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc3062.html"><strong>RFC 3062</strong></a> - LDAP Password Modify Extended Operation</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.rename">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">rename</tt><big>(</big><em>dn</em>, <em>newrdn</em><span class="optional">[</span>, <em>newsuperior=None</em><span class="optional">[</span>, <em>delold=1</em><span class="optional">[</span>, <em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.rename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.rename_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">rename_s</tt><big>(</big><em>dn</em>, <em>newrdn</em><span class="optional">[</span>, <em>newsuperior=None</em><span class="optional">[</span>, <em>delold=1</em><span class="optional">[</span>, <em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.rename_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a <tt class="docutils literal"><span class="pre">Rename</span></tt> operation, (i.e. a renaming operation).
+These routines take <em>dn</em> (the DN of the entry whose RDN is to be changed,
+and <em>newrdn</em>, the new RDN to give to the entry.
+The optional parameter <em>newsuperior</em> is used to specify
+a new parent DN for moving an entry in the tree
+(not all LDAP servers support this).
+The optional parameter <em>delold</em> is used to specify
+whether the old RDN should be kept as an attribute of the entry or not.</p>
+<p><em>serverctrls</em> and <em>clientctrls</em> like described above.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.result">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">result</tt><big>(</big><span class="optional">[</span><em>msgid=RES_ANY</em><span class="optional">[</span>, <em>all=1</em><span class="optional">[</span>, <em>timeout=None</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; 2-tuple<a class="headerlink" href="#ldap.LDAPObject.result" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used to wait for and return the result of an operation
+previously initiated by one of the LDAP <em>asynchronous</em> operations
+(eg <a class="reference internal" href="#ldap.LDAPObject.search" title="ldap.LDAPObject.search"><tt class="xref py py-meth docutils literal"><span class="pre">search()</span></tt></a>, <a class="reference internal" href="#ldap.LDAPObject.modify" title="ldap.LDAPObject.modify"><tt class="xref py py-meth docutils literal"><span class="pre">modify()</span></tt></a>, etc.)</p>
+<p>The <em>msgid</em> parameter is the integer identifier returned by that method.
+The identifier is guaranteed to be unique across an LDAP session,
+and tells the <a class="reference internal" href="#ldap.LDAPObject.result" title="ldap.LDAPObject.result"><tt class="xref py py-meth docutils literal"><span class="pre">result()</span></tt></a> method to request the result of that
+specific operation.</p>
+<p>If a result is desired from any one of the in-progress operations,
+<em>msgid</em> should be specified as the constant <tt class="xref py py-const docutils literal"><span class="pre">RES_ANY</span></tt>
+and the method <a class="reference internal" href="#ldap.LDAPObject.result2" title="ldap.LDAPObject.result2"><tt class="xref py py-meth docutils literal"><span class="pre">result2()</span></tt></a> should be used instead.</p>
+<p>The <em>all</em> parameter only has meaning for <a class="reference internal" href="#ldap.LDAPObject.search" title="ldap.LDAPObject.search"><tt class="xref py py-meth docutils literal"><span class="pre">search()</span></tt></a> responses
+and is used to select whether a single entry of the search
+response should be returned, or to wait for all the results
+of the search before returning.</p>
+<p>A search response is made up of zero or more search entries
+followed by a search result. If <em>all</em> is 0, search entries will
+be returned one at a time as they come in, via separate calls
+to <a class="reference internal" href="#ldap.LDAPObject.result" title="ldap.LDAPObject.result"><tt class="xref py py-meth docutils literal"><span class="pre">result()</span></tt></a>. If all is 1, the search response will be returned
+in its entirety, i.e. after all entries and the final search
+result have been received.</p>
+<p>For <em>all</em> set to 0, result tuples
+trickle in (with the same message id), and with the result types
+<tt class="xref py py-const docutils literal"><span class="pre">RES_SEARCH_ENTRY</span></tt> and <tt class="xref py py-const docutils literal"><span class="pre">RES_SEARCH_REFERENCE</span></tt>,
+until the final result which has a result type of <tt class="xref py py-const docutils literal"><span class="pre">RES_SEARCH_RESULT</span></tt>
+and a (usually) empty data field.  When all is set to 1, only one result is returned,
+with a result type of RES_SEARCH_RESULT, and all the result tuples
+listed in the data field.</p>
+<p>The <em>timeout</em> parameter is a limit on the number of seconds that the
+method will wait for a response from the server.
+If <em>timeout</em> is negative (which is the default),
+the method will wait indefinitely for a response.
+The timeout can be expressed as a floating-point value, and
+a value of <tt class="xref py py-const docutils literal"><span class="pre">0</span></tt> effects a poll.
+If a timeout does occur, a <a class="reference internal" href="#ldap.TIMEOUT" title="ldap.TIMEOUT"><tt class="xref py py-exc docutils literal"><span class="pre">ldap.TIMEOUT</span></tt></a> exception is raised,
+unless polling, in which case <tt class="docutils literal"><span class="pre">(None,</span> <span class="pre">None)</span></tt> is returned.</p>
+<p>The <a class="reference internal" href="#ldap.LDAPObject.result" title="ldap.LDAPObject.result"><tt class="xref py py-meth docutils literal"><span class="pre">result()</span></tt></a> method returns a tuple of the form
+<tt class="docutils literal"><span class="pre">(result-type,</span> <span class="pre">result-data)</span></tt>.
+The first element, <tt class="docutils literal"><span class="pre">result-type</span></tt> is a string, being one of
+these module constants:
+<tt class="xref py py-const docutils literal"><span class="pre">RES_BIND</span></tt>, <tt class="xref py py-const docutils literal"><span class="pre">RES_SEARCH_ENTRY</span></tt>,
+<tt class="xref py py-const docutils literal"><span class="pre">RES_SEARCH_REFERENCE</span></tt>, <tt class="xref py py-const docutils literal"><span class="pre">RES_SEARCH_RESULT</span></tt>,
+<tt class="xref py py-const docutils literal"><span class="pre">RES_MODIFY</span></tt>, <tt class="xref py py-const docutils literal"><span class="pre">RES_ADD</span></tt>, <tt class="xref py py-const docutils literal"><span class="pre">RES_DELETE</span></tt>,
+<tt class="xref py py-const docutils literal"><span class="pre">RES_MODRDN</span></tt>, or <tt class="xref py py-const docutils literal"><span class="pre">RES_COMPARE</span></tt>.</p>
+<p>If <em>all</em> is <tt class="xref py py-const docutils literal"><span class="pre">0</span></tt>, one response at a time is returned on
+each call to <a class="reference internal" href="#ldap.LDAPObject.result" title="ldap.LDAPObject.result"><tt class="xref py py-meth docutils literal"><span class="pre">result()</span></tt></a>, with termination indicated by
+<tt class="docutils literal"><span class="pre">result-data</span></tt> being an empty list.</p>
+<p>See <a class="reference internal" href="#ldap.LDAPObject.search" title="ldap.LDAPObject.search"><tt class="xref py py-meth docutils literal"><span class="pre">search()</span></tt></a> for a description of the search result&#8217;s
+<tt class="docutils literal"><span class="pre">result-data</span></tt>, otherwise the <tt class="docutils literal"><span class="pre">result-data</span></tt> is normally meaningless.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.result2">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">result2</tt><big>(</big><span class="optional">[</span><em>msgid=RES_ANY</em><span class="optional">[</span>, <em>all=1</em><span class="optional">[</span>, <em>timeout=None</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; 3-tuple<a class="headerlink" href="#ldap.LDAPObject.result2" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method behaves almost exactly like <a class="reference internal" href="#ldap.LDAPObject.result" title="ldap.LDAPObject.result"><tt class="xref py py-meth docutils literal"><span class="pre">result()</span></tt></a>. But
+it returns a 3-tuple also containing the message id of the
+outstanding LDAP operation a particular result message belongs
+to. This is especially handy if one needs to dispatch results
+obtained with <tt class="docutils literal"><span class="pre">msgid=</span></tt><tt class="xref py py-const docutils literal"><span class="pre">RES_ANY</span></tt> to several consumer
+threads which invoked a particular LDAP operation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.result3">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">result3</tt><big>(</big><span class="optional">[</span><em>msgid=RES_ANY</em><span class="optional">[</span>, <em>all=1</em><span class="optional">[</span>, <em>timeout=None</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; 4-tuple<a class="headerlink" href="#ldap.LDAPObject.result3" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method behaves almost exactly like <a class="reference internal" href="#ldap.LDAPObject.result2" title="ldap.LDAPObject.result2"><tt class="xref py py-meth docutils literal"><span class="pre">result2()</span></tt></a>. But it
+returns an extra item in the tuple, the decoded server controls.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.result4">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">result4</tt><big>(</big><span class="optional">[</span><em>msgid=RES_ANY</em><span class="optional">[</span>, <em>all=1</em><span class="optional">[</span>, <em>timeout=None</em><span class="optional">[</span>, <em>add_ctrls=0</em><span class="optional">[</span>, <em>add_intermediates=0</em><span class="optional">[</span>, <em>add_extop=0</em><span class="optional">[</span>, <em>resp_ctrl_classes=None</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; 6-tuple<a class="headerlink" href="#ldap.LDAPObject.result4" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method behaves almost exactly like <a class="reference internal" href="#ldap.LDAPObject.result3" title="ldap.LDAPObject.result3"><tt class="xref py py-meth docutils literal"><span class="pre">result3()</span></tt></a>. But it
+returns an extra items in the tuple, the decoded results of an extended response.</p>
+<p>The additional arguments are:</p>
+<p><em>add_ctrls</em> (integer flag) specifies whether response controls are returned.</p>
+<p>add_intermediates (integer flag) specifies whether response controls of
+intermediate search results are returned.</p>
+<p><em>add_extop</em> (integer flag) specifies whether the response of an
+extended operation is returned. If using extended operations you should
+consider using the method <a class="reference internal" href="#ldap.extop_result" title="ldap.extop_result"><tt class="xref py py-meth docutils literal"><span class="pre">extop_result()</span></tt></a> or
+<a class="reference internal" href="#ldap.extop_s" title="ldap.extop_s"><tt class="xref py py-meth docutils literal"><span class="pre">extop_s()</span></tt></a> instead.</p>
+<p><em>resp_ctrl_classes</em> is a dictionary mapping the OID of a response controls to a
+<a class="reference internal" href="ldap-controls.html#ldap.controls.ResponseControl" title="ldap.controls.ResponseControl"><tt class="xref py py-class docutils literal"><span class="pre">ldap.controls.ResponseControl</span></tt></a> class of response controls known by the
+application. So the response control value will be automatically decoded.
+If <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt> the global dictionary <a class="reference internal" href="ldap-controls.html#ldap.controls.KNOWN_RESPONSE_CONTROLS" title="ldap.controls.KNOWN_RESPONSE_CONTROLS"><tt class="xref py py-data docutils literal"><span class="pre">ldap.controls.KNOWN_RESPONSE_CONTROLS</span></tt></a>
+is used instead.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.search">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">search</tt><big>(</big><em>base</em>, <em>scope</em><span class="optional">[</span>, <em>filterstr='(objectClass=*)'</em><span class="optional">[</span>, <em>attrlist=None</em><span class="optional">[</span>, <em>attrsonly=0</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.search" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.search_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">search_s</tt><big>(</big><em>base</em>, <em>scope</em><span class="optional">[</span>, <em>filterstr='(objectClass=*)'</em><span class="optional">[</span>, <em>attrlist=None</em><span class="optional">[</span>, <em>attrsonly=0</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; list|None<a class="headerlink" href="#ldap.LDAPObject.search_s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.search_st">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">search_st</tt><big>(</big><em>base</em>, <em>scope</em><span class="optional">[</span>, <em>filterstr='(objectClass=*)'</em><span class="optional">[</span>, <em>attrlist=None</em><span class="optional">[</span>, <em>attrsonly=0</em><span class="optional">[</span>, <em>timeout=-1</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; list|None<a class="headerlink" href="#ldap.LDAPObject.search_st" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.search_ext">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">search_ext</tt><big>(</big><em>base</em>, <em>scope</em><span class="optional">[</span>, <em>filterstr='(objectClass=*)'</em><span class="optional">[</span>, <em>attrlist=None</em><span class="optional">[</span>, <em>attrsonly=0</em><span class="optional">[</span>, <em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">[</span>, <em>timeout=-1</em><span class="optional">[</span>, <em>sizelimit=0</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.search_ext" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.search_ext_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">search_ext_s</tt><big>(</big><em>base</em>, <em>scope</em><span class="optional">[</span>, <em>filterstr='(objectClass=*)'</em><span class="optional">[</span>, <em>attrlist=None</em><span class="optional">[</span>, <em>attrsonly=0</em><span class="optional">[</span>, <em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">[</span>, <em>timeout=-1</em><span class="optional">[</span>, <em>sizelimit=0</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; list|None<a class="headerlink" href="#ldap.LDAPObject.search_ext_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform an LDAP search operation, with <em>base</em> as the DN of the entry
+at which to start the search, <em>scope</em> being one of
+<tt class="xref py py-const docutils literal"><span class="pre">SCOPE_BASE</span></tt> (to search the object itself),
+<tt class="xref py py-const docutils literal"><span class="pre">SCOPE_ONELEVEL</span></tt> (to search the object&#8217;s immediate children), or
+<tt class="xref py py-const docutils literal"><span class="pre">SCOPE_SUBTREE</span></tt> (to search the object and all its descendants).</p>
+<p>The <em>filterstr</em> argument is a string representation of the filter to apply in
+the search.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><span class="target" id="index-3"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc4515.html"><strong>RFC 4515</strong></a> - Lightweight Directory Access Protocol (LDAP): String Representation of Search Filters.</p>
+</div>
+<p>Each result tuple is of the form <tt class="docutils literal"><span class="pre">(dn,</span> <span class="pre">attrs)</span></tt>,
+where <em>dn</em> is a string containing the DN (distinguished name) of the
+entry, and <em>attrs</em> is a dictionary containing the attributes associated
+with the entry. The keys of <em>attrs</em> are strings, and the associated
+values are lists of strings.</p>
+<p>The DN in <em>dn</em> is automatically extracted using the underlying libldap
+function <tt class="xref c c-func docutils literal"><span class="pre">ldap_get_dn()</span></tt>, which may raise an exception if the
+DN is malformed.</p>
+<p>If <em>attrsonly</em> is non-zero, the values of <em>attrs</em> will be meaningless
+(they are not transmitted in the result).</p>
+<p>The retrieved attributes can be limited with the <em>attrlist</em> parameter.
+If <em>attrlist</em> is <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>, all the attributes of each entry are returned.</p>
+<p><em>serverctrls</em> and <em>clientctrls</em> like described above.</p>
+<p>The synchronous form with timeout, <a class="reference internal" href="#ldap.LDAPObject.search_st" title="ldap.LDAPObject.search_st"><tt class="xref py py-meth docutils literal"><span class="pre">search_st()</span></tt></a> or <a class="reference internal" href="#ldap.LDAPObject.search_ext_s" title="ldap.LDAPObject.search_ext_s"><tt class="xref py py-meth docutils literal"><span class="pre">search_ext_s()</span></tt></a>,
+will block for at most <em>timeout</em> seconds (or indefinitely if <em>timeout</em>
+is negative). A <a class="reference internal" href="#ldap.TIMEOUT" title="ldap.TIMEOUT"><tt class="xref py py-exc docutils literal"><span class="pre">ldap.TIMEOUT</span></tt></a> exception is raised if no result is received
+within the specified time.</p>
+<p>The amount of search results retrieved can be limited with the
+<em>sizelimit</em> parameter when using <a class="reference internal" href="#ldap.LDAPObject.search_ext" title="ldap.LDAPObject.search_ext"><tt class="xref py py-meth docutils literal"><span class="pre">search_ext()</span></tt></a>
+or <a class="reference internal" href="#ldap.LDAPObject.search_ext_s" title="ldap.LDAPObject.search_ext_s"><tt class="xref py py-meth docutils literal"><span class="pre">search_ext_s()</span></tt></a> (client-side search limit). If non-zero
+not more than <em>sizelimit</em> results are returned by the server.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.start_tls_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">start_tls_s</tt><big>(</big><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.start_tls_s" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Negotiate TLS with server. The <tt class="docutils literal"><span class="pre">version</span></tt> attribute must have been
+set to <tt class="xref py py-const docutils literal"><span class="pre">VERSION3</span></tt> (which it is by default) before calling this method.
+If TLS could not be started an exception will be raised.</div></blockquote>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><span class="target" id="index-4"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc2830.html"><strong>RFC 2830</strong></a> - Lightweight Directory Access Protocol (v3): Extension for Transport Layer Security</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.unbind">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">unbind</tt><big>(</big><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.unbind" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.unbind_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">unbind_s</tt><big>(</big><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.unbind_s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.unbind_ext">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">unbind_ext</tt><big>(</big><span class="optional">[</span><em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; int<a class="headerlink" href="#ldap.LDAPObject.unbind_ext" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.unbind_ext_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">unbind_ext_s</tt><big>(</big><span class="optional">[</span><em>serverctrls=None</em><span class="optional">[</span>, <em>clientctrls=None</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.unbind_ext_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>This call is used to unbind from the directory, terminate the
+current association, and free resources. Once called, the connection to the
+LDAP server is closed and the LDAP object is marked invalid.
+Further invocation of methods on the object will yield exceptions.</p>
+<p><em>serverctrls</em> and <em>clientctrls</em> like described above.</p>
+<p>These methods are all synchronous in nature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.whoami_s">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">whoami_s</tt><big>(</big><big>)</big> &rarr; string<a class="headerlink" href="#ldap.LDAPObject.whoami_s" title="Permalink to this definition">¶</a></dt>
+<dd><p>This synchronous method implements the LDAP &#8220;Who Am I?&#8221;
+extended operation.</p>
+<p>It is useful for finding out to find out which identity
+is assumed by the LDAP server after a SASL bind.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><span class="target" id="index-5"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc4532.html"><strong>RFC 4532</strong></a> - Lightweight Directory Access Protocol (LDAP) &#8220;Who am I?&#8221; Operation</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="connection-specific-ldap-options">
+<h3>Connection-specific LDAP options<a class="headerlink" href="#connection-specific-ldap-options" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="ldap.LDAPObject.get_option">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">get_option</tt><big>(</big><em>option</em><big>)</big> &rarr; int|string<a class="headerlink" href="#ldap.LDAPObject.get_option" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the value of the LDAPObject option
+specified by <em>option</em>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="ldap.LDAPObject.set_option">
+<tt class="descclassname">LDAPObject.</tt><tt class="descname">set_option</tt><big>(</big><em>option</em>, <em>invalue</em><big>)</big> &rarr; None<a class="headerlink" href="#ldap.LDAPObject.set_option" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method sets the value of the LDAPObject option
+specified by <em>option</em> to <em>invalue</em>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="object-attributes">
+<h3>Object attributes<a class="headerlink" href="#object-attributes" title="Permalink to this headline">¶</a></h3>
+<p>If the underlying library provides enough information,
+each LDAP object will also have the following attributes.
+These attributes are mutable unless described as read-only.</p>
+<dl class="attribute">
+<dt>
+<tt class="descname">LDAPObject.deref -&gt; int</tt></dt>
+<dd><p>Controls whether aliases are automatically dereferenced.
+This must be one of <tt class="xref py py-const docutils literal"><span class="pre">DEREF_NEVER</span></tt>, <tt class="xref py py-const docutils literal"><span class="pre">DEREF_SEARCHING</span></tt>,
+<tt class="xref py py-const docutils literal"><span class="pre">DEREF_FINDING</span></tt> or <tt class="xref py py-const docutils literal"><span class="pre">DEREF_ALWAYS</span></tt>.
+This option is mapped to option constant <a class="reference internal" href="#ldap.OPT_DEREF" title="ldap.OPT_DEREF"><tt class="xref py py-const docutils literal"><span class="pre">OPT_DEREF</span></tt></a>
+and used in the underlying OpenLDAP client lib.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">LDAPObject.network_timeout -&gt; int</tt></dt>
+<dd><p>Limit on waiting for a network response, in seconds.
+Defaults to <tt class="xref py py-const docutils literal"><span class="pre">NO_LIMIT</span></tt>.
+This option is mapped to option constant <a class="reference internal" href="#ldap.OPT_NETWORK_TIMEOUT" title="ldap.OPT_NETWORK_TIMEOUT"><tt class="xref py py-const docutils literal"><span class="pre">OPT_NETWORK_TIMEOUT</span></tt></a>
+and used in the underlying OpenLDAP client lib.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">LDAPObject.protocol_version -&gt; int</tt></dt>
+<dd><p>Version of LDAP in use (either <tt class="xref py py-const docutils literal"><span class="pre">VERSION2</span></tt> for LDAPv2
+or <tt class="xref py py-const docutils literal"><span class="pre">VERSION3</span></tt> for LDAPv3).
+This option is mapped to option constant <a class="reference internal" href="#ldap.OPT_PROTOCOL_VERSION" title="ldap.OPT_PROTOCOL_VERSION"><tt class="xref py py-const docutils literal"><span class="pre">OPT_PROTOCOL_VERSION</span></tt></a>
+and used in the underlying OpenLDAP client lib.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is highly recommended to set the protocol version after establishing
+a LDAP connection with <a class="reference internal" href="#ldap.initialize" title="ldap.initialize"><tt class="xref py py-func docutils literal"><span class="pre">ldap.initialize()</span></tt></a> and before submitting
+the first request.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">LDAPObject.sizelimit -&gt; int</tt></dt>
+<dd><p>Limit on size of message to receive from server.
+Defaults to <tt class="xref py py-const docutils literal"><span class="pre">NO_LIMIT</span></tt>.
+This option is mapped to option constant <a class="reference internal" href="#ldap.OPT_SIZELIMIT" title="ldap.OPT_SIZELIMIT"><tt class="xref py py-const docutils literal"><span class="pre">OPT_SIZELIMIT</span></tt></a>
+and used in the underlying OpenLDAP client lib. Its use is deprecated
+in favour of <em>sizelimit</em> parameter when using <tt class="xref py py-meth docutils literal"><span class="pre">search_ext()</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">LDAPObject.timelimit -&gt; int</tt></dt>
+<dd><p>Limit on waiting for any response, in seconds.
+Defaults to <tt class="xref py py-const docutils literal"><span class="pre">NO_LIMIT</span></tt>.
+This option is mapped to option constant <a class="reference internal" href="#ldap.OPT_TIMELIMIT" title="ldap.OPT_TIMELIMIT"><tt class="xref py py-const docutils literal"><span class="pre">OPT_TIMELIMIT</span></tt></a>
+and used in the underlying OpenLDAP client lib. Its use is deprecated
+in favour of using <tt class="xref py py-attr docutils literal"><span class="pre">timeout</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">LDAPObject.timeout -&gt; int</tt></dt>
+<dd><p>Limit on waiting for any response, in seconds.
+Defaults to <tt class="xref py py-const docutils literal"><span class="pre">NO_LIMIT</span></tt>.
+This option is used in the wrapper module.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="example">
+<span id="ldap-example"></span><h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>The following example demonstrates how to open a connection to an
+LDAP server using the <a class="reference internal" href="#module-ldap" title="ldap: Access to an underlying LDAP C library. (Posix, Windows)"><tt class="xref py py-mod docutils literal"><span class="pre">ldap</span></tt></a> module and invoke a synchronous
+subtree search.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">ldap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">l</span> <span class="o">=</span> <span class="n">ldap</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="s">&#39;ldap://localhost:1390&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">l</span><span class="o">.</span><span class="n">search_s</span><span class="p">(</span><span class="s">&#39;ou=Testing,dc=stroeder,dc=de&#39;</span><span class="p">,</span><span class="n">ldap</span><span class="o">.</span><span class="n">SCOPE_SUBTREE</span><span class="p">,</span><span class="s">&#39;(cn=fred*)&#39;</span><span class="p">,[</span><span class="s">&#39;cn&#39;</span><span class="p">,</span><span class="s">&#39;mail&#39;</span><span class="p">])</span>
+<span class="go">[(&#39;cn=Fred Feuerstein,ou=Testing,dc=stroeder,dc=de&#39;, {&#39;cn&#39;: [&#39;Fred Feuerstein&#39;]})]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">search_s</span><span class="p">(</span><span class="s">&#39;ou=Testing,dc=stroeder,dc=de&#39;</span><span class="p">,</span><span class="n">ldap</span><span class="o">.</span><span class="n">SCOPE_SUBTREE</span><span class="p">,</span><span class="s">&#39;(objectClass=*)&#39;</span><span class="p">,[</span><span class="s">&#39;cn&#39;</span><span class="p">,</span><span class="s">&#39;mail&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">dn</span><span class="p">,</span><span class="n">entry</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="k">print</span> <span class="s">&#39;Processing&#39;</span><span class="p">,</span><span class="nb">repr</span><span class="p">(</span><span class="n">dn</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="n">handle_ldap_entry</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">ldap</span></tt> LDAP library interface module</a><ul>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#constants">Constants</a><ul>
+<li><a class="reference internal" href="#general">General</a></li>
+<li><a class="reference internal" href="#options">Options</a><ul>
+<li><a class="reference internal" href="#sasl-options">SASL options</a></li>
+<li><a class="reference internal" href="#tls-options">TLS options</a></li>
+<li><a class="reference internal" href="#keepalive-options">Keepalive options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dn-format-flags">DN format flags</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li><a class="reference internal" href="#ldapobject-classes">LDAPObject classes</a><ul>
+<li><a class="reference internal" href="#arguments-for-ldapv3-controls">Arguments for LDAPv3 controls</a></li>
+<li><a class="reference internal" href="#sending-ldap-requests">Sending LDAP requests</a></li>
+<li><a class="reference internal" href="#connection-specific-ldap-options">Connection-specific LDAP options</a></li>
+<li><a class="reference internal" href="#object-attributes">Object attributes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installing.html"
+                        title="previous chapter">Building and installing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ldap-async.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">ldap.async</span></tt> Stream-processing of large search results</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/ldap.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldap-async.html" title="ldap.async Stream-processing of large search results"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installing.html" title="Building and installing"
+             >previous</a> |</li>
+        <li><a href="index.html">python-ldap 2.4.10.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2011, python-ldap project team.
+      Last updated on Aug 09, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

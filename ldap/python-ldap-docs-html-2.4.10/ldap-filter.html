@@ -1,0 +1,143 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ldap.filter LDAP filter handling &mdash; python-ldap 2.4.10.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '2.4.10.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="python-ldap 2.4.10.0 documentation" href="index.html" />
+    <link rel="next" title="ldap.modlist Generate modify lists" href="ldap-modlist.html" />
+    <link rel="prev" title="ldap.extop High-level access to LDAPv3 extended operations" href="ldap-extop.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldap-modlist.html" title="ldap.modlist Generate modify lists"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ldap-extop.html" title="ldap.extop High-level access to LDAPv3 extended operations"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">python-ldap 2.4.10.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-ldap.filter">
+<span id="ldap-filter-ldap-filter-handling"></span><h1><a class="reference internal" href="#module-ldap.filter" title="ldap.filter: LDAP filter handling."><tt class="xref py py-mod docutils literal"><span class="pre">ldap.filter</span></tt></a> LDAP filter handling<a class="headerlink" href="#module-ldap.filter" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><span class="target" id="index-0"></span><a class="rfc reference external" href="http://tools.ietf.org/html/rfc4515.html"><strong>RFC 4515</strong></a> - Lightweight Directory Access Protocol (LDAP): String Representation of Search Filters.</p>
+</div>
+<p>The <a class="reference internal" href="#module-ldap.filter" title="ldap.filter: LDAP filter handling."><tt class="xref py py-mod docutils literal"><span class="pre">ldap.filter</span></tt></a> module defines the following functions:</p>
+<dl class="function">
+<dt id="ldap.filter.escape_filter_chars">
+<tt class="descclassname">ldap.filter.</tt><tt class="descname">escape_filter_chars</tt><big>(</big><em>assertion_value</em><span class="optional">[</span>, <em>escape_mode=0</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#ldap.filter.escape_filter_chars" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function escapes characters in <em>assertion_value</em> which  are special in LDAP
+filters. You should use this function when  building LDAP filter strings from
+arbitrary input.    <em>escape_mode</em> means:  If <tt class="xref py py-const docutils literal"><span class="pre">0</span></tt> only special chars
+mentioned in RFC 4515 are escaped.  If <tt class="xref py py-const docutils literal"><span class="pre">1</span></tt> all NON-ASCII chars are
+escaped.  If <tt class="xref py py-const docutils literal"><span class="pre">2</span></tt> all chars are escaped.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ldap.filter.filter_format">
+<tt class="descclassname">ldap.filter.</tt><tt class="descname">filter_format</tt><big>(</big><em>filter_template</em>, <em>assertion_values</em><big>)</big><a class="headerlink" href="#ldap.filter.filter_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function applies <a class="reference internal" href="#ldap.filter.escape_filter_chars" title="ldap.filter.escape_filter_chars"><tt class="xref py py-func docutils literal"><span class="pre">escape_filter_chars()</span></tt></a> to each of the strings in
+list <em>assertion_values</em>. After that <em>filter_template</em> containing  as many
+<tt class="xref py py-const docutils literal"><span class="pre">%s</span></tt> placeholders as count of assertion values is  used to build the
+whole filter string.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ldap-extop.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">ldap.extop</span></tt> High-level access to LDAPv3 extended operations</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ldap-modlist.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">ldap.modlist</span></tt> Generate modify lists</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/ldap-filter.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ldap-modlist.html" title="ldap.modlist Generate modify lists"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ldap-extop.html" title="ldap.extop High-level access to LDAPv3 extended operations"
+             >previous</a> |</li>
+        <li><a href="index.html">python-ldap 2.4.10.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2008-2011, python-ldap project team.
+      Last updated on Aug 09, 2012.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
