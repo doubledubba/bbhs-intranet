@@ -8,7 +8,7 @@ Bind password: cookies
 
 Objective:
     Collect username and password from user
-    Test authentication (pass | fail)
+    Test authentication via LDAP query (pass | fail)
     if passed:
         stuff
     if not passed:
@@ -18,20 +18,28 @@ To do:
     Connect our custom LDAP authentication to builtin Django auth app
     Data integrity - keep local database sync'ed with LDAP database
         - Minimal info to sync - maybe only username (would have to be unique)
+        - Will probably need to get the user's OU for separation and store it
+    Define what data to attempt to collect from LDAP after authentication
+        - Email
+        - Full name
+        - Organizational unit (different user privilidges in Django auth system)
+            - Teacher
+            - Student
+            - Parent
+            - School admin
+            - Tech admin
+    Collect missing data from LDAP search
 '''
 
-from getpass import getpass
 import ldap
 
-DEBUG = True
-DEBUG = False
-
 server = '10.10.10.201'
+port = 389
 who = 'CN=Administrator,CN=Users,DC=testad'
-cred = 'cookies' or getpass() if not DEBUG else raw_input('Password: ')
+cred = 'cookies'
 
 try:
-    l = ldap.open(server)
+    l = ldap.open(server, port)
     l.simple_bind_s(who, cred)
 
     print 'Successfully Authenticated!\n' + '=' * 72 + '\n'
