@@ -155,7 +155,7 @@ LOGGING = {
         },
     }
 }
-
+#http://code.google.com/p/django-ldapbackend/
 AUTHENTICATION_BACKENDS = (
  'django_ldapbackend.LDAPBackend',
  'django.contrib.auth.backends.ModelBackend',
@@ -168,13 +168,13 @@ AUTH_LDAP_SERVER = '10.10.10.201'                       # Hostname
 AUTH_LDAP_BASE_USER = 'CN=Administrator,CN=Users,DC=testad'  # Administrative User's Username
 AUTH_LDAP_BASE_PASS = "cookies"                     # Administrative User's Password 
 AUTH_LDAP_BASE_DN = "dc=testad"              # Base DN (also accepts o=example.com format)
-AUTH_LDAP_FIELD_DOMAIN = "example.com"               # Domain from which users will take the domain for dummy e-mail generation (it keeps Django happy!)
+AUTH_LDAP_FIELD_DOMAIN = "bishopblanchet.org"               # Domain from which users will take the domain for dummy e-mail generation (it keeps Django happy!)
 AUTH_LDAP_GROUP_NAME = "ldap_people"                 # Django group for LDAP users (helps us manage them for password changing, etc.)
 AUTH_LDAP_VERSION = 3                                # LDAP version
 AUTH_LDAP_OLDPW = False                              # Can the server take the old password? True/False
 
 # Optional
 AUTH_LDAP_FIELD_USERAUTH = "uid"                     # The field from which the user authentication shall be done.
-AUTH_LDAP_FIELD_AUTHUNIT = "People"                  # The organisational unit in which your users shall be found.
+AUTH_LDAP_FIELD_AUTHUNIT = "Staff"                  # The organisational unit in which your users shall be found.
 AUTH_LDAP_FIELD_USERNAME = "uid"                     # The field from which to draw the username (Default 'uid'). (Allows non-uid/non-dn custom fields to be used for login.)
 AUTH_LDAP_WITHDRAW_EMAIL = False                     # Should django try the directory for the user's email ('mail')? True/False.
