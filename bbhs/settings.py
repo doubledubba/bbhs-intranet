@@ -170,6 +170,8 @@ AUTH_LDAP_BIND_PASSWORD = 'cookies' # to the password.
 AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=staff,dc=testad",
     ldap.SCOPE_SUBTREE, "(SAMAccountName=%(user)s)")
 
+AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn"}
+
 '''
 This will perform a bind, search under "ou=users,dc=example,dc=com"
 for an object with a uid matching the user's name, and try to bind using that
