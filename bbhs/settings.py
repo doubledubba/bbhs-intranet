@@ -180,9 +180,20 @@ AUTH_LDAP_USER_FLAGS_BY_GROUP = {
     "is_staff": "cn=Staff,ou=Staff,dc=testad",
 }'''
 
+AUTH_LDAP_GROUP_TYPE = ActiveDirectoryGroupType()
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch('ou=staff,dc=testad',
+        ldap.SCOPE_SUBTREE, '(cn=Staff)')
+
 AUTH_LDAP_MIRROR_GROUPS = True
 
 # AUTH_LDAP_CACHE_GROUPS = True
 # AUTH_LDAP_GROUP_CACHE_TIMEOUT = 300
 
+
+''' To do:
+    Configure logging:
+        - Django
+        - Auth LDAP
+        - Custom apps
+'''
 
