@@ -1,7 +1,7 @@
 import os
 
 import ldap
-from django_auth_ldap.config import LDAPSearch
+from django_auth_ldap.config import LDAPSearch, ActiveDirectoryGroupType
 
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -157,6 +157,8 @@ LOGGING = {
         },
     }
 }
+
+# LDAP Auth config
 # http://packages.python.org/django-auth-ldap/index.html
 AUTHENTICATION_BACKENDS = (
  'django_auth_ldap.backend.LDAPBackend',
@@ -170,17 +172,17 @@ AUTH_LDAP_BIND_PASSWORD = 'cookies' # to the password.
 AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=staff,dc=testad",
     ldap.SCOPE_SUBTREE, "(SAMAccountName=%(user)s)")
 
-AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn"}
+AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn",
+        'email': 'mail'}
 
 '''
-This will perform a bind, search under "ou=users,dc=example,dc=com"
-for an object with a uid matching the user's name, and try to bind using that
-DN and the user's password. The search must return exactly one result or
-authentication will fail.
+AUTH_LDAP_USER_FLAGS_BY_GROUP = {
+    "is_staff": "cn=Staff,ou=Staff,dc=testad",
+}'''
 
-To skip the search phase, set AUTH_LDAP_USER_DN_TEMPLATE to a template that will produce the authenticating user's DN directly. This template should have one placeholder, %(user)s. If the previous example had used ldap.SCOPE_ONELEVEL, the following would be a more straightforward (and efficient) equivalent:
-AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=users,dc=example,dc=com"
+AUTH_LDAP_MIRROR_GROUPS = True
 
+# AUTH_LDAP_CACHE_GROUPS = True
+# AUTH_LDAP_GROUP_CACHE_TIMEOUT = 300
 
-'''
 
