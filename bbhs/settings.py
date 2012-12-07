@@ -175,10 +175,9 @@ AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=staff,dc=testad",
 AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn",
         'email': 'mail'}
 
-'''
 AUTH_LDAP_USER_FLAGS_BY_GROUP = {
-    "is_staff": "cn=Staff,ou=Staff,dc=testad",
-}'''
+    "is_superuser": "cn=Technology,ou=Technology,dc=testad",
+}
 
 AUTH_LDAP_GROUP_TYPE = ActiveDirectoryGroupType()
 AUTH_LDAP_GROUP_SEARCH = LDAPSearch('ou=staff,dc=testad',
@@ -197,3 +196,8 @@ AUTH_LDAP_MIRROR_GROUPS = True
         - Custom apps
 '''
 
+import logging
+
+logger = logging.getLogger('django_auth_ldap')
+logger.addHandler(logging.StreamHandler())
+logger.setLevel(logging.DEBUG)
