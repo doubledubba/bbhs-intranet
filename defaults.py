@@ -5,6 +5,8 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'bbhs.settings'
 
 from django.utils.timezone import utc
 from chaperone.models import *
+from intranet.models import UserProfile
+
 
 luis = UserProfile.objects.get(user__username='luis')
 
@@ -21,3 +23,4 @@ events = [
 for info in events:
     event = Event(**info)
     event.save()
+    print 'Created the "%s" event for luis.' % info['name']
