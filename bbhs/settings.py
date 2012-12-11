@@ -169,7 +169,7 @@ AUTH_LDAP_SERVER_URI = "ldap://10.10.10.201"
 
 AUTH_LDAP_BIND_DN  = 'CN=Administrator,CN=Users,DC=testad' #to the distinguished name of an authorized user 
 AUTH_LDAP_BIND_PASSWORD = 'cookies' # to the password.
-AUTH_LDAP_USER_SEARCH = LDAPSearch("dc=testad", # set to root, search ALL
+AUTH_LDAP_USER_SEARCH = LDAPSearch("dc=testad", # Auth if in Staff
     ldap.SCOPE_SUBTREE, "(SAMAccountName=%(user)s)")
 
 AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn",
@@ -177,6 +177,7 @@ AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn",
 
 AUTH_LDAP_USER_FLAGS_BY_GROUP = {
     "is_superuser": "cn=Technology,ou=Technology,dc=testad",
+    "is_staff": "cn=Technology,ou=Technology,dc=testad",
 }
 
 AUTH_LDAP_GROUP_TYPE = ActiveDirectoryGroupType()
@@ -184,6 +185,8 @@ AUTH_LDAP_GROUP_SEARCH = LDAPSearch('ou=staff,dc=testad',
         ldap.SCOPE_SUBTREE, '(cn=Staff)')
 
 AUTH_LDAP_MIRROR_GROUPS = True
+
+AUTH_LDAP_REQUIRE_GROUP = "cn=Staff,ou=staff,dc=testad"
 
 # Use the security group only, don't rely on the OU
 
