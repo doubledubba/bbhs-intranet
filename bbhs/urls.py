@@ -15,6 +15,4 @@ urlpatterns += patterns('',
     url(r'^chaperone/', include('chaperone.urls'),),
     url(r'^service/', include('service.urls'),),
 
-    (r'^profile/password/$', 'django_ldapbackend.views.password_change'),
-    (r'^profile/password/changed/$', 'django.contrib.auth.views.password_change_done'),  
 )

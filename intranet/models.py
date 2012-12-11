@@ -7,7 +7,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
     eventsNeeded = models.IntegerField()
-    eventsNeeded.verbose_name = 'Events Needed'
+    eventsNeeded.verbose_name = '(Chaperone) Events Needed'
 
     def __unicode__(self):
         return self.user.username
