@@ -50,7 +50,22 @@ class Event(models.Model):
         NOTICE: The pk of the User and UserProfile MAY NOT BE EQUAL
         Use the User's pk for security.'''
 
-        return 'All of the volunteers for this event go here.'
+        volunteerPKs = self.volunteersRegistered.split(',')
+        print volunteerPKs
+        print len(volunteerPKs)
+        if volunteerPKs == [u'']:
+            return 'No volunteers!'
+
+        names = ''
+        for pk in volunteerPKs:
+            user = User.objects.get(pk=pk)
+            if names:
+                names += ', %s' % user.username
+            else:
+                names = user.username
+
+        return names
+
 
         
 
