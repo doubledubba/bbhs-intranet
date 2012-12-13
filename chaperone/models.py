@@ -54,11 +54,11 @@ class Event(models.Model):
 
         
 
-    def expired(self):
+    def expired(self, now=datetime.utcnow().replace(tzinfo=utc)):
         ''' Returns True if the event has already passed.
 
         This will be called every time a user opens an event page.
         Implementation of this is method is the only missing piece
         of this functionality.'''
 
-        pass
+        return self.date < now
