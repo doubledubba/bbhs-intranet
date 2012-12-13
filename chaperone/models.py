@@ -22,9 +22,19 @@ class Event(models.Model):
 
     @staticmethod
     def future_events(now=datetime.utcnow().replace(tzinfo=utc)):
+        ''' Returns a queryset of events that have not happened.
+
+        You can pass in an optional datetime object to over ride
+        the comparison date.'''
+
         return Event.objects.filter(date__gte=now).order_by('date')
 
     def addVolunteer(self, volunteer):
+        ''' Handles the registering of volunteers
+
+        volunteer is a User object, not a UserProfile'''
+
+
         if not self.volunteersRegistered:
             self.volunteersRegistered = volunteer.pk
         else:
