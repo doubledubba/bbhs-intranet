@@ -40,7 +40,6 @@ class Event(models.Model):
         else:
             self.volunteersRegistered += ',%d' % volunteer.pk
         self.save()
-        print 'Added:', volunteer
 
 
     def showVolunteers(self):
@@ -51,8 +50,6 @@ class Event(models.Model):
         Use the User's pk for security.'''
 
         volunteerPKs = self.volunteersRegistered.split(',')
-        print volunteerPKs
-        print len(volunteerPKs)
         if volunteerPKs == [u'']:
             return 'No volunteers!'
 

@@ -10,4 +10,18 @@
 <h4 style="font-family:verdana;color:red;"> Warning: This event has already taken place </h4>
 {% endif %}
 
+<h5> Description </h5>
+<p>
+{{ event.description }}
+</p>
+
+<!-- Needs to
+    + Display all information about the event
+    + Have a form for signing up the user
+    + Have a form for removing the user (maybe auth)
+    + Have contact information for the administrator
+        - Maybe a "Contact Me" form
+    + Good design - use twitter bootstrap
+    -->
+
 {% endblock body %}
