@@ -5,10 +5,6 @@
 {% block body %}
 <h1>Welcome to the Chaperone system!</h1>
 
-{% if user.is_authenticated %}
-<b> You are authenticated!</b><br>
-{% endif %}
-
 
 <table border="1" class="table table-striped">
     <thead>
@@ -27,11 +23,15 @@
 {% for event in events %}
         <tr>
 
-            <td>{{ event.name }}</td>
-            <td>{{ event.admin }}</td>
+            <td>
+                <a href="/chaperone/eventPage/{{ event.pk }}">
+                    {{ event.name }}
+                </a>
+            </td>
+            <td>{{ event.admin.user.get_full_name }}</td>
             <td>{{ event.date }}</td>
             <td>{{ event.volunteersNeeded }}</td>
-            <td>{{ event.volunteersRegistered }}</td>
+            <td>{{ event.showVolunteers }}</td>
             <td>{{ event.description }}</td>
  
         </tr>

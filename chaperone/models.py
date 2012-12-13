@@ -33,4 +33,22 @@ class Event(models.Model):
         print 'Added:', volunteer
 
 
+    def showVolunteers(self):
+        '''Returns a string of volunteers
 
+        The volunteers returned have all signed up for this event.
+        NOTICE: The pk of the User and UserProfile MAY NOT BE EQUAL
+        Use the User's pk for security.'''
+
+        return 'All of the volunteers for this event go here.'
+
+        
+
+    def expired(self):
+        ''' Returns True if the event has already passed.
+
+        This will be called every time a user opens an event page.
+        Implementation of this is method is the only missing piece
+        of this functionality.'''
+
+        pass

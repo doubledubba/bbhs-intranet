@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Chaperone Sign up | BBHS {% endblock title %}
+
+{% block body %}
+
+<h1> {{ event.name }} </h1>
+
+{% if event.expired %}
+<h4 style="font-family:verdana;color:red;"> Warning: This event has already taken place </h4>
+{% endif %}
+
+{% endblock body %}
