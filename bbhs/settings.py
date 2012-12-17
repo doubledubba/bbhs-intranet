@@ -14,6 +14,8 @@ Phone number and department from LDAP in userprofile
 Delete user form on chaperone page
 
 URL Shortener
+
+Implement {{ event.get_absolute_url }}/signup view+url
 '''
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))

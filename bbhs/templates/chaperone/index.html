@@ -24,7 +24,7 @@
         <tr>
 
             <td>
-                <a href="/chaperone/eventPage/{{ event.pk }}">
+                <a href="{{ event.get_absolute_url }}">
                     {{ event.name }}
                 </a>
             </td>

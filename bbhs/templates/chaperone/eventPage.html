@@ -49,6 +49,7 @@
 
         <div class="tab-pane" id="tab2">
             <p>Sign up for this event!</p>
+            <a href="{{ event.get_absolute_url }}/signup">Sign up</a>
         </div>
 
         {% if user.is_superuser %}

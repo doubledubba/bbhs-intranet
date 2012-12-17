@@ -20,6 +20,9 @@ class Event(models.Model):
         return '%s on %s with %s' % (self.name, self.date.strftime('%c'),
                 self.admin)
 
+    def get_absolute_url(self):
+        return '/chaperone/eventPage/%d' % self.pk
+
     @staticmethod
     def future_events(now=datetime.utcnow().replace(tzinfo=utc)):
         ''' Returns a queryset of events that have not happened.
