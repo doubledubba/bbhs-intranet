@@ -4,17 +4,6 @@
 
 {% block body %}
 
-<h1> {{ event.name }} </h1>
-
-{% if event.expired %}
-<h4 style="font-family:verdana;color:red;"> Warning: This event has already taken place </h4>
-{% endif %}
-
-<h5> Description </h5>
-<p>
-{{ event.description }}
-</p>
-
 <!-- Needs to
     + Display all information about the event
     + Have a form for signing up the user
@@ -22,6 +11,52 @@
     + Have contact information for the administrator
         - Maybe a "Contact Me" form
     + Good design - use twitter bootstrap
-    -->
+-->
 
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">Event Info</a></li>
+        <li><a href="#tab2" data-toggle="tab">Contact Info</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+           <h1>{{ event.name }}</h1>
+
+            {% if event.expired %}
+            <h4 style="font-family:verdana;color:red;"> Warning: This event has already taken place </h4>
+            {% endif %}
+
+            <h5>Date</h5>
+            {{ event.date }}
+
+            <h5>Description</h5>
+            <p>
+            {{ event.description }}
+
+            <h5>Volunteers Needed</h5>
+            {{ event.volunteersNeeded }}
+
+            <h5>Volunteers Registered</h5>
+            <p>#Need to implement user profile
+            pages</p>
+            <ul>
+            {% for user in event.getVolunteers %}
+                <li><a href="{{ user.get_absolute_url }}">
+                    {% if user.get_full_name %}
+                    {{ user.get_full_name }} ({{ user }})
+                    {% else %}
+                    {{ user }}
+                    {% endif %}
+                </a></li>
+            {% endfor %}
+            </ul>
+            </p>
+        </div>
+        <div class="tab-pane" id="tab2">
+            <p>
+            <b>Admin: </b> {{ event.admin }}
+            </p>
+        </div>
+    </div>
+</div>
 {% endblock body %}

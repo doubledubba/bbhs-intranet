@@ -41,13 +41,14 @@ class Event(models.Model):
             self.volunteersRegistered += ',%d' % volunteer.pk
         self.save()
 
-
     def showVolunteers(self):
-        '''Returns a string of volunteers
+        '''DEPRECATED: Returns a string of volunteers
 
         The volunteers returned have all signed up for this event.
         NOTICE: The pk of the User and UserProfile MAY NOT BE EQUAL
-        Use the User's pk for security.'''
+        Use the User's pk for security.
+        I replaced this with the lower level getVolunteers method.
+        I'm not sure if this can be deleted yet.'''
 
         volunteerPKs = self.volunteersRegistered.split(',')
         if volunteerPKs == [u'']:
@@ -63,8 +64,19 @@ class Event(models.Model):
 
         return names
 
+    def getVolunteers(self):
+        '''Returns a list of volunteer User objects.'''
 
-        
+        volunteerPKs = self.volunteersRegistered.split(',')
+        if volunteerPKs == [u'']:
+            return None
+
+        users = []
+        for pk in volunteerPKs:
+            user = User.objects.get(pk=pk)
+            users.append(user)
+
+        return users
 
     def expired(self, now=datetime.utcnow().replace(tzinfo=utc)):
         ''' Returns True if the event has already passed.
@@ -74,3 +86,5 @@ class Event(models.Model):
         of this functionality.'''
 
         return self.date < now
+
+

@@ -18,6 +18,10 @@ MANAGERS = ADMINS
 AUTH_PROFILE_MODULE = 'intranet.UserProfile'
 LOGIN_URL = '/login/'
 
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: "/volunteers/%s/" % u.username,
+}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
