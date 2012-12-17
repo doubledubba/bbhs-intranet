@@ -3,6 +3,18 @@ import os
 import ldap
 from django_auth_ldap.config import LDAPSearch, ActiveDirectoryGroupType
 
+'''TODO
+In eventPage.html
+    + Change "if superuser" to "if in admin group"
+
+Create user profile 
+
+Phone number and department from LDAP in userprofile
+
+Delete user form on chaperone page
+
+URL Shortener
+'''
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
