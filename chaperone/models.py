@@ -18,7 +18,7 @@ class Event(models.Model):
 
     class Meta:
         permissions = (
-                ('signup_chaperones', 'Can sign up chaperones'),
+                ('add_chaperones', 'Can sign up chaperones'),
                 ('remove_chaperones', 'Can remove chaperones'),
                 ('view_chaperones', 'Can view chaperones')
         )

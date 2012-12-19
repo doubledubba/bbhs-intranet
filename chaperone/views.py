@@ -14,4 +14,9 @@ def index(request):
 def eventPage(request, eventID):
     event = get_object_or_404(Event, pk=eventID)
     params = {'event': event}
+    params['view_chaperones'] = request.user.has_perm('chaperone.view_chaperones')
+    params['add_chaperones'] = request.user.has_perm('chaperone.add_chaperones')
+    params['remove_chaperones'] = request.user.has_perm('chaperone.remove_chaperones')
+    print params, request.user.username
+    print request.user.get_all_permissions()
     return render(request, 'chaperone/eventPage.html', params)

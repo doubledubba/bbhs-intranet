@@ -22,9 +22,13 @@
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tab1" data-toggle="tab">Event Info</a></li>
         <li><a href="#tab2" data-toggle="tab">Sign up</a></li>
-        {% if user.is_superuser %} <!-- WRONG. If part of admin group -->
+        {% if view_chaperones %} <!-- WRONG. If part of admin group -->
         <li><a href="#tab3" data-toggle="tab">Volunteers Registered</a></li> <!-- Admin only -->
+        {% endif %}
+        {% if add_chaperones %}
         <li><a href="#tab4" data-toggle="tab">Sign someone up</a></li> <!-- Admin only -->
+        {% endif %}
+        {% if remove_chaperones %}
         <li><a href="#tab5" data-toggle="tab">Remove a volunteer</a></li> <!-- Admin only -->
         {% endif %}
     </ul>
@@ -52,7 +56,7 @@
             <a href="{{ event.get_absolute_url }}/signup">Sign up</a>
         </div>
 
-        {% if user.is_superuser %}
+        {% if view_chaperones %}
         <div class="tab-pane" id="tab3">
             <p>#Need to implement user profile
             pages</p>
@@ -69,15 +73,18 @@
             </ul>
             </p>
         </div>
+        {% endif %}
 
+        {% if add_chaperones %}
         <div class="tab-pane" id="tab4">
             <p>Sign up a user for volunteering</p>
         </div>
+        {% endif %}
 
+        {% if remove_chaperones %}
         <div class="tab-pane" id="tab5">
             <p>Remove a volunteer</p>
         </div>
-
         {% endif %}
 
     </div>
