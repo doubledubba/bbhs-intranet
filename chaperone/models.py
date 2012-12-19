@@ -16,6 +16,13 @@ class Event(models.Model):
     volunteersNeeded.verbose_name = 'Volunteers Needed'
     volunteersRegistered.verbose_name = 'Volunteers Registered'
 
+    class Meta:
+        permissions = (
+                ('signup_chaperones', 'Can sign up chaperones'),
+                ('remove_chaperones', 'Can remove chaperones'),
+                ('view_chaperones', 'Can view chaperones')
+        )
+
     def __unicode__(self):
         return '%s on %s with %s' % (self.name, self.date.strftime('%c'),
                 self.admin)
@@ -91,3 +98,9 @@ class Event(models.Model):
         return self.date < now
 
 
+    def signedUp(self, user):
+        '''Return true if the User is signed up for this event.
+        
+        Experimental functionality - not tested'''
+
+        return str(user.pk) in self.volunteersRegistered
