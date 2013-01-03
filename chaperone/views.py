@@ -24,3 +24,7 @@ def eventPage(request, eventID):
     print params, request.user.username
     print request.user.get_all_permissions()
     return render(request, 'chaperone/eventPage.html', params)
+
+
+def signUp(request):
+    return HttpResponse('hey')
