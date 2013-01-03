@@ -90,14 +90,23 @@
                     {% endfor %}
                 </select>
                 <br/>
-                <button type="submit" class="btn">Submit</button>
+                <button type="submit" class="btn">Sign up</button>
             </form>
         </div>
         {% endif %}
 
         {% if remove_chaperones %}
         <div class="tab-pane" id="tab5">
-            <p>Remove a volunteer</p>
+            <form method="POST">
+                {% csrf_token %}
+                <select name="status">
+                    {% for user in event.getVolunteers %}
+                    <option value="{{ user.pk }}">{{ user }}</option>
+                    {% endfor %}
+                </select>
+                <br/>
+                <button type="submit" class="btn">Remove</button>
+            </form>
         </div>
         {% endif %}
 
