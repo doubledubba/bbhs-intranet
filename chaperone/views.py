@@ -17,6 +17,7 @@ def eventPage(request, eventID):
     params['view_chaperones'] = request.user.has_perm('chaperone.view_chaperones')
     params['add_chaperones'] = request.user.has_perm('chaperone.add_chaperones')
     params['remove_chaperones'] = request.user.has_perm('chaperone.remove_chaperones')
+    params['sign_up'] = request.user.has_perm('chaperone.sign_up')
     print params, request.user.username
     print request.user.get_all_permissions()
     return render(request, 'chaperone/eventPage.html', params)

@@ -20,7 +20,8 @@ class Event(models.Model):
         permissions = (
                 ('add_chaperones', 'Can sign up chaperones'),
                 ('remove_chaperones', 'Can remove chaperones'),
-                ('view_chaperones', 'Can view chaperones')
+                ('view_chaperones', 'Can view chaperones'),
+                ('sign_up', 'Can sign up for an event')
         )
 
     def __unicode__(self):
