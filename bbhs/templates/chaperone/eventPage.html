@@ -55,8 +55,8 @@
 
         {% if sign_up %}
         <div class="tab-pane" id="tab2">
-            <p>Sign up for this event!</p>
-            <a href="{{ event.get_absolute_url }}/signup">Sign up</a>
+            <a href="{{ event.get_absolute_url }}/signup" class="btn btn-large btn-primary">
+                Sign up for this event!</a>
         </div>
         {% endif %}
 
@@ -82,6 +82,16 @@
         {% if add_chaperones %}
         <div class="tab-pane" id="tab4">
             <p>Sign up a user for volunteering</p>
+            <form method="POST">
+                {% csrf_token %}
+                <select name="status">
+                    {% for user in users %}
+                    <option value="{{ user.pk }}">{{ user }}</option>
+                    {% endfor %}
+                </select>
+                <br/>
+                <button type="submit" class="btn">Submit</button>
+            </form>
         </div>
         {% endif %}
 
