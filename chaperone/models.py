@@ -105,3 +105,12 @@ class Event(models.Model):
         Experimental functionality - not tested'''
 
         return str(user.pk) in self.volunteersRegistered
+
+    def signUp(self, user):
+        if self.volunteersRegistered:
+            self.volunteersRegistered += ',%s' % user.pk
+        else:
+            self.volunteersRegistered = user.pk
+
+        self.save()
+        return 'yeaa'

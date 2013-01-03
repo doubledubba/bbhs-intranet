@@ -27,5 +27,7 @@ def eventPage(request, eventID):
 def signUp(request, eventID):
     event = get_object_or_404(Event, pk=eventID)
     userPk = request.POST.get('userPk') or str(request.user.pk)
+    user = User.objects.get(pk=userPk)
+    message = event.signUp(user)
 
-    return HttpResponse(userPk)
+    return HttpResponse(userPk + message)
