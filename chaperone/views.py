@@ -21,10 +21,10 @@ def eventPage(request, eventID):
     params['remove_chaperones'] = request.user.has_perm('chaperone.remove_chaperones')
     params['sign_up'] = request.user.has_perm('chaperone.sign_up')
     params['users'] = User.objects.all() # TODO: filter for sign_up perm
-    print params, request.user.username
-    print request.user.get_all_permissions()
     return render(request, 'chaperone/eventPage.html', params)
 
 
 def signUp(request):
-    return HttpResponse('hey')
+    userPk = request.POST.get('userPk') or str(request.user.pk)
+
+    return HttpResponse(userPk)
