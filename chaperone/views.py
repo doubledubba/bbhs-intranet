@@ -24,7 +24,8 @@ def eventPage(request, eventID):
     return render(request, 'chaperone/eventPage.html', params)
 
 
-def signUp(request):
+def signUp(request, eventID):
+    event = get_object_or_404(Event, pk=eventID)
     userPk = request.POST.get('userPk') or str(request.user.pk)
 
     return HttpResponse(userPk)
