@@ -7,7 +7,7 @@ from intranet.models import UserProfile
 
 class Event(models.Model):
     name = models.CharField(max_length=80)
-    admin = models.ForeignKey(UserProfile)
+    admin = models.ForeignKey(UserProfile) # This could be a problem
     date = models.DateTimeField()
     volunteersNeeded = models.IntegerField()
     volunteersRegistered = models.CommaSeparatedIntegerField(max_length=80, blank=True)
@@ -116,7 +116,7 @@ class Event(models.Model):
             self.volunteersRegistered = user.pk
 
         self.save()
-        return 'yeaa'
+        return 'Succesfully signed up %s' % user
 
     def removeUser(self, userPK):
         if userPK in self.volunteersRegistered:

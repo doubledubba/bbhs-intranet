@@ -28,7 +28,11 @@
                     {{ event.name }}
                 </a>
             </td>
+            {% if event.admin.user.get_full_name %}
             <td>{{ event.admin.user.get_full_name }}</td>
+            {% else %}
+            <td>{{ event.admin }}</td>
+            {% endif %}
             <td>{{ event.date }}</td>
             <td>{{ event.volunteersNeeded }}</td>
             <td>{{ event.showVolunteers }}</td>

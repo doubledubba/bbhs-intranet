@@ -38,3 +38,14 @@ def removeChaperone(request, eventID):
     message = event.removeUser(userPk)
     return redirect(event)
     return HttpResponse(message)
+
+'''TODO:
+    Redirect after forms with status message
+    LDAP mirroring bug?
+    Polish gui
+    Edge case testing
+    Userprofile vs User in models
+    Userprofile initiation requirement in gui
+    Default chaperone events needed for users
+    deployment
+'''
