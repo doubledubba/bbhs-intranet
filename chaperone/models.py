@@ -117,3 +117,7 @@ class Event(models.Model):
 
         self.save()
         return 'yeaa'
+
+    def removeUser(self, userPK):
+        if userPK in self.volunteersRegistered:
+            return 'removed'

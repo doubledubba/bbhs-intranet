@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.models import User
@@ -29,5 +29,11 @@ def signUp(request, eventID):
     userPk = request.POST.get('userPk') or str(request.user.pk)
     user = User.objects.get(pk=userPk)
     message = event.signUp(user)
+    return redirect(event.get_absolute_url())
+    return HttpResponse(userPk + message) # redirect to thanks page
 
-    return HttpResponse(userPk + message)
+def removeChaperone(request, eventID):
+    event = get_object_or_404(Event, pk=eventID)
+    userPk = request.POST.get('userPk') or str(request.user.pk)
+    message = event.removeUser(userPk)
+    return HttpResponse(message)
