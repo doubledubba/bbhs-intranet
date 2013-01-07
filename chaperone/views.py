@@ -30,10 +30,10 @@ def signUp(request, eventID):
     user = User.objects.get(pk=userPk)
     message = event.signUp(user)
     return redirect(event.get_absolute_url())
-    return HttpResponse(userPk + message) # redirect to thanks page
 
 def removeChaperone(request, eventID):
     event = get_object_or_404(Event, pk=eventID)
-    userPk = request.POST.get('userPk') or str(request.user.pk)
+    userPk = request.POST.get('userPk') or str(request.user.pk) # local user is
+    # being set always BUG
     message = event.removeUser(userPk)
     return HttpResponse(message)

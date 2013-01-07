@@ -120,4 +120,14 @@ class Event(models.Model):
 
     def removeUser(self, userPK):
         if userPK in self.volunteersRegistered:
-            return 'removed'
+            index = self.volunteersRegistered.find(userPK)
+            temp = list(self.volunteersRegistered)
+            if index == 0: # at beginning
+                temp = temp[2:] # drop off pk + comma at start
+            else: # not at beginning
+                del temp[index] # pk
+                del temp[index] # preceding comma, shifted
+            self.volunteersRegistered = ''.join(temp)
+            self.save()
+            return 'Removed user# %s' % userPK
+        return "User# %s not in database" % userPK
