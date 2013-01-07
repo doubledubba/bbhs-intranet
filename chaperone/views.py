@@ -36,4 +36,5 @@ def removeChaperone(request, eventID):
     userPk = request.POST.get('userPk') or str(request.user.pk) # local user is
     # being set always BUG
     message = event.removeUser(userPk)
+    return redirect(event)
     return HttpResponse(message)

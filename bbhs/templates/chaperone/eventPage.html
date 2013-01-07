@@ -100,7 +100,7 @@
         <div class="tab-pane" id="tab5">
             <form method="POST" action="{{ event.get_absolute_url }}/removeChaperone">
                 {% csrf_token %}
-                <select name="status">
+                <select name="userPk">
                     {% for user in event.getVolunteers %}
                     <option value="{{ user.pk }}">{{ user }}</option>
                     {% endfor %}
