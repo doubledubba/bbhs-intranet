@@ -125,8 +125,11 @@ class Event(models.Model):
             if index == 0: # at beginning
                 temp = temp[2:] # drop off pk + comma at start
             else: # not at beginning
+                print temp
                 del temp[index] # pk
-                del temp[index] # preceding comma, shifted
+                print temp
+                del temp[index - 1]# preceding comma, shifted
+                print temp
             self.volunteersRegistered = ''.join(temp)
             self.save()
             return 'Removed user# %s' % userPK
