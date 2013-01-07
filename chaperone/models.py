@@ -107,6 +107,9 @@ class Event(models.Model):
         return str(user.pk) in self.volunteersRegistered
 
     def signUp(self, user):
+        if str(user.pk) in self.volunteersRegistered:
+            return 'Already registered!'
+
         if self.volunteersRegistered:
             self.volunteersRegistered += ',%s' % user.pk
         else:
