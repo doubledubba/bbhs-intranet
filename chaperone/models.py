@@ -107,10 +107,10 @@ class Event(models.Model):
         return str(user.pk) in self.volunteersRegistered
 
     def signUp(self, user):
-        if self.volunteersNeeded > 0:
-            if str(user.pk) in self.volunteersRegistered:
-                return 'Already registered!'
+        if str(user.pk) in self.volunteersRegistered:
+            return '%s is already registered!' % user
 
+        if self.volunteersNeeded > 0:
             if self.volunteersRegistered:
                 self.volunteersRegistered += ',%s' % user.pk
             else:
@@ -134,6 +134,8 @@ class Event(models.Model):
                 del temp[index - 1]# preceding comma, shifted
                 print temp
             self.volunteersRegistered = ''.join(temp)
+            if self.volunteersNeeded > 0:
+                self.volunteersNeeded += 1
             self.save()
             return 'Removed user# %s' % userPK
         return "User# %s not in database" % userPK
