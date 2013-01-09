@@ -67,4 +67,9 @@ def userPage(request, username):
     deployment
     User page w/ require permission to view + populate with relevant data -
     Notifications page on chaperone index
+    make administrator optional
+    Create events form
+        + Search database for users who need events and notify users of details
+        via email.
+        + Bool field for event to toggle mass notification ^
 '''
