@@ -25,10 +25,17 @@ def eventPage(request, eventID):
 
 
 def signUp(request, eventID):
+    '''Signs up a user for an event.
+
+    The view should check to see if there are any more users needed.
+    If not, don't let the user sign up and redirect to an error page.
+    If they are, sign the user up and let them know!'''
+    
     event = get_object_or_404(Event, pk=eventID)
     userPk = request.POST.get('userPk') or str(request.user.pk)
     user = User.objects.get(pk=userPk)
     message = event.signUp(user)
+    return HttpResponse(message)
     return redirect(event.get_absolute_url())
 
 def removeChaperone(request, eventID):
@@ -52,4 +59,5 @@ def userPage(request, username):
     Default chaperone events needed for users *
     deployment
     User page w/ require permission to view + populate with relevant data -
+    Notifications page on chaperone index
 '''

@@ -107,16 +107,19 @@ class Event(models.Model):
         return str(user.pk) in self.volunteersRegistered
 
     def signUp(self, user):
-        if str(user.pk) in self.volunteersRegistered:
-            return 'Already registered!'
+        if self.volunteersNeeded > 0:
+            if str(user.pk) in self.volunteersRegistered:
+                return 'Already registered!'
 
-        if self.volunteersRegistered:
-            self.volunteersRegistered += ',%s' % user.pk
+            if self.volunteersRegistered:
+                self.volunteersRegistered += ',%s' % user.pk
+            else:
+                self.volunteersRegistered = user.pk
+            self.volunteersNeeded -= 1
+            self.save()
+            return 'Succesfully signed up %s' % user
         else:
-            self.volunteersRegistered = user.pk
-
-        self.save()
-        return 'Succesfully signed up %s' % user
+            return 'Sorry, no more volunteers needed!'
 
     def removeUser(self, userPK):
         if userPK in self.volunteersRegistered:
