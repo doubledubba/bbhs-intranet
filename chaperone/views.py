@@ -39,6 +39,9 @@ def removeChaperone(request, eventID):
     return redirect(event)
     return HttpResponse(message)
 
+def userPage(request, username):
+    return HttpResponse(username)
+
 '''TODO:
     Redirect after forms with status message
     LDAP mirroring bug? *
