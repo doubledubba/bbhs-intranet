@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from chaperone.models import Event
 
+from urllib import urlencode
+
 
 @login_required
 def index(request):
@@ -18,6 +20,8 @@ def index(request):
 def eventPage(request, eventID):
     event = get_object_or_404(Event, pk=eventID)
     params = {'event': event}
+    params['alert'] = request.GET.get('alert')
+    params['message'] = request.GET.get('message')
     params['view_chaperones'] = request.user.has_perm('chaperone.view_chaperones')
     params['add_chaperones'] = request.user.has_perm('chaperone.add_chaperones')
     params['remove_chaperones'] = request.user.has_perm('chaperone.remove_chaperones')
@@ -37,8 +41,9 @@ def signUp(request, eventID):
     userPk = request.POST.get('userPk') or str(request.user.pk)
     user = User.objects.get(pk=userPk)
     message = event.signUp(user)
-    return HttpResponse(message)
-    return redirect(event.get_absolute_url())
+    thanks = event.get_absolute_url() + '?'
+    thanks += urlencode({'alert': 'error', 'message': message})
+    return redirect(thanks)
 
 def removeChaperone(request, eventID):
     event = get_object_or_404(Event, pk=eventID)
