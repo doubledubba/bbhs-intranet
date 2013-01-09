@@ -5,6 +5,13 @@
 {% block body %}
 <h1>Welcome to the Chaperone system!</h1>
 
+{% if alert and message %}
+<div class="alert alert-{{ alert }}">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ message }}
+</div>
+{% endif %}
+
 
 <table border="1" class="table table-striped">
     <thead>

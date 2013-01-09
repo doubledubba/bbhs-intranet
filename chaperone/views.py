@@ -9,6 +9,8 @@ from chaperone.models import Event
 @login_required
 def index(request):
     params = {'events': Event.future_events()}
+    params['alert'] = request.GET.get('alert')
+    params['message'] = request.GET.get('message')
     return render(request, 'chaperone/index.html', params)
 
 
