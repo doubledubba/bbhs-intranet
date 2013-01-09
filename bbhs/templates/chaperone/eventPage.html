@@ -24,9 +24,6 @@
         {% if sign_up %}
         <li><a href="#tab2" data-toggle="tab">Sign up</a></li>
         {% endif %}
-        {% if view_chaperones %} <!-- WRONG. If part of admin group -->
-        <li><a href="#tab3" data-toggle="tab">Volunteers Registered</a></li> <!-- Admin only -->
-        {% endif %}
         {% if add_chaperones %}
         <li><a href="#tab4" data-toggle="tab">Sign someone up</a></li> <!-- Admin only -->
         {% endif %}
@@ -51,21 +48,11 @@
 
             <h5>Volunteers Needed</h5>
             <p>{{ event.volunteersNeeded }}</p>
-        </div>
 
-        {% if sign_up %}
-        <div class="tab-pane" id="tab2">
-            <a href="{{ event.get_absolute_url }}/signUp" class="btn btn-large btn-primary">
-                Sign up for this event!</a>
-        </div>
-        {% endif %}
-
-        {% if view_chaperones %}
-        <div class="tab-pane" id="tab3">
-            <p>#Need to implement user profile
-            pages</p>
+            <h5>Volunteers Registered</h5>
+            {% if view_chaperones %}
             <ul>
-            {% for user in event.getVolunteers %}
+                {% for user in event.getVolunteers %}
                 <li><a href="{{ user.get_absolute_url }}">
                     {% if user.get_full_name %}
                     {{ user.get_full_name }} ({{ user }})
@@ -73,9 +60,17 @@
                     {{ user }}
                     {% endif %}
                 </a></li>
-            {% endfor %}
+                {% endfor %}
             </ul>
-            </p>
+            {% else %}
+            <p>You do not have sufficient priviledges to view other members</p>
+            {% endif %}
+        </div>
+
+        {% if sign_up %}
+        <div class="tab-pane" id="tab2">
+            <a href="{{ event.get_absolute_url }}/signUp" class="btn btn-large btn-primary">
+                Sign up for this event!</a>
         </div>
         {% endif %}
 

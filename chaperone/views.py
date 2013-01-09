@@ -41,11 +41,12 @@ def removeChaperone(request, eventID):
 
 '''TODO:
     Redirect after forms with status message
-    LDAP mirroring bug?
+    LDAP mirroring bug? *
     Polish gui
     Edge case testing
-    Userprofile vs User in models
-    Userprofile initiation requirement in gui
-    Default chaperone events needed for users
+    Userprofile vs User in models *
+    Userprofile initiation requirement in gui *
+    Default chaperone events needed for users *
     deployment
+    User page w/ require permission to view + populate with relevant data -
 '''
