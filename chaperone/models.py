@@ -113,4 +113,4 @@ class Event(models.Model):
             self.volunteersRegistered = user.pk
 
         self.save()
-        return 'yeaa'
+        return 'success', 'Signed up user'

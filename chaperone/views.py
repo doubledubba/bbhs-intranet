@@ -1,14 +1,17 @@
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.models import User
 from chaperone.models import Event
 
+from urllib import urlencode
 
 @login_required
 def index(request):
     params = {'events': Event.future_events()}
+    params['alert'] = request.GET.get('alert')
+    params['message'] = request.GET.get('message')
     return render(request, 'chaperone/index.html', params)
 
 
@@ -28,6 +31,8 @@ def signUp(request, eventID):
     event = get_object_or_404(Event, pk=eventID)
     userPk = request.POST.get('userPk') or str(request.user.pk)
     user = User.objects.get(pk=userPk)
-    message = event.signUp(user)
+    alert, message = event.signUp(user)
+    thanks = '/chaperone/?'
+    thanks += urlencode({'alert': alert, 'message': message})
 
-    return HttpResponse(userPk + message)
+    return redirect(thanks)
