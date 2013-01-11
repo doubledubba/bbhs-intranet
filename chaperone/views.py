@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
@@ -36,3 +36,10 @@ def signUp(request, eventID):
     thanks += urlencode({'alert': alert, 'message': message})
 
     return redirect(thanks)
+
+def removeUser(request):
+    userPk = request.POST.get('userPk')
+    if not userPk:
+        raise Http404
+    user = User.objects.get(pk=userPk)
+    return HttpResponse(user)

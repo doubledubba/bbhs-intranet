@@ -114,3 +114,4 @@ class Event(models.Model):
 
         self.save()
         return 'success', 'Signed up user'
+
