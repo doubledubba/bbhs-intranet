@@ -107,6 +107,8 @@ class Event(models.Model):
         return str(user.pk) in self.volunteersRegistered
 
     def signUp(self, user):
+        if str(user.pk) in self.volunteersRegistered:
+            return 'error', 'User is already signed up'
         if self.volunteersRegistered:
             self.volunteersRegistered += ',%s' % user.pk
         else:
@@ -116,6 +118,10 @@ class Event(models.Model):
         return 'success', 'Signed up user'
 
     def removeVolunteer(self, user):
+        ''' BUG HUGE BUG
+        What about users with PK's larger than one digit?
+        '''
+
         if str(user.pk) not in self.volunteersRegistered:
             return 'error', 'Can\'t find "%s": Not Found' % user
         i = self.volunteersRegistered.find(str(user.pk))
@@ -125,4 +131,4 @@ class Event(models.Model):
             del self.volunteersRegistered[i] # PK
             del self.volunteersRegistered[i] # Comma after PK
         self.save()
-        return 'success', 'Unregistered: %s' % user
+        return 'info', 'Unregistered: %s' % user

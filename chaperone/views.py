@@ -7,6 +7,10 @@ from chaperone.models import Event
 
 from urllib import urlencode
 
+'''TODO:
+    + Shouldn't be able to add a user more than once
+
+'''
 
 def notify(alert, message, thanks='/chaperone/'):
     thanks += '?'
@@ -51,5 +55,5 @@ def removeUser(request, eventID):
         raise Http404
     user = User.objects.get(pk=userPk)
     alert, message = event.removeVolunteer(user)
-    return notify(alert, message)
+    return notify(alert, message, event.get_absolute_url())
     
