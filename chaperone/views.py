@@ -7,6 +7,13 @@ from chaperone.models import Event
 
 from urllib import urlencode
 
+
+def notify(alert, message, thanks='/chaperone/'):
+    thanks += '?'
+    thanks += urlencode({'alert': alert, 'message': message})
+
+    return redirect(thanks)
+
 @login_required
 def index(request):
     params = {'events': Event.future_events()}
@@ -19,6 +26,8 @@ def index(request):
 def eventPage(request, eventID):
     event = get_object_or_404(Event, pk=eventID)
     params = {'event': event}
+    params['alert'] = request.GET.get('alert')
+    params['message'] = request.GET.get('message')
     params['view_chaperones'] = request.user.has_perm('chaperone.view_chaperones')
     params['add_chaperones'] = request.user.has_perm('chaperone.add_chaperones')
     params['remove_chaperones'] = request.user.has_perm('chaperone.remove_chaperones')
@@ -32,14 +41,15 @@ def signUp(request, eventID):
     userPk = request.POST.get('userPk') or str(request.user.pk)
     user = User.objects.get(pk=userPk)
     alert, message = event.signUp(user)
-    thanks = '/chaperone/?'
-    thanks += urlencode({'alert': alert, 'message': message})
+    return notify(alert, message, event.get_absolute_url())
 
-    return redirect(thanks)
 
-def removeUser(request):
+def removeUser(request, eventID):
+    event = Event.objects.get(pk=eventID)
     userPk = request.POST.get('userPk')
     if not userPk:
         raise Http404
     user = User.objects.get(pk=userPk)
-    return HttpResponse(user)
+    alert, message = event.removeVolunteer(user)
+    return notify(alert, message)
+    

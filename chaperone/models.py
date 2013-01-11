@@ -115,3 +115,14 @@ class Event(models.Model):
         self.save()
         return 'success', 'Signed up user'
 
+    def removeVolunteer(self, user):
+        if str(user.pk) not in self.volunteersRegistered:
+            return 'error', 'Can\'t find "%s": Not Found' % user
+        i = self.volunteersRegistered.find(str(user.pk))
+        if i == 0:
+            self.volunteersRegistered = self.volunteersRegistered[2:]
+        else:
+            del self.volunteersRegistered[i] # PK
+            del self.volunteersRegistered[i] # Comma after PK
+        self.save()
+        return 'success', 'Unregistered: %s' % user

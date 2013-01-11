@@ -4,5 +4,5 @@ urlpatterns = patterns('chaperone.views',
     url(r'^$', 'index'),
     url(r'^eventPage/(?P<eventID>\d+)/$', 'eventPage'),
     url(r'^eventPage/(?P<eventID>\d+)/signUp$', 'signUp'),
-    url(r'^removeUser/$', 'removeUser'),
+    url(r'^eventPage/(?P<eventID>\d+)/removeUser/$', 'removeUser'),
 )

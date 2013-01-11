@@ -94,7 +94,7 @@
 
         {% if remove_chaperones %}
         <div class="tab-pane" id="tab5">
-            <form method="POST" action="/chaperone/removeUser/">
+            <form method="POST" action="{{ event.get_absolute_url }}/removeUser/">
                 {% csrf_token %}
                 <select name="userPk">
                     {% for user in event.getVolunteers %}
