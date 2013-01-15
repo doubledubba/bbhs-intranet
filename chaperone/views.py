@@ -11,6 +11,10 @@ from urllib import urlencode
 + Increment/Decrement volunteersNeeded
 + Remove users who are already signed up on the event signup page
 + Test to see if we still need more volunteers befor sign up
++ Automatic Email/Twilio Notifications for users/admins
++ Form for manual notifications
++ Hosting
+    - Web Server (Gunicon? Nginx?)
 '''
 
 def notify(alert, message, thanks='/chaperone/'):
