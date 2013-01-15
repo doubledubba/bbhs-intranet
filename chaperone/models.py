@@ -62,6 +62,20 @@ class Event(models.Model):
 
         return users
 
+    def showVolunteers(self):
+        return '<a href="google.com">asdf</a>'
+        pks = self.getPks()
+        names = ''
+        if pks:
+            for pk in pks:
+                user = User.objects.get(pk=pk)
+                username = user.get_full_name() or str(user)
+                if names == '':
+                    names = username
+                else:
+                    names += ', ' + username
+            return names
+
     def expired(self, now=datetime.utcnow().replace(tzinfo=utc)):
         ''' Returns True if the event has already passed.
 
@@ -81,8 +95,6 @@ class Event(models.Model):
 
     def signUp(self, user):
         volunteerPks = self.getPks()
-        print user
-        print volunteerPks
         if user.pk in volunteerPks:
             return 'error', '%s is already signed up' % user
         if volunteerPks:

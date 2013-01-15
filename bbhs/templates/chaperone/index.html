@@ -28,10 +28,18 @@
                     {{ event.name }}
                 </a>
             </td>
+            {% if event.admin.user.get_full_name %}
             <td>{{ event.admin.user.get_full_name }}</td>
+            {% else %}
+            <td>{{ event.admin.user }}</td>
+            {% endif %}
             <td>{{ event.date }}</td>
             <td>{{ event.volunteersNeeded }}</td>
-            <td>{{ event.showVolunteers }}</td>
+            <td>
+                {% for volunteer in event.getVolunteers %}
+                <a href="{{ volunteer.get_absolute_url }}">{{ volunteer }}</a>,
+                {% endfor %}
+            </td>
             <td>{{ event.description }}</td>
  
         </tr>

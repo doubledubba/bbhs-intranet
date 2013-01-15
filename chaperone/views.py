@@ -8,7 +8,6 @@ from chaperone.models import Event
 from urllib import urlencode
 
 '''TODO:
-    + Shouldn't be able to add a user more than once
 
 '''
 
@@ -36,7 +35,7 @@ def eventPage(request, eventID):
     params['add_chaperones'] = request.user.has_perm('chaperone.add_chaperones')
     params['remove_chaperones'] = request.user.has_perm('chaperone.remove_chaperones')
     params['sign_up'] = request.user.has_perm('chaperone.sign_up')
-    params['users'] = User.objects.all() # TODO: filter for sign_up perm
+    params['users'] = User.objects.all()
     return render(request, 'chaperone/eventPage.html', params)
 
 
