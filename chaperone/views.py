@@ -8,6 +8,7 @@ from chaperone.models import Event
 from urllib import urlencode
 
 '''TODO:
+Increment/Decrement volunteersNeeded
 
 '''
 

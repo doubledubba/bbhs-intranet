@@ -102,6 +102,8 @@ class Event(models.Model):
             self.volunteersRegistered = json.dumps(volunteerPks)
         else:
             self.volunteersRegistered = json.dumps([user.pk,])
+        if self.volunteersNeeded > 0:
+            self.volunteersNeeded -= 1
 
         self.save()
         return 'success', 'Signed up %s' % user
@@ -115,5 +117,6 @@ class Event(models.Model):
             return 'error', 'Can\'t find "%s": Not Found' % user
         volunteerPks.remove(user.pk)
         self.volunteersRegistered = json.dumps(volunteerPks)
+        self.volunteersNeeded += 1
         self.save()
         return 'info', 'Unregistered: %s' % user
