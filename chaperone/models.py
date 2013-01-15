@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 
 from django.db import models
@@ -10,7 +11,7 @@ class Event(models.Model):
     admin = models.ForeignKey(UserProfile)
     date = models.DateTimeField()
     volunteersNeeded = models.IntegerField()
-    volunteersRegistered = models.CommaSeparatedIntegerField(max_length=80, blank=True)
+    volunteersRegistered = models.CharField(max_length=80, blank=True)
     description = models.TextField(blank=True)
 
     volunteersNeeded.verbose_name = 'Volunteers Needed'
@@ -40,46 +41,18 @@ class Event(models.Model):
 
         return Event.objects.filter(date__gte=now).order_by('date')
 
-    def addVolunteer(self, volunteer):
-        ''' Handles the registering of volunteers
-
-        volunteer is a User object, not a UserProfile'''
-
-
-        if not self.volunteersRegistered:
-            self.volunteersRegistered = volunteer.pk
-        else:
-            self.volunteersRegistered += ',%d' % volunteer.pk
-        self.save()
-
-    def showVolunteers(self):
-        '''DEPRECATED: Returns a string of volunteers
-
-        The volunteers returned have all signed up for this event.
-        NOTICE: The pk of the User and UserProfile MAY NOT BE EQUAL
-        Use the User's pk for security.
-        I replaced this with the lower level getVolunteers method.
-        I'm not sure if this can be deleted yet.'''
-
-        volunteerPKs = self.volunteersRegistered.split(',')
-        if volunteerPKs == [u'']:
-            return 'No volunteers!'
-
-        names = ''
-        for pk in volunteerPKs:
-            user = User.objects.get(pk=pk)
-            if names:
-                names += ', %s' % user.username
-            else:
-                names = user.username
-
-        return names
+    def getPks(self):
+        try:
+            pks = json.loads(self.volunteersRegistered)
+        except ValueError:
+            pks = []
+        return pks
 
     def getVolunteers(self):
         '''Returns a list of volunteer User objects.'''
 
-        volunteerPKs = self.volunteersRegistered.split(',')
-        if volunteerPKs == [u'']:
+        volunteerPKs = self.getPks()
+        if not volunteerPKs:
             return None
 
         users = []
@@ -98,21 +71,25 @@ class Event(models.Model):
 
         return self.date < now
 
-
     def signedUp(self, user):
         '''Return true if the User is signed up for this event.
         
         Experimental functionality - not tested'''
 
+        users = self.volunteers
         return str(user.pk) in self.volunteersRegistered
 
     def signUp(self, user):
-        if str(user.pk) in self.volunteersRegistered:
+        volunteerPks = self.getPks()
+        print user
+        print volunteerPks
+        if user.pk in volunteerPks:
             return 'error', 'User is already signed up'
-        if self.volunteersRegistered:
-            self.volunteersRegistered += ',%s' % user.pk
+        if volunteerPks:
+            volunteerPks.append(user.pk)
+            self.volunteersRegistered = json.dumps(volunteerPks)
         else:
-            self.volunteersRegistered = user.pk
+            self.volunteersRegistered = json.dumps([user.pk,])
 
         self.save()
         return 'success', 'Signed up user'
