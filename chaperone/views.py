@@ -52,7 +52,9 @@ def removeUser(request, eventID):
     event = Event.objects.get(pk=eventID)
     userPk = request.POST.get('userPk')
     if not userPk:
-        raise Http404
+        url = event.get_absolute_url() + '?'
+        url += urlencode({'alert': 'error', 'message': 'No users left to remove!'})
+        return redirect(url)
     user = User.objects.get(pk=userPk)
     alert, message = event.removeVolunteer(user)
     return notify(alert, message, event.get_absolute_url())

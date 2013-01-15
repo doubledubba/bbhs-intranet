@@ -92,7 +92,8 @@
         </div>
         {% endif %}
 
-        {% if remove_chaperones %}
+        {% if remove_chaperones %} <!-- TODO: Find a way to remove the form if
+        not volunteers left to remove -->
         <div class="tab-pane" id="tab5">
             <form method="POST" action="{{ event.get_absolute_url }}/removeUser/">
                 {% csrf_token %}
