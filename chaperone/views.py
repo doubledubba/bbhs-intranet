@@ -10,7 +10,7 @@ from urllib import urlencode
 '''TODO:
 + Increment/Decrement volunteersNeeded
 + Remove users who are already signed up on the event signup page
-
++ Test to see if we still need more volunteers befor sign up
 '''
 
 def notify(alert, message, thanks='/chaperone/'):
