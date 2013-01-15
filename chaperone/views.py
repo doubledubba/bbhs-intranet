@@ -8,7 +8,8 @@ from chaperone.models import Event
 from urllib import urlencode
 
 '''TODO:
-Increment/Decrement volunteersNeeded
++ Increment/Decrement volunteersNeeded
++ Remove users who are already signed up on the event signup page
 
 '''
 
