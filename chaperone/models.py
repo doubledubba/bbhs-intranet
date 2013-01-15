@@ -84,7 +84,7 @@ class Event(models.Model):
         print user
         print volunteerPks
         if user.pk in volunteerPks:
-            return 'error', 'User is already signed up'
+            return 'error', '%s is already signed up' % user
         if volunteerPks:
             volunteerPks.append(user.pk)
             self.volunteersRegistered = json.dumps(volunteerPks)
@@ -92,20 +92,16 @@ class Event(models.Model):
             self.volunteersRegistered = json.dumps([user.pk,])
 
         self.save()
-        return 'success', 'Signed up user'
+        return 'success', 'Signed up %s' % user
 
     def removeVolunteer(self, user):
         ''' BUG HUGE BUG
         What about users with PK's larger than one digit?
         '''
-
-        if str(user.pk) not in self.volunteersRegistered:
+        volunteerPks = self.getPks()
+        if user.pk not in volunteerPks:
             return 'error', 'Can\'t find "%s": Not Found' % user
-        i = self.volunteersRegistered.find(str(user.pk))
-        if i == 0:
-            self.volunteersRegistered = self.volunteersRegistered[2:]
-        else:
-            del self.volunteersRegistered[i] # PK
-            del self.volunteersRegistered[i] # Comma after PK
+        volunteerPks.remove(user.pk)
+        self.volunteersRegistered = json.dumps(volunteerPks)
         self.save()
         return 'info', 'Unregistered: %s' % user
