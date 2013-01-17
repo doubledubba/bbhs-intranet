@@ -22,6 +22,8 @@ from urllib import urlencode
     - Web Server (Gunicon? Nginx?)
 + Re-structuring code
     - Add eventPK in a field for userProfile in chaperone
++ Add URL Shortener app
++ Collect contact info from users
 '''
 
 def notify(alert, message, thanks='/chaperone/'):
