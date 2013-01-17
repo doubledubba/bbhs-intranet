@@ -8,7 +8,7 @@ from intranet.models import UserProfile
 
 class Event(models.Model):
     name = models.CharField(max_length=80)
-    admin = models.ForeignKey(UserProfile)
+    admin = models.ForeignKey(User)
     date = models.DateTimeField()
     volunteersNeeded = models.IntegerField()
     volunteersRegistered = models.CharField(max_length=80, blank=True)
