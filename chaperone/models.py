@@ -104,6 +104,8 @@ class Event(models.Model):
             self.volunteersRegistered = json.dumps([user.pk,])
         if self.volunteersNeeded > 0:
             self.volunteersNeeded -= 1
+        else:
+            return 'error', 'Sorry, no more volunteers needed'
 
         self.save()
         return 'success', 'Signed up %s' % user
