@@ -53,7 +53,8 @@
             <h5>Volunteers Signed Up</h5>
             <ul>
             {% for user in event.getVolunteers %}
-            <li><a href="{{ user.get_absolute_url }}">
+            <li><a href="{{ user.get_absolute_url }}"> <!-- This should be a
+                userprofile -->
                 {% if user.get_full_name %}
                 {{ user.get_full_name }} ({{ user }})
                 {% else %}

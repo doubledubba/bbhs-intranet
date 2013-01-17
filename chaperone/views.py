@@ -20,6 +20,8 @@ from urllib import urlencode
 + Form for manual notifications
 + Hosting
     - Web Server (Gunicon? Nginx?)
++ Re-structuring code
+    - Add eventPK in a field for userProfile in chaperone
 '''
 
 def notify(alert, message, thanks='/chaperone/'):
@@ -69,3 +71,12 @@ def removeUser(request, eventID):
     alert, message = event.removeVolunteer(user)
     return notify(alert, message, event.get_absolute_url())
     
+def userPage(request, username):
+    user = User.objects.get(username=username)
+    events = []
+    for event in Event.objects.all():
+        pks = event.getPks()
+        if user.pk in pks:
+            events.append(event)
+    params = {'events': events}
+    return render(request, 'chaperone/userPage.html', params)
