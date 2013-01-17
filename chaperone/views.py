@@ -8,9 +8,10 @@ from chaperone.models import Event
 from urllib import urlencode
 
 '''TODO:
-+ Increment/Decrement volunteersNeeded
++ Increment/Decrement USER'S eventsNeeeded
++ User Profile pages
++ LDAP Bug
 + Remove users who are already signed up on the event signup page
-+ Test to see if we still need more volunteers befor sign up
 + Automatic Email/Twilio Notifications for users/admins
 + Form for manual notifications
 + Hosting

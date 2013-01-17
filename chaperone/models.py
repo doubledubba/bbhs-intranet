@@ -107,6 +107,11 @@ class Event(models.Model):
         else:
             return 'error', 'Sorry, no more volunteers needed'
 
+        print repr(user)
+
+        userProfile = user.get_profile()
+        userProfile.signUp()
+
         self.save()
         return 'success', 'Signed up %s' % user
 

@@ -6,7 +6,7 @@ from django.db.models.signals import post_save
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
-    eventsNeeded = models.IntegerField(null=True)
+    eventsNeeded = models.IntegerField(null=True, default=4)
     eventsNeeded.verbose_name = '(Chaperone) Events Needed'
 
     def __unicode__(self):
@@ -19,6 +19,9 @@ class UserProfile(models.Model):
         except UserProfile.DoesNotExist:
             pass 
         models.Model.save(self, *args, **kwargs)
+
+    def signUp(self):
+        return True
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
