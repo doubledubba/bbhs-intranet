@@ -11,6 +11,10 @@ from urllib import urlencode
 + Increment/Decrement USER'S eventsNeeeded
 + User Profile pages
 + LDAP Bug
+    - Over-riding
+    - Updating db
++ Custom links for auth'ed users
++ Setup groups
 + Remove users who are already signed up on the event signup page
 + Automatic Email/Twilio Notifications for users/admins
 + Form for manual notifications
