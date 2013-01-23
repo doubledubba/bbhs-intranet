@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load clippy %}
+
+
+{% block body %}
+<h1>Thanks!</h1>
+<p>Your data is valid, and your link has been shortened for you.
+<br>
+<input id="clipfield" value="{{ url.get_absolute_url }}"> {% clippy "clipfield" %}
+
+<br>
+<a href="{{ url.get_absolute_url }}">Test: {{ url.get_absolute_url }}</a>
+</p>
+
+
+{% endblock body %}

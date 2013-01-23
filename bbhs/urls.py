@@ -13,6 +13,14 @@ urlpatterns = patterns('intranet.views',
 urlpatterns += patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^chaperone/', include('chaperone.urls'),),
-    url(r'^service/', include('service.urls'),),
+    url(r'^service/', include('service.urls'))
+)
+
+short = '(?P<short>.{6})'
+urlpatterns += patterns('shortener.views',
+    url(r'^shortener/', 'index'),
+    url(r'^thanks/%s/$' % short, 'thanks'),
+    url(r'^%s$' % short, 'activate'),
 
 )
+
