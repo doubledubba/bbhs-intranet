@@ -9,6 +9,14 @@ from shortener.models import Url, UrlForm
 chars = string.lowercase + string.uppercase + '0123456789'
 randomString = lambda: ''.join([random.choice(chars) for a in range(6)])
 
+'''
+TODO:
+Add support for custom string shortening
+Add forms for adding urls after checking for availability
+Error reporting in case the desired url is taken
+	- Show them how to delete the existing URL if they want to
+'''
+
 
 def index(request):
     if request.method == 'POST':
