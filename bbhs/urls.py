@@ -1,26 +1,17 @@
 from django.conf.urls import patterns, include, url
 
-from django.contrib import admin
-admin.autodiscover()
+# Uncomment the next two lines to enable the admin:
+# from django.contrib import admin
+# admin.autodiscover()
 
-urlpatterns = patterns('intranet.views',
-    url(r'^$', 'index'),
-    url(r'^login/$', 'loginView'),
-    url(r'^logout/$', 'logoutView'),
+urlpatterns = patterns('',
+    # Examples:
+    # url(r'^$', 'bbhs.views.home', name='home'),
+    # url(r'^bbhs/', include('bbhs.foo.urls')),
 
+    # Uncomment the admin/doc line below to enable admin documentation:
+    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+
+    # Uncomment the next line to enable the admin:
+    # url(r'^admin/', include(admin.site.urls)),
 )
-
-urlpatterns += patterns('',
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^chaperone/', include('chaperone.urls'),),
-    url(r'^service/', include('service.urls'))
-)
-
-short = '(?P<short>.{6})'
-urlpatterns += patterns('shortener.views',
-    url(r'^shortener/', 'index'),
-    url(r'^thanks/%s/$' % short, 'thanks'),
-    url(r'^%s$' % short, 'activate'),
-
-)
-

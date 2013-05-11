@@ -1,57 +1,35 @@
-import os
-
-import ldap
-from django_auth_ldap.config import LDAPSearch, ActiveDirectoryGroupType
-
-'''TODO
-In eventPage.html
-    + Change "if superuser" to "if in admin group"
-
-Create user profile 
-
-Phone number and department from LDAP in userprofile
-
-Delete user form on chaperone page
-
-URL Shortener
-
-Implement {{ event.get_absolute_url }}/signup view+url
-'''
-
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+# Django settings for bbhs project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Luis Naranjo', 'luisnaranjo733@gmail.com'),
+    # ('Your Name', 'your_email@example.com'),
 )
 
 MANAGERS = ADMINS
 
-AUTH_PROFILE_MODULE = 'intranet.UserProfile'
-LOGIN_URL = '/login/'
-
-ABSOLUTE_URL_OVERRIDES = {
-    'auth.user': lambda u: "/chaperone/volunteers/%s/" % u.username,
-}
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.path.join(PROJECT_ROOT, 'bbhs.db'),                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '',                      # Or path to database file if using sqlite3.
+        # The following settings are not used with sqlite3:
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',                      # Set to empty string for default.
     }
 }
+
+# Hosts/domain names that are valid for this site; required if DEBUG is False
+# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
+ALLOWED_HOSTS = []
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'US/Pacific'
+TIME_ZONE = 'America/Chicago'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -71,27 +49,29 @@ USE_L10N = True
 USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
+# Example: "/var/www/example.com/media/"
 MEDIA_ROOT = ''
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
+# Examples: "http://example.com/media/", "http://media.example.com/"
 MEDIA_URL = ''
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'collected static')
+# Example: "/var/www/example.com/static/"
+STATIC_ROOT = ''
 
 # URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
+# Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-        os.path.join(PROJECT_ROOT, 'static files'),
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
 )
 
 # List of finder classes that know how to find static files in
@@ -103,7 +83,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'n4=oo6dem%fjurp78xt=-@0g)atgo%u59ry+z&amp;pa94va*#_0v0'
+SECRET_KEY = 'jf_l^*p*80nhi+fu*92feal6-y@gq53qs)hfq$m%kln%y!16-#'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -128,7 +108,9 @@ ROOT_URLCONF = 'bbhs.urls'
 WSGI_APPLICATION = 'bbhs.wsgi.application'
 
 TEMPLATE_DIRS = (
-        os.path.join(PROJECT_ROOT, 'templates'),
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
 )
 
 INSTALLED_APPS = (
@@ -138,16 +120,10 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
-
-    'intranet',
-    'chaperone',
-    'service',
-    'shortener',
-
-    'clippy',
-
-
+    # Uncomment the next line to enable the admin:
+    # 'django.contrib.admin',
+    # Uncomment the next line to enable admin documentation:
+    # 'django.contrib.admindocs',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -178,54 +154,3 @@ LOGGING = {
         },
     }
 }
-
-# LDAP Auth config
-# http://packages.python.org/django-auth-ldap/index.html
-AUTHENTICATION_BACKENDS = (
- 'django_auth_ldap.backend.LDAPBackend',
- 'django.contrib.auth.backends.ModelBackend',
-)
-
-AUTH_LDAP_SERVER_URI = "ldap://10.10.10.201"
-
-AUTH_LDAP_BIND_DN  = 'CN=Administrator,CN=Users,DC=testad' #to the distinguished name of an authorized user 
-AUTH_LDAP_BIND_PASSWORD = 'cookies' # to the password.
-AUTH_LDAP_USER_SEARCH = LDAPSearch("dc=testad", # Auth if in Staff
-    ldap.SCOPE_SUBTREE, "(SAMAccountName=%(user)s)")
-
-AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn",
-        'email': 'mail'}
-
-AUTH_LDAP_USER_FLAGS_BY_GROUP = {
-    "is_superuser": "cn=Technology,ou=Technology,dc=testad",
-    "is_staff": "cn=Technology,ou=Technology,dc=testad",
-}
-
-AUTH_LDAP_GROUP_TYPE = ActiveDirectoryGroupType()
-AUTH_LDAP_GROUP_SEARCH = LDAPSearch('ou=staff,dc=testad',
-        ldap.SCOPE_SUBTREE, '(cn=Staff)')
-
-AUTH_LDAP_MIRROR_GROUPS = True
-
-AUTH_LDAP_REQUIRE_GROUP = "cn=Staff,ou=staff,dc=testad"
-
-# Use the security group only, don't rely on the OU
-
-# AUTH_LDAP_CACHE_GROUPS = True
-# AUTH_LDAP_GROUP_CACHE_TIMEOUT = 300
-
-
-''' To do:
-    Configure logging:
-        - Django
-        - Auth LDAP
-        - Custom apps
-'''
-
-import logging
-
-logger = logging.getLogger('django_auth_ldap')
-logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.DEBUG)
-
-DOMAIN = 'bbhs.us'
