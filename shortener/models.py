@@ -1,7 +1,6 @@
 from django.db import models
 from django import forms
 from bbhs.settings import DOMAIN
-DOMAIN = 'faculty.bishopblanchet.org:8080'
 maxUrlDisplay = 40
 
 

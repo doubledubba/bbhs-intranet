@@ -16,6 +16,9 @@ Delete user form on chaperone page
 URL Shortener
 
 Implement {{ event.get_absolute_url }}/signup view+url
+
+DJANGO LOGGING
+Tech security group superuser access over LDAP
 '''
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -39,7 +42,7 @@ ABSOLUTE_URL_OVERRIDES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.path.join(PROJECT_ROOT, 'bbhs.db'),                      # Or path to database file if using sqlite3.
+        'NAME': '/var/www/faculty.bishopblanchet.org/sqlite.db',
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
