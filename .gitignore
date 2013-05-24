@@ -1,2 +1,4 @@
 *.pyc
 *.*~
+bbhs/passReader.py
+

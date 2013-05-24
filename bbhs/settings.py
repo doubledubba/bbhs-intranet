@@ -83,7 +83,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'collected static')
+STATIC_ROOT = '/var/www/faculty.bishopblanchet.org/static/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -189,7 +189,7 @@ AUTHENTICATION_BACKENDS = (
 AUTH_LDAP_SERVER_URI = "ldap://10.10.10.33"
 
 AUTH_LDAP_BIND_DN  = 'CN=Luis Naranjo,CN=Users,DC=campus,DC=bishopblanchet,DC=org'
-AUTH_LDAP_BIND_PASSWORD = 'cookies'
+from passReader import AUTH_LDAP_BIND_PASSWORD
 
 AUTH_LDAP_USER_SEARCH = LDAPSearchUnion(
     LDAPSearch('ou=Staff,dc=campus,dc=bishopblanchet,dc=org', ldap.SCOPE_SUBTREE, "(sAMAccountName=%(user)s)"),
