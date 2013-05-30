@@ -183,7 +183,7 @@ LOGGING = {
 }
 
 # LDAP Auth config
-# http://packages.python.org/django-auth-ldap/index.html
+#sdfas http://packages.python.org/django-auth-ldap/index.html
 AUTHENTICATION_BACKENDS = (
  'django_auth_ldap.backend.LDAPBackend',
  'django.contrib.auth.backends.ModelBackend',
@@ -191,19 +191,16 @@ AUTHENTICATION_BACKENDS = (
 
 AUTH_LDAP_SERVER_URI = "ldap://10.10.10.33"
 
-AUTH_LDAP_BIND_DN  = 'CN=Luis Naranjo,CN=Users,DC=campus,DC=bishopblanchet,DC=org'
+AUTH_LDAP_BIND_DN  = 'CN=Luis Naranjo,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
 from passReader import AUTH_LDAP_BIND_PASSWORD
 
-AUTH_LDAP_USER_SEARCH = LDAPSearchUnion(
-    LDAPSearch('ou=Staff,dc=campus,dc=bishopblanchet,dc=org', ldap.SCOPE_SUBTREE, "(sAMAccountName=%(user)s)"),
-    LDAPSearch("ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org", ldap.SCOPE_SUBTREE, "(sAMAccountName=%(user)s)"),
-)
+AUTH_LDAP_USER_SEARCH = LDAPSearch('ou=Staff,dc=campus,dc=bishopblanchet,dc=org', ldap.SCOPE_SUBTREE, '(sAMAccountName=%(user)s)')
 
 
 AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn",
         'email': 'mail'}
 
-super_admin = 'cn=Intranet Super Admin,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org'
+super_admin = 'cn=Intranet_Super_Admin,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org'
 
 AUTH_LDAP_USER_FLAGS_BY_GROUP = {
 #    "is_superuser": "cn=Technology,ou=Technology,dc=testad",
@@ -221,7 +218,6 @@ AUTH_LDAP_GROUP_SEARCH = LDAPSearch('ou=Staff,dc=campus,dc=bishopblanchet,dc=org
 
 AUTH_LDAP_MIRROR_GROUPS = True
 
-#AUTH_LDAP_REQUIRE_GROUP = "cn=Staff,ou=staff,dc=testad"
 #AUTH_LDAP_REQUIRE_GROUP = "cn=Staff,ou=staff,dc=campus,dc=bishopblanchet,dc=org"
 
 # Use the security group only, don't rely on the OU
