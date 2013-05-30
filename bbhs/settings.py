@@ -19,6 +19,7 @@ Implement {{ event.get_absolute_url }}/signup view+url
 
 DJANGO LOGGING
 Tech security group superuser access over LDAP
+UNREGISTER FEATURE
 '''
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -202,28 +203,22 @@ AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn",
 
 super_admin = 'cn=Intranet_Super_Admin,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org'
 
+
 AUTH_LDAP_USER_FLAGS_BY_GROUP = {
-#    "is_superuser": "cn=Technology,ou=Technology,dc=testad",
     'is_superuser': super_admin,
-#    "is_staff": "cn=Technology,ou=Technology,dc=testad",
     'is_staff': super_admin
 }
 
 AUTH_LDAP_GROUP_TYPE = ActiveDirectoryGroupType()
-#AUTH_LDAP_GROUP_SEARCH = LDAPSearch('ou=staff,dc=testad',
-#        ldap.SCOPE_SUBTREE, '(cn=Staff)')
 
 AUTH_LDAP_GROUP_SEARCH = LDAPSearch('ou=Staff,dc=campus,dc=bishopblanchet,dc=org',
         ldap.SCOPE_SUBTREE, '(cn=Staff)')
 
 AUTH_LDAP_MIRROR_GROUPS = True
 
-#AUTH_LDAP_REQUIRE_GROUP = "cn=Staff,ou=staff,dc=campus,dc=bishopblanchet,dc=org"
+AUTH_LDAP_REQUIRE_GROUP = "cn=Staff,ou=staff,dc=campus,dc=bishopblanchet,dc=org"
 
 # Use the security group only, don't rely on the OU
-
-# AUTH_LDAP_CACHE_GROUPS = True
-# AUTH_LDAP_GROUP_CACHE_TIMEOUT = 300
 
 ''' To do:
     Configure logging:
