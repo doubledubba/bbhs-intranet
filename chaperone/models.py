@@ -61,20 +61,24 @@ class Event(models.Model):
             users.append(user)
 
         return users
-
-    def showVolunteers(self):
-        return '<a href="google.com">asdf</a>'
+    
+    def showVolunteerLinks(self):
         pks = self.getPks()
-        names = ''
-        if pks:
-            for pk in pks:
+        links = ''
+        for pk in pks:
+            try:
                 user = User.objects.get(pk=pk)
-                username = user.get_full_name() or str(user)
-                if names == '':
-                    names = username
-                else:
-                    names += ', ' + username
-            return names
+            except:
+                pass
+            string = '<a href="%s">%s</a>'
+            url = user.get_absolute_url()
+            username = user.get_full_name() or str(user)
+            string = string % (url, username)
+            if links == '':
+                links += string
+            else:
+                links += ',' + string
+        return links
 
     def expired(self, now=datetime.utcnow().replace(tzinfo=utc)):
         ''' Returns True if the event has already passed.
@@ -89,9 +93,12 @@ class Event(models.Model):
         '''Return true if the User is signed up for this event.
         
         Experimental functionality - not tested'''
+        pks = self.getPks()
+        for pk in pks:
+            if user.pk == pk:
+                return True
 
-        users = self.volunteers
-        return str(user.pk) in self.volunteersRegistered
+        return False 
 
     def signUp(self, user):
         volunteerPks = self.getPks()
@@ -107,18 +114,10 @@ class Event(models.Model):
         else:
             return 'error', 'Sorry, no more volunteers needed'
 
-        print repr(user)
-
-        userProfile = user.get_profile()
-        userProfile.signUp()
-
         self.save()
         return 'success', 'Signed up %s' % user
 
     def removeVolunteer(self, user):
-        ''' BUG HUGE BUG
-        What about users with PK's larger than one digit?
-        '''
         volunteerPks = self.getPks()
         if user.pk not in volunteerPks:
             return 'error', 'Can\'t find "%s": Not Found' % user

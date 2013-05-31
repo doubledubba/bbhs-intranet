@@ -46,11 +46,14 @@ def eventPage(request, eventID):
     params = {'event': event}
     params['alert'] = request.GET.get('alert')
     params['message'] = request.GET.get('message')
+
     params['view_chaperones'] = request.user.has_perm('chaperone.view_chaperones')
     params['add_chaperones'] = request.user.has_perm('chaperone.add_chaperones')
     params['remove_chaperones'] = request.user.has_perm('chaperone.remove_chaperones')
     params['sign_up'] = request.user.has_perm('chaperone.sign_up')
+
     params['users'] = User.objects.all()
+    
     return render(request, 'chaperone/eventPage.html', params)
 
 

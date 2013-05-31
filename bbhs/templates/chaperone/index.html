@@ -35,11 +35,7 @@
             {% endif %}
             <td>{{ event.date }}</td>
             <td>{{ event.volunteersNeeded }}</td>
-            <td>
-                {% for volunteer in event.getVolunteers %}
-                <a href="{{ volunteer.get_absolute_url }}">{{ volunteer }}</a>,
-                {% endfor %}
-            </td>
+            <td>{{ event.showVolunteerLinks | safe }}</td>
             <td>{{ event.description }}</td>
  
         </tr>
