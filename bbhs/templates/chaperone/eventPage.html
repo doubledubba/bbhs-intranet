@@ -22,7 +22,7 @@
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tab1" data-toggle="tab">Event Info</a></li>
         {% if sign_up %}
-        <li><a href="#tab2" data-toggle="tab">Sign up</a></li>
+        <li><a href="#tab2" data-toggle="tab">Registration</a></li>
         {% endif %}
         {% if add_chaperones %}
         <li><a href="#tab4" data-toggle="tab">Sign someone up</a></li> <!-- Admin only -->
@@ -71,6 +71,14 @@
         <div class="tab-pane" id="tab2">
             <a href="{{ event.get_absolute_url }}/signUp" class="btn btn-large btn-primary">
                 Sign up for this event!</a>
+
+		<br><br><br>
+
+            <form method="POST" action="{{ event.get_absolute_url }}/removeUser/">
+		{% csrf_token %}
+		<button type="submit" name="userPk" value="{{ user.pk }}">Unregister</button>
+	</form>
+
         </div>
         {% endif %}
 
