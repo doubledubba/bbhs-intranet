@@ -77,6 +77,7 @@ def removeUser(request, eventID):
     return notify(alert, message, event.get_absolute_url())
     
 def userPage(request, username):
+    params = {}
     user = User.objects.get(username=username)
     events = []
     for event in Event.objects.all():
