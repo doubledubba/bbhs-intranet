@@ -83,5 +83,13 @@ def userPage(request, username):
         pks = event.getPks()
         if user.pk in pks:
             events.append(event)
-    params = {'events': events}
+    expired = []
+    active = []
+    for event in events:
+        if event.expired():
+            expired.append(event)
+        else:
+            active.append(event)
+    params['expired'] = expired
+    params['active'] = active
     return render(request, 'chaperone/userPage.html', params)

@@ -8,16 +8,37 @@
 <h1>{{ user}}</h1>
 {% endif %}
 
+1{{ events  }}
+2{{ active }}
+3{{ expired }}
 <hr>
 
 <div class="row">
 	<div class="span6">
-		<h3>Registered events</h3>
-	</div>			
-
-	<div class="span6">
-		<h3>Bio</h3>
+		<p>Personal info goes in here</p>
 	</div>
+	<div class="span6">
+		<div class="tabbable">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#tab1" data-toggle="tab">Future Events</a></li>
+				<li><a href="#tab2" data-toggle="tab">Past Events</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane active" id="tab1">
+					{% for event in active %}
+					{{ event }}
+					{% endfor %}
+				</div>
+				<div class="tab-pane" id="tab2">
+					{% for event in expired %}
+					{{ event }}
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+				
+
 </div>
 
 
