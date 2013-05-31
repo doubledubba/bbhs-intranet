@@ -76,7 +76,7 @@
 
             <form method="POST" action="{{ event.get_absolute_url }}/removeUser/">
 		{% csrf_token %}
-		<button type="submit" name="userPk" value="{{ user.pk }}">Unregister</button>
+		<button class="btn btn-large btn-primary" type="submit" name="userPk" value="{{ user.pk }}">Unregister</button>
 	</form>
 
         </div>

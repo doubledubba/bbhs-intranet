@@ -102,8 +102,9 @@ class Event(models.Model):
 
     def signUp(self, user):
         volunteerPks = self.getPks()
+        username = user.get_full_name() or str(user)
         if user.pk in volunteerPks:
-            return 'error', '%s is already signed up' % user
+            return 'error', '%s is already signed up' % username
         if volunteerPks:
             volunteerPks.append(user.pk)
             self.volunteersRegistered = json.dumps(volunteerPks)
@@ -115,14 +116,16 @@ class Event(models.Model):
             return 'error', 'Sorry, no more volunteers needed'
 
         self.save()
-        return 'success', 'Signed up %s' % user
+        return 'success', 'Signed up %s' % username
 
     def removeVolunteer(self, user):
         volunteerPks = self.getPks()
+        username = user.get_full_name() or str(user)
+
         if user.pk not in volunteerPks:
-            return 'error', 'Can\'t find "%s": Not Found' % user
+            return 'error', 'Can\'t find "%s": Not Found' % username
         volunteerPks.remove(user.pk)
         self.volunteersRegistered = json.dumps(volunteerPks)
         self.volunteersNeeded += 1
         self.save()
-        return 'info', 'Unregistered: %s' % user
+        return 'info', 'Unregistered: %s' % username
