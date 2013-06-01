@@ -19,10 +19,10 @@ class Event(models.Model):
 
     class Meta:
         permissions = (
-                ('add_chaperones', 'Can sign up chaperones'),
-                ('remove_chaperones', 'Can remove chaperones'),
-                ('view_chaperones', 'Can view chaperones'),
-                ('sign_up', 'Can sign up for an event')
+                ('add_chaperones', 'Can sign up other chaperones'),
+                ('remove_chaperones', 'Can remove other chaperones'),
+                ('view_chaperones', 'Can view other chaperones'),
+                ('sign_up', 'Can sign up or remove self from an event')
         )
 
     def __unicode__(self):
@@ -131,4 +131,8 @@ class Event(models.Model):
         return 'info', 'Unregistered: %s' % username
 
     def get_description(self):
-        return self.description
+        text = self.description
+        limit = 150
+        if len(text) < limit:
+            return text
+        return text[:limit] + '...'

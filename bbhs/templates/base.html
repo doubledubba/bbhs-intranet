@@ -69,7 +69,7 @@
           <div class="nav-collapse">
             <ul class="nav" role="navigation">
               <li class="active"><a href="/">Home</a></li>
-              {% if user.is_authenticated %}<li><a href="/admin">Admin</a></li>
+              {% if user.is_staff %}<li><a href="/admin">Admin</a></li>
               {% endif %}
               <li><a href="/chaperone">Chaperone</a></li>
               <li><a href="/shortener">Shortener</a></li>
