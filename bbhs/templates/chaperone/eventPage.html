@@ -62,7 +62,8 @@
                 {{ event.date }}
 
             <h5>Person in charge:</h5>
-            <p>{% firstof event.admin.get_full_name event.admin %}</p>
+            <p><a href="{{ event.admin.get_absolute_url }}">
+		{% firstof event.admin.get_full_name event.admin %}</p></a>
 
             <h5>Volunteers Needed</h5>
             <p>{{ event.volunteersNeeded }}</p>

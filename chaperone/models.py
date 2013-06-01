@@ -137,5 +137,5 @@ class Event(models.Model):
         text = self.description
         limit = 150
         if len(text) > limit:
-            text = text[:limit] + '...'
+            text = text[:limit] + '... (more on event page)'
         return text
