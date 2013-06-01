@@ -129,3 +129,6 @@ class Event(models.Model):
         self.volunteersNeeded += 1
         self.save()
         return 'info', 'Unregistered: %s' % username
+
+    def get_description(self):
+        return self.description

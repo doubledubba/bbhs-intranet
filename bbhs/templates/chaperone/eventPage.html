@@ -55,10 +55,9 @@
             {% for user in event.getVolunteers %}
             <li><a href="{{ user.get_absolute_url }}"> <!-- This should be a
                 userprofile -->
-                {% if user.get_full_name %}
-                {{ user.get_full_name }} ({{ user }})
-                {% else %}
-                {{ user }}
+		{{ user }} 
+		{% if user.get_full_name %}
+                ({{ user.get_full_name }})
                 {% endif %}
             </a></li>
             {% endfor %}
@@ -69,15 +68,20 @@
 
         {% if sign_up %}
         <div class="tab-pane" id="tab2">
-            <a href="{{ event.get_absolute_url }}/signUp" class="btn btn-large btn-primary">
+		<div class="row">
+			<div class="span6">
+            		<a href="{{ event.get_absolute_url }}/signUp" class="btn btn-large btn-primary">
                 Sign up for this event!</a>
+	
+			</div>
 
-		<br><br><br>
-
-            <form method="POST" action="{{ event.get_absolute_url }}/removeUser/">
-		{% csrf_token %}
-		<button class="btn btn-large btn-primary" type="submit" name="userPk" value="{{ user.pk }}">Unregister</button>
-	</form>
+			<div>
+            		<form method="POST" action="{{ event.get_absolute_url }}/removeUser/">
+			{% csrf_token %}
+			<button class="btn btn-large btn-primary" type="submit" name="userPk" value="{{ user.pk }}">Unregister</button>
+			</form>
+			</div>
+		</div>
 
         </div>
         {% endif %}

@@ -36,7 +36,7 @@
             <td>{{ event.date }}</td>
             <td>{{ event.volunteersNeeded }}</td>
             <td>{{ event.showVolunteerLinks | safe }}</td>
-            <td>{{ event.description }}</td>
+            <td>{{ event.get_description }}</td>
  
         </tr>
         {% endfor %}

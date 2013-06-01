@@ -78,7 +78,7 @@ def removeUser(request, eventID):
     
 def userPage(request, username):
     params = {}
-    user = User.objects.get(username=username)
+    user = get_object_or_404(User, username=username)
     events = []
     for event in Event.objects.all():
         pks = event.getPks()
@@ -93,4 +93,5 @@ def userPage(request, username):
             active.append(event)
     params['expired'] = expired
     params['active'] = active
+    params['user'] = user
     return render(request, 'chaperone/userPage.html', params)
