@@ -1,10 +1,13 @@
 import json
 from datetime import datetime
 
+from markdown import markdown
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import utc
 from intranet.models import UserProfile
+
 
 class Event(models.Model):
     name = models.CharField(max_length=80)
@@ -133,6 +136,6 @@ class Event(models.Model):
     def get_description(self):
         text = self.description
         limit = 150
-        if len(text) < limit:
-            return text
-        return text[:limit] + '...'
+        if len(text) > limit:
+            text = text[:limit] + '...'
+        return text

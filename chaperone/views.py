@@ -3,6 +3,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.models import User
+from markdown import markdown
+
 from chaperone.models import Event
 
 from urllib import urlencode
@@ -53,6 +55,7 @@ def eventPage(request, eventID):
     params['sign_up'] = request.user.has_perm('chaperone.sign_up')
 
     params['users'] = User.objects.all()
+    params['description'] = markdown(event.description)
     
     return render(request, 'chaperone/eventPage.html', params)
 

@@ -36,7 +36,7 @@
             <h4 style="font-family:verdana;color:red;"> Warning: This event has already taken place </h4>
             {% endif %}
 
-           <div class="well"> <p>{{ event.description }}</p></div>
+           <div class="well"> <p>{{ description | safe }}</p></div>
 
         {% if sign_up %}
 	<div class="row">
