@@ -38,8 +38,28 @@
 
            <div class="well"> <p>{{ event.description }}</p></div>
 
-	    <h5>When: </h5> 
-		{{ event.date }}
+        {% if sign_up %}
+	<div class="row">
+		<div class="span3">
+                        <a href="{{ event.get_absolute_url }}/signUp" class="btn btn-large btn-success">
+                Sign up for this event!</a>
+
+		</div>
+		<div class="span3">
+                        <form method="POST" action="{{ event.get_absolute_url }}/removeUser/">
+                        {% csrf_token %}
+                        <button class="btn btn-large btn-warning" type="submit" name="userPk" value="{{ user.pk }}">Unregister</button>
+                        </form>
+		</div>
+	</div>
+        {% endif %}
+
+        </div>
+
+			<div class="span6">
+
+            <h5>When: </h5>
+                {{ event.date }}
 
             <h5>Person in charge:</h5>
             <p>{% firstof event.admin.get_full_name event.admin %}</p>
@@ -53,28 +73,16 @@
             {% for user in event.getVolunteers %}
             <li><a href="{{ user.get_absolute_url }}"> <!-- This should be a
                 userprofile -->
-		{{ user }} 
-		{% if user.get_full_name %}
+                {{ user }} 
+                {% if user.get_full_name %}
                 ({{ user.get_full_name }})
                 {% endif %}
             </a></li>
             {% endfor %}
         </ul>
             {% endif %}
-        </div>
 
-			<div class="span6">
-        {% if sign_up %}
-            		<a href="{{ event.get_absolute_url }}/signUp" class="btn btn-large btn-success">
-                Sign up for this event!</a>
-	
-			<br><br><br>
 
-            		<form method="POST" action="{{ event.get_absolute_url }}/removeUser/">
-			{% csrf_token %}
-			<button class="btn btn-large btn-warning" type="submit" name="userPk" value="{{ user.pk }}">Unregister</button>
-			</form>
-        {% endif %}
         </div> <!-- close span -->
 	</div> <!-- close row -->
 	</div> <!-- close tab -->
