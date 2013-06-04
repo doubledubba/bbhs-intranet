@@ -45,7 +45,7 @@ def index(request):
     params['q'] = q
     if q and q.strip():
         event_query = get_query(q, ['name', 'description'])
-        found_entries = Event.objects.filter(event_query)
+        found_entries = Event.objects.filter(event_query).order_by('-date')
         params['events'] = found_entries
     return render(request, 'chaperone/index.html', params)
 
