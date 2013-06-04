@@ -57,7 +57,7 @@ def eventPage(request, eventID):
     params['sign_up'] = request.user.has_perm('chaperone.sign_up')
 
     params['users'] = User.objects.all()
-    params['description'] = markdown(event.description)
+    params['description'] = markdown(event.description) if event.markdown else event.description
     
     return render(request, 'chaperone/eventPage.html', params)
 
