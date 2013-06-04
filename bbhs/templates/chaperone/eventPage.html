@@ -38,21 +38,6 @@
 
            <div class="well"> <p>{{ description | safe }}</p></div>
 
-        {% if sign_up %}
-	<div class="row">
-		<div class="span3">
-                        <a href="{{ event.get_absolute_url }}/signUp" class="btn btn-large btn-success">
-                Sign up for this event!</a>
-
-		</div>
-		<div class="span3">
-                        <form method="POST" action="{{ event.get_absolute_url }}/removeUser/">
-                        {% csrf_token %}
-                        <button class="btn btn-large btn-warning" type="submit" name="userPk" value="{{ user.pk }}">Unregister</button>
-                        </form>
-		</div>
-	</div>
-        {% endif %}
 
         </div>
 
@@ -82,6 +67,23 @@
             {% endfor %}
         </ul>
             {% endif %}
+
+        {% if sign_up %}
+        <div class="row">
+                <div class="span3">
+                        <a href="{{ event.get_absolute_url }}/signUp" class="btn btn-large btn-success">
+                Sign up for this event!</a>
+
+                </div>
+                <div class="span3">
+                        <form method="POST" action="{{ event.get_absolute_url }}/removeUser/">
+                        {% csrf_token %}
+                        <button class="btn btn-large btn-warning" type="submit" name="userPk" value="{{ user.pk }}">Unregister</button>
+                        </form>
+                </div>
+        </div>
+        {% endif %}
+
 
 
         </div> <!-- close span -->

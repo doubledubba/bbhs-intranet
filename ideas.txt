@@ -35,3 +35,6 @@ Future app ideas? Make sure there's room for future expansion
 
 On the "sign someone up" form on the eventPage, add a search feature. There will be a lot of teachers and it will be a hassle to go down the list until you find the right one.
 Or at least alphabetize the users by last name, and remove the users that are already signed up from the list.
+
+BUG: When a user registers for an event, their eventsNeeded field should decrease by 1.
+	Inversely, when the deregister, their eventsNeeded field should increase by 1.

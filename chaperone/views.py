@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from markdown import markdown
 
 from chaperone.models import Event
+from query import get_query
 
 from urllib import urlencode
 
@@ -40,7 +41,12 @@ def index(request):
     params['enable_search_bar'] = True
     params['alert'] = request.GET.get('alert')
     params['message'] = request.GET.get('message')
-    params['q'] = request.GET.get('q')
+    q = request.GET.get('q')
+    params['q'] = q
+    if q and q.strip():
+        event_query = get_query(q, ['name', 'description'])
+        found_entries = Event.objects.filter(event_query)
+        params['events'] = found_entries
     return render(request, 'chaperone/index.html', params)
 
 
