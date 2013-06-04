@@ -7,7 +7,7 @@ from markdown import markdown
 
 from chaperone.models import Event
 from query import get_query
-
+from datetime import datetime
 from urllib import urlencode
 
 '''TODO:
@@ -44,9 +44,12 @@ def index(request):
     q = request.GET.get('q')
     params['q'] = q
     if q and q.strip():
+        start = datetime.now()
         event_query = get_query(q, ['name', 'description'])
         found_entries = Event.objects.filter(event_query).order_by('-date')
         params['events'] = found_entries
+        params['latency'] = (datetime.now() - start).total_seconds()
+        params['n'] = len(found_entries)
     return render(request, 'chaperone/index.html', params)
 
 
