@@ -1,0 +1,37 @@
+When a user signs up, give them the option to send in a note.
+This could be useful if an event requires different types of volunteers, and the user would like to sign up for a specific type of job.
+
+Allow the event admin to enable/disable the markdown rendering of the event description.
+
+Add a mandatory short description field to events so they are easier to list and display, as well as search. We could put keywords in the
+short description field. Alternatively, the title might be a good enough short description since most staff will know what the event is just
+by looking at the title.
+
+Add a search bar to the event index page
+
+Add event search filtering criteria for the event index page
+	+ Expired/not expired
+	+ By year
+
+Sort the event index page the way the user wants (date published, date of event, ascending, descending, etc...)
+
+Have an interface where the user can search events by categories organized by years
+
+Make the user profile page more lively.
+	Add profile pictures
+
+Monthly cron job that will remind users of their yearly chaperone obligations
+
+Weekly cron job that reminds users of events that they've already signed up for 
+
+Daily cron job that reminds users of events that they've signed up for starting two days before the event
+
+Cron job alerts - email/text/call ? combination?
+
+Bash installation script for the intranet, installs dependencies, pulls code from github, apache, mod_wsgi, django, markdown, django_auth_ldap, bootstrap, server settings, etc
+	* "A developer's job is to put himself/herself out of work"
+
+Future app ideas? Make sure there's room for future expansion
+
+On the "sign someone up" form on the eventPage, add a search feature. There will be a lot of teachers and it will be a hassle to go down the list until you find the right one.
+Or at least alphabetize the users by last name, and remove the users that are already signed up from the list.
