@@ -76,8 +76,13 @@
               
             </ul>
 
-
-    </div>
+		</div>
+		{% if enable_search_bar %}
+		<form class="navbar-search pull-left" action="/chaperone">
+			<input type="text" class="search-query" placeholder="{% firstof q "Search" %}" name="q">
+		</form>
+		{% endif %}
+	
         </div>
       </div>
     </div>

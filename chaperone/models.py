@@ -16,6 +16,7 @@ class Event(models.Model):
     volunteersNeeded = models.IntegerField()
     volunteersRegistered = models.CharField(max_length=80, blank=True)
     description = models.TextField(blank=True)
+    markdown = models.BooleanField(default=True)
 
     volunteersNeeded.verbose_name = 'Volunteers Needed'
     volunteersRegistered.verbose_name = 'Volunteers Registered'

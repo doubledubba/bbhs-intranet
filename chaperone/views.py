@@ -37,8 +37,10 @@ def notify(alert, message, thanks='/chaperone/'):
 @login_required
 def index(request):
     params = {'events': Event.future_events()}
+    params['enable_search_bar'] = True
     params['alert'] = request.GET.get('alert')
     params['message'] = request.GET.get('message')
+    params['q'] = request.GET.get('q')
     return render(request, 'chaperone/index.html', params)
 
 

@@ -5,8 +5,8 @@
 {% block body %}
 <h1>Welcome to the Chaperone system!</h1>
 
-
-<table border="1" class="table table-striped">
+{% if events %}
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>Name</th>
@@ -42,6 +42,8 @@
         {% endfor %}
     </tbody>
 </table>
-
+{% else %}
+<h4 style="font-family:verdana;color:red;">No future events currently listed!</h4>
+{% endif %}
 
 {% endblock body %}
