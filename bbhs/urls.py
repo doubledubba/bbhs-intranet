@@ -7,6 +7,8 @@ urlpatterns = patterns('intranet.views',
     url(r'^$', 'index'),
     url(r'^login/$', 'loginView'),
     url(r'^logout/$', 'logoutView'),
+    url(r'^user/(?P<username>.+)/$', 'userPage'),
+
 
 )
 

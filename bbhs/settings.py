@@ -37,7 +37,7 @@ AUTH_PROFILE_MODULE = 'intranet.UserProfile'
 LOGIN_URL = '/login/'
 
 ABSOLUTE_URL_OVERRIDES = {
-    'auth.user': lambda u: "/chaperone/volunteers/%s/" % u.username,
+    'auth.user': lambda u: "/user/%s/" % u.username,
 }
 
 DATABASES = {

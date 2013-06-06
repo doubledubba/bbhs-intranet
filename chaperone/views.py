@@ -90,22 +90,3 @@ def removeUser(request, eventID):
     alert, message = event.removeVolunteer(user)
     return notify(alert, message, event.get_absolute_url())
     
-def userPage(request, username):
-    params = {}
-    user = get_object_or_404(User, username=username)
-    events = []
-    for event in Event.objects.all():
-        pks = event.getPks()
-        if user.pk in pks:
-            events.append(event)
-    expired = []
-    active = []
-    for event in events:
-        if event.expired():
-            expired.append(event)
-        else:
-            active.append(event)
-    params['expired'] = expired
-    params['active'] = active
-    params['user'] = user
-    return render(request, 'chaperone/userPage.html', params)

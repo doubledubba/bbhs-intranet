@@ -5,6 +5,12 @@ Add a mandatory short description field to events so they are easier to list and
 short description field. Alternatively, the title might be a good enough short description since most staff will know what the event is just
 by looking at the title.
 
+Redirect logged in users at / to /{{ user profile }}  -global intranet profile
+	Will have chaperone info such as current events, events remaining, etc...
+	General user bio
+
+Custom layout JS Widget for user profile
+
 Add event search filtering criteria for the event index page
 	+ Expired/not expired
 	+ By year
@@ -50,6 +56,8 @@ GCalendar?
 
 Save or Email and Save
 	Will require an admin page independent sign up form
+	
+On create event page, add inline events so you can add several at a time and save and send an email all at once
 
 Emailing users and event administrators
 
