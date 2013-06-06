@@ -19,7 +19,6 @@
             <th class="numeric">Date</th>
             <th class="numeric">Volunteers Needed</th>
             <th class="numeric">Volunteers Registered</th>
-            <th class="numeric">Description</th>
         </tr>
     </thead>
  
@@ -40,8 +39,7 @@
             {% endif %}
             <td>{{ event.date }}</td>
             <td>{{ event.volunteersNeeded }}</td>
-            <td>{{ event.showVolunteerLinks | safe }}</td>
-            <td>{{ event.get_description }}</td>
+            <td>{% firstof event.showVolunteerLinks "None" %}</td>
  
         </tr>
         {% endfor %}
