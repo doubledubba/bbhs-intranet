@@ -65,7 +65,13 @@ def eventPage(request, eventID):
     params['remove_chaperones'] = request.user.has_perm('chaperone.remove_chaperones')
     params['sign_up'] = request.user.has_perm('chaperone.sign_up')
 
-    params['users'] = User.objects.all()
+    if params['add_chaperones']:
+        all_users = User.objects.all()
+        users = []
+        for user in all_users:
+            if str(user.pk) not in event.volunteersRegistered:
+                users.append(user)
+        params['users'] = users
     params['description'] = markdown(event.description) if event.markdown else event.description
     
     return render(request, 'chaperone/eventPage.html', params)
