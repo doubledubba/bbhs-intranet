@@ -17,6 +17,7 @@ class Event(models.Model):
     volunteersRegistered = models.CharField(max_length=80, blank=True)
     description = models.TextField(blank=True)
     markdown = models.BooleanField(default=True)
+    markdown.allow_tags = True
 
     volunteersNeeded.verbose_name = 'Volunteers Needed'
     volunteersRegistered.verbose_name = 'Volunteers Registered'
@@ -65,7 +66,16 @@ class Event(models.Model):
             users.append(user)
 
         return users
-    
+ 
+    def showVolunteers(self):
+        volunteers = self.getVolunteers()
+        if volunteers:
+            return ', '.join([user.get_full_name() or str(user) for user in volunteers])
+        else:
+            return ''
+    showVolunteers.short_description = 'Volunteers'
+
+   
     def showVolunteerLinks(self):
         pks = self.getPks()
         links = ''
