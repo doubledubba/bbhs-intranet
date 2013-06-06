@@ -1,3 +1,7 @@
+What do you do when no more volunteers are needed?
+	Email admin?
+	Stop allowing users to sign up
+
 When a user signs up, give them the option to send in a note.
 This could be useful if an event requires different types of volunteers, and the user would like to sign up for a specific type of job.
 
