@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+{% if home %}
+
+<h1> Welcome to your personal home page, {% firstof user.get_full_name user %}! </h1>
+
+{% else %}
+
+<h1>{% firstof user.get_full_name user %}</h1>
+{% endif %}
+
+<hr>
+
+<div class="row">
+	<div class="span6">
+		<b>Username:</b> {{ user }} <br>
+		<b>Events needed for this year:</b> {{ user.get_profile.eventsNeeded }} <br>
+		<b>Email:</b> {{ user.email }}
+	</div>
+	<div class="span6">
+		<div class="tabbable">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#tab1" data-toggle="tab">Future Events</a></li>
+				<li><a href="#tab2" data-toggle="tab">Past Events</a></li>
+			</ul>
+			<div class="tab-content">
+                                <div class="tab-pane active" id="tab1">
+                                        <ul>
+					    {% for event in active %}
+                                            <li><a href="{{event.get_absolute_url}}">{{event }}</a></li>
+					    {% endfor %}
+                                        </ul>
+				</div>
+                                <div class="tab-pane" id="tab2">
+                                        <ul>
+					    {% for event in expired %}
+                                            <li><a href="{{event.get_absolute_url}}">{{event }}</a></li>
+					    {% endfor %}
+                                        </ul>
+				</div>
+			</div>
+		</div>
+	</div>
+				
+
+</div>
+
+
+{% endblock body %}
