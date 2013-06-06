@@ -11,6 +11,8 @@ Add event search filtering criteria for the event index page
 
 On event page, show the user his/her current events, and how many he/she still needs
 
+Drop the admin interface and replace it with custom pages for more fine tuned functionality
+
 Sort the event index page the way the user wants (date published, date of event, ascending, descending, etc...)
 
 Have an interface where the user can search events by categories organized by years
