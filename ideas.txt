@@ -37,4 +37,26 @@ On the "sign someone up" form on the eventPage, add a search feature. There will
 Or at least alphabetize the users by last name, and remove the users that are already signed up from the list.
 
 BUG: When a user registers for an event, their eventsNeeded field should decrease by 1.
-	Inversely, when the deregister, their eventsNeeded field should increase by 1.
+	Inversely, when the deregister, their eventsNeeded field should increase by 1
+
+Have django keep track of who is a Faculty member, member of ou=faculty,ou=Staff
+either by seeing if they are in the OU or creating a security group for them. Bug them about
+chaperone events only if they are faculty. Make sure this is able to be modified by an tech admin
+- bool
+
+GCalendar?
+
+4 chaperone events for every teacher per year
+
+Save or Email and Save
+	Will require an admin page independent sign up form
+
+Emailing users and event administrators
+
+User reports
+	All users
+	Individual users (search)?
+
+Separate permissions into
+	User can sign up
+	User can deregister

@@ -9,6 +9,8 @@ class UserProfile(models.Model):
     eventsNeeded = models.IntegerField(null=True, default=4)
     eventsNeeded.verbose_name = '(Chaperone) Events Needed'
 
+    isFaculty = models.BooleanField(default=False)
+
     def __unicode__(self):
         return self.user.username
 
@@ -19,9 +21,6 @@ class UserProfile(models.Model):
         except UserProfile.DoesNotExist:
             pass 
         models.Model.save(self, *args, **kwargs)
-
-    def signUp(self):
-        return True
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

@@ -2,13 +2,17 @@
 import os
 from datetime import datetime
 os.environ['DJANGO_SETTINGS_MODULE'] = 'bbhs.settings'
+from urllib2 import urlopen
 
 from django.utils.timezone import utc
+from django.contrib.auth.models import User
 from chaperone.models import *
-from intranet.models import UserProfile
 
+fh = urlopen('http://daringfireball.net/projects/markdown/basics.text')
+md = fh.read()
+fh.close()
 
-luis = UserProfile.objects.get(user__username='luis')
+luis = User.objects.get(username='luis')
 
 events = [
         {
@@ -16,7 +20,7 @@ events = [
             'admin': luis,
             'date': datetime.utcnow().replace(tzinfo=utc),
             'volunteersNeeded': 4,
-            'description': 'lada lada lada!'
+            'description': md
             }
         ]
 
