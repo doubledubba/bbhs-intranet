@@ -3,6 +3,12 @@
 {% block container %}
 
 <div class="container-fluid">
+     {% if alert and message %}
+     <div class="alert alert-{{ alert }}">
+         <button type="button" class="close" data-dismiss="alert">&times;</button>
+         {{ message }}
+     </div>
+     {% endif %}
 	<div class="row-fluid">
 		<div class="span2">
 			{% block sidebar %}
