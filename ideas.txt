@@ -1,3 +1,5 @@
+Correct the time zone settings
+
 What do you do when no more volunteers are needed?
 	Email admin?
 	Stop allowing users to sign up

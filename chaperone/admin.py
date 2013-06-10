@@ -1,5 +1,5 @@
 from django.contrib import admin
-from chaperone.models import Event
+from chaperone.models import Event, Note
 
 def turnOnRender(modelAdmin, request, querySet):
     querySet.update(markdown=True)
@@ -19,5 +19,9 @@ class EventAdmin(admin.ModelAdmin):
     search_fields = ['name']
     actions = [turnOnRender, turnOffRender]
 
-admin.site.register(Event, EventAdmin)
+class NoteAdmin(admin.ModelAdmin):
+    date_hierarchy = 'pub_date'
+    list_display = ['event', 'author', 'pub_date']
 
+admin.site.register(Event, EventAdmin)
+admin.site.register(Note, NoteAdmin)

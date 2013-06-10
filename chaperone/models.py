@@ -150,3 +150,12 @@ class Event(models.Model):
         if len(text) > limit:
             text = text[:limit] + '... (more on event page)'
         return text
+
+class Note(models.Model):
+    event = models.ForeignKey(Event)
+    author = models.ForeignKey(User)
+    text = models.TextField("Note text")
+    pub_date = models.DateTimeField("Creation date", auto_now_add=True)
+
+    def __unicode__(self):
+        return 'From "%s" about "%s"' % (self.author, self.event)
