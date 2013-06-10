@@ -145,7 +145,7 @@
 		<p>Send note code here</p>
 	</div>
 	
-<form method="GET" action="{{ event.get_absolute_url }}/signUp">
+<form method="POST" action="{{ event.get_absolute_url }}/addNote">
 {% csrf_token %}
 <textarea rows="3" name="note"></textarea>
 
@@ -153,7 +153,7 @@
 	<input type="checkbox" name="private" value="true">
 	Private note
 </label>
-<button class="btn btn-large btn-success" type="submit">Sign up for this event!</button>
+<input type="submit">
 </form>
 	            <!-- End notes code-->
 </div> <!-- close tab -->

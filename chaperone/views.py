@@ -105,6 +105,28 @@ def signUp(request, eventID):
         message = message + ' and note added' # todo: Better UX feedback
     return notify(alert, message, event.get_absolute_url())
 
+from cgi import escape
+
+def addNote(request, eventID):
+    event = get_object_or_404(Event, pk=eventID)
+    userPk = request.POST.get('userPk') or str(request.user.pk)
+    user = User.objects.get(pk=userPk)
+    text = request.POST.get('note')
+    if text:
+        private = request.POST.get('private')
+        private = True if private else False
+        note = Note()
+        note.event = event
+        note.author = user
+        note.text = text
+        note.public = not private
+        note.save()
+        message = 'Note added'
+        alert = 'success'
+    else:
+        alert= 'error'
+        message = 'Something went wrong!'
+    return notify(alert, message, event.get_absolute_url())
 
 def removeUser(request, eventID):
     event = Event.objects.get(pk=eventID)
