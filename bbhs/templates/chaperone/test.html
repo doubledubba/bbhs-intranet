@@ -59,9 +59,7 @@
 <div class="tabbable">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tab1" data-toggle="tab">Event Info</a></li>
-        {% if add_chaperones %}
-        <li><a href="#tab4" data-toggle="tab">Sign someone up</a></li> <!-- Admin only -->
-        {% endif %}
+        <li><a href="#tab4" data-toggle="tab">Event Notes</a></li> <!-- Admin only -->
         {% if remove_chaperones %}
         <li><a href="#tab5" data-toggle="tab">Remove a volunteer</a></li> <!-- Admin only -->
         {% endif %}
@@ -78,22 +76,74 @@
 	</div> <!-- close tab -->
 
 
-        {% if add_chaperones %}
         <div class="tab-pane" id="tab4">
-            <p>Sign up a user for volunteering</p>
-            <form method="POST" action="{{ event.get_absolute_url }}/signUp">
-                {% csrf_token %}
-                <select name="userPk">
-                    {% for user in users %}
-                    <option value="{{ user.pk }}">{{ user }}</option>
-                    <!-- TODO: Test for logged in user, and continue -->
-                    {% endfor %}
-                </select>
-                <br/>
-                <button type="submit" class="btn">Sign up</button>
-            </form>
-        </div>
-        {% endif %}
+				<!-- Start notes code -->
+<div class="accordion" id="accordion2">
+	<div class="accordion-group">
+		<div class="accordion-heading">
+		<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+		Public Notes
+		</a>
+		</div>
+		<div id="collapseOne" class="accordion-body collapse in">
+			<div class="accordion-inner">
+          {% if public_notes %}
+            <ul>
+            {% for note in public_notes %}
+            	<h6>User</h6>
+            	<p>{{ note.author }}</p>
+            	
+            	<h6>Date noted</h6>
+            	<p>{{ note.pub_date }}</p>
+            	
+            	<h6>Content</h6>
+            	<p>{{ note.text }}</p>
+            	<hr>
+            {% endfor %}
+            </ul>
+            </h5>
+            {% else %}
+            None
+            {% endif %}
+			</div>
+		</div>
+	</div>
+	
+	<div class="accordion-group">
+		<div class="accordion-heading">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+			Private Notes
+			</a>
+		</div>
+		<div id="collapseTwo" class="accordion-body collapse">
+			<div class="accordion-inner">
+				{% if private_notes %}
+				<ul>
+					{% for note in private_notes %}
+            	<h6>User</h6>
+            	<p>{{ note.author }}</p>
+            	
+            	<h6>Date noted</h6>
+            	<p>{{ note.pub_date }}</p>
+            	
+            	<h6>Content</h6>
+            	<p>{{ note.text }}</p>
+            	<hr>
+					{% endfor %}
+				</ul>
+				{% else %}
+					{% if isAdmin %}
+					<p>No private notes available</p>
+					{% else %}
+					<p>You don't have security clearance to view private notes</p>
+					{% endif %}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+            <!-- End notes code-->
+        </div> <!-- close tab -->
 
         {% if remove_chaperones %} <!-- TODO: Find a way to remove the form if
         not volunteers left to remove -->
