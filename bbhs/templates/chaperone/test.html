@@ -24,6 +24,9 @@
                 ({{ user.get_full_name }})
                 {% endif %}
             </a></li>
+            {% empty %}
+            </ul>
+            <p>No users signed up yet</p>
             {% endfor %}
         </ul>
             {% endif %}
@@ -47,6 +50,69 @@
   
 <!-- End buttons -->
 
+{% endblock sidebar %}
+
+{% block content %}
+<h1>{{ event.name }}</h1>
+
+
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">Event Info</a></li>
+        {% if add_chaperones %}
+        <li><a href="#tab4" data-toggle="tab">Sign someone up</a></li> <!-- Admin only -->
+        {% endif %}
+        {% if remove_chaperones %}
+        <li><a href="#tab5" data-toggle="tab">Remove a volunteer</a></li> <!-- Admin only -->
+        {% endif %}
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+        	{% if event.expired %}
+			<h4 style="font-family:verdana;color:red;"> Warning: This event has already taken place </h4>
+            {% endif %}
+
+           <div class="well"> <p>{{ description | safe }}</p></div>
+
+
+	</div> <!-- close tab -->
+
+
+        {% if add_chaperones %}
+        <div class="tab-pane" id="tab4">
+            <p>Sign up a user for volunteering</p>
+            <form method="POST" action="{{ event.get_absolute_url }}/signUp">
+                {% csrf_token %}
+                <select name="userPk">
+                    {% for user in users %}
+                    <option value="{{ user.pk }}">{{ user }}</option>
+                    <!-- TODO: Test for logged in user, and continue -->
+                    {% endfor %}
+                </select>
+                <br/>
+                <button type="submit" class="btn">Sign up</button>
+            </form>
+        </div>
+        {% endif %}
+
+        {% if remove_chaperones %} <!-- TODO: Find a way to remove the form if
+        not volunteers left to remove -->
+        <div class="tab-pane" id="tab5">
+            <form method="POST" action="{{ event.get_absolute_url }}/removeUser/">
+                {% csrf_token %}
+                <select name="userPk">
+                    {% for user in event.getVolunteers %}
+                    <option value="{{ user.pk }}">{{ user }}</option>
+                    {% endfor %}
+                </select>
+                <br/>
+                <button type="submit" class="btn">Remove</button>
+            </form>
+        </div>
+        {% endif %}
+
+    </div>
 </div>
 
-{% endblock sidebar %}
+
+{% endblock content %}
