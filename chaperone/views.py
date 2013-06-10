@@ -92,7 +92,6 @@ def eventPage(request, eventID):
         params['users'] = users
     params['description'] = markdown(event.description) if event.markdown else event.description
 
-    return render(request, 'chaperone/test.html', params)
     return render(request, 'chaperone/eventPage.html', params)
 
 

@@ -1,49 +1,9 @@
-{% extends "base.html" %}
+{% extends "fluid.html" %}
 
-{% block title %}Chaperone Sign up | BBHS {% endblock title %}
+{% block sidebar %}
 
-{% block body %}
-
-<!-- Needs to
-    + Display all information about the event
-    + Have a form for signing up the user
-    + Have a form for removing the user (maybe auth)
-    + Have contact information for the administrator
-        - Maybe a "Contact Me" form
-        + Good design - use twitter bootstrap
-
-    + When a user has not signed up, offer to sign up
-    + When a user is signed up, offer to resign
-    -->
-
-<h1>{{ event.name }}</h1>
-
-<div class="tabbable">
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab1" data-toggle="tab">Event Info</a></li>
-        {% if add_chaperones %}
-        <li><a href="#tab4" data-toggle="tab">Sign someone up</a></li> <!-- Admin only -->
-        {% endif %}
-        {% if remove_chaperones %}
-        <li><a href="#tab5" data-toggle="tab">Remove a volunteer</a></li> <!-- Admin only -->
-        {% endif %}
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane active" id="tab1">
-		<div class="row">
-			<div class="span6">
-            {% if event.expired %}
-            <h4 style="font-family:verdana;color:red;"> Warning: This event has already taken place </h4>
-            {% endif %}
-
-           <div class="well"> <p>{{ description | safe }}</p></div>
-
-
-        </div>
-
-			<div class="span6">
-
-            <h5>When: </h5>
+<!-- Start general info -->
+          <h5>When: </h5>
                 {{ event.date }}
 
             <h5>Person in charge:</h5>
@@ -64,131 +24,178 @@
                 ({{ user.get_full_name }})
                 {% endif %}
             </a></li>
+            {% empty %}
+            </ul>
+            <p>No users signed up yet</p>
             {% endfor %}
         </ul>
             {% endif %}
             
-            <!-- Start -->
-            
-            <h5>Public Notes </h5>
-            {% if public_notes %}
-            <ul>
-            {% for note in public_notes %}
-            	<h6>User</h6>
-            	<p>{{ note.author }}</p>
-            	
-            	<h6>Date noted</h6>
-            	<p>{{ note.pub_date }}</p>
-            	
-            	<h6>Content</h6>
-            	<p>{{ note.text }}</p>
-            	<hr>
-            {% endfor %}
-            </ul>
-            </h5>
-            {% else %}
-            None
+<!-- End general info -->
+
+<!-- Start buttons -->
+{% if sign_up %}
+<form method="GET" action="{{ event.get_absolute_url }}/signUp">
+{% csrf_token %}
+<button class="btn btn-large btn-success" type="submit">Sign up for this event!</button>
+</form>
+{% endif %}
+
+{% if unsign_up %}
+<form method="POST" action="{{ event.get_absolute_url }}/removeUser/">
+{% csrf_token %}
+<button class="btn btn-large btn-warning" type="submit" name="userPk" value="{{ user.pk }}">Unregister</button>
+</form>
+{% endif %}
+  
+<!-- End buttons -->
+
+{% endblock sidebar %}
+
+{% block content %}
+<h1>{{ event.name }}</h1>
+
+
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab1" data-toggle="tab">Event Info</a></li>
+        <li><a href="#tab2" data-toggle="tab">Event Notes</a></li>
+        {% if remove_chaperones %}
+        <li><a href="#tab3" data-toggle="tab">Administration</a></li> <!-- Admin only -->
+        {% endif %}
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab1">
+        	{% if event.expired %}
+			<h4 style="font-family:verdana;color:red;"> Warning: This event has already taken place </h4>
             {% endif %}
 
-				<h5>Private Notes</h5>
-				{% if private_notes %}
-				<ul>
-					{% for note in private_notes %}
-            	<h6>User</h6>
-            	<p>{{ note.author }}</p>
-            	
-            	<h6>Date noted</h6>
-            	<p>{{ note.pub_date }}</p>
-            	
-            	<h6>Content</h6>
-            	<p>{{ note.text }}</p>
-            	<hr>
-					{% endfor %}
-				</ul>
-				{% else %}
-					{% if isAdmin %}
-					<p>No private notes available</p>
-					{% else %}
-					<p>You don't have security clearance to view private notes</p>
-					{% endif %}
-				{% endif %}
-				
-				
-            
-            <!-- End -->
-
-        
-        <div class="row">
-        			{% if sign_up %}
-                <div class="span3">
-                        <form method="GET" action="{{ event.get_absolute_url }}/signUp">
-                        {% csrf_token %}
-                        <textarea rows="3" name="note"></textarea>
-                        
-                        <label class="checkbox">
-									<input type="checkbox" name="private" value="true">
-									Private note
-								</label>
-                        <button class="btn btn-large btn-success" type="submit">Sign up for this event!</button>
-                        </form>
-
-			{% endif %}
-			{% if unsign_up %}
+           <div class="well"> <p>{{ description | safe }}</p></div>
 
 
-                </div>
-                <div class="span3">
-                        <form method="POST" action="{{ event.get_absolute_url }}/removeUser/">
-                        {% csrf_token %}
-                        <button class="btn btn-large btn-warning" type="submit" name="userPk" value="{{ user.pk }}">Unregister</button>
-                        </form>
-                </div>
-        {% endif %}
-        </div>
-
-
-
-
-
-
-        </div> <!-- close span -->
-	</div> <!-- close row -->
 	</div> <!-- close tab -->
 
 
-        {% if add_chaperones %}
-        <div class="tab-pane" id="tab4">
-            <p>Sign up a user for volunteering</p>
-            <form method="POST" action="{{ event.get_absolute_url }}/signUp">
-                {% csrf_token %}
-                <select name="userPk">
-                    {% for user in users %}
-                    <option value="{{ user.pk }}">{{ user }}</option>
-                    <!-- TODO: Test for logged in user, and continue -->
-                    {% endfor %}
-                </select>
-                <br/>
-                <button type="submit" class="btn">Sign up</button>
-            </form>
-        </div>
-        {% endif %}
+<div class="tab-pane" id="tab2">
+				<!-- Start notes code -->
+	<div class="accordion" id="accordion2">
+		<div class="accordion-group">
+			<div class="accordion-heading">
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+			Public Notes
+			</a>
+			</div>
+			<div id="collapseOne" class="accordion-body collapse">
+				<div class="accordion-inner">
+	          {% if public_notes %}
+	            <ul>
+	            {% for note in public_notes %}
+	            	<h6>User</h6>
+	            	<p>{% firstof note.author.get_full_name note.author %}</p>
+	            	
+	            	<h6>Date noted</h6>
+	            	<p>{{ note.pub_date }}</p>
+	            	
+	            	<h6>Content</h6>
+	            	<p>{{ note.text }}</p>
+	            	<hr>
+	            {% endfor %}
+	            </ul>
+	            </h5>
+	            {% else %}
+	            None
+	            {% endif %}
+				</div>
+			</div>
+		</div>
+		
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+				Private Notes
+				</a>
+			</div>
+			<div id="collapseTwo" class="accordion-body collapse">
+				<div class="accordion-inner">
+					{% if private_notes %}
+					<ul>
+						{% for note in private_notes %}
+	            	<h6>User</h6>
+	            	<p>{% firstof note.author.get_full_name note.author %}</p>
+	            	
+	            	<h6>Date noted</h6>
+	            	<p>{{ note.pub_date }}</p>
+	            	
+	            	<h6>Content</h6>
+	            	<p>{{ note.text }}</p>
+	            	<hr>
+						{% endfor %}
+					</ul>
+					{% else %}
+						{% if isAdmin %}
+						<p>No private notes available</p>
+						{% else %}
+						<p>You don't have security clearance to view private notes</p>
+						{% endif %}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+<form method="POST" action="{{ event.get_absolute_url }}/addNote">
+{% csrf_token %}
+<textarea rows="3" name="note"></textarea>
 
-        {% if remove_chaperones %} <!-- TODO: Find a way to remove the form if
-        not volunteers left to remove -->
-        <div class="tab-pane" id="tab5">
-            <form method="POST" action="{{ event.get_absolute_url }}/removeUser/">
-                {% csrf_token %}
-                <select name="userPk">
-                    {% for user in event.getVolunteers %}
-                    <option value="{{ user.pk }}">{{ user }}</option>
-                    {% endfor %}
-                </select>
-                <br/>
-                <button type="submit" class="btn">Remove</button>
-            </form>
-        </div>
-        {% endif %}
+<label class="checkbox">
+	<input type="checkbox" name="private" value="true">
+	Private note
+</label>
+<input type="submit">
+</form>
+	            <!-- End notes code-->
+</div> <!-- close tab -->
+
+
+ <div class="tab-pane" id="tab3">
+  {% if add_chaperones %}
+  <div class="tab-pane" id="tab4">
+      <p>Add another user to the event chaperone list</p>
+      <form method="POST" action="{{ event.get_absolute_url }}/signUp">
+          {% csrf_token %}
+          <select name="userPk">
+              {% for user in users %}
+              <option value="{{ user.pk }}">{{ user }}</option>
+              <!-- TODO: Test for logged in user, and continue -->
+              {% endfor %}
+          </select>
+          <br/>
+          <button type="submit" class="btn">Sign up</button>
+      </form>
+  </div>
+  {% endif %}
+
+  {% if remove_chaperones %} <!-- TODO: Find a way to remove the form if
+  not volunteers left to remove -->
+  <p>Remove a user from the event chaperone list</p>
+  <div class="tab-pane" id="tab5">
+      <form method="POST" action="{{ event.get_absolute_url }}/removeUser/">
+          {% csrf_token %}
+          <select name="userPk">
+              {% for user in event.getVolunteers %}
+              <option value="{{ user.pk }}">{{ user }}</option>
+              {% endfor %}
+          </select>
+          <br/>
+          <button type="submit" class="btn">Remove</button>
+      </form>
+  </div>
+  {% endif %}
+</div>
 
     </div>
 </div>
-{% endblock body %}
+
+
+{% endblock content %}
