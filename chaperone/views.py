@@ -61,7 +61,8 @@ def eventPage(request, eventID):
             public=True).order_by('-pub_date')
     isAdmin = request.user.pk == event.admin.pk
     params['isAdmin'] = isAdmin
-    params['private_notes'] = Note.objects.filter(event=event, public=False) if isAdmin else False
+    private_notes = Note.objects.filter(event=event, public=False).order_by('-pub_date')
+    params['private_notes'] =private_notes if isAdmin else False
     params['alert'] = request.GET.get('alert')
     params['message'] = request.GET.get('message')
 
@@ -69,6 +70,7 @@ def eventPage(request, eventID):
     params['add_chaperones'] = request.user.has_perm('chaperone.add_chaperones')
     params['remove_chaperones'] = request.user.has_perm('chaperone.remove_chaperones')
     params['sign_up'] = request.user.has_perm('chaperone.sign_up')
+    params['unsign_up'] = request.user.has_perm('chaperone.unsign_up')
 
     if params['add_chaperones']:
         all_users = User.objects.all()
