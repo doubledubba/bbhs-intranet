@@ -7,7 +7,6 @@ Fix LDAP Group mirroring bug with a replacement method
 
 Fix the html layout/formatting
     + Make the public/private notes be in a hideable accordion type thing
-Improve the UX feedback system
 
 Correct the time zone settings
 
@@ -19,24 +18,11 @@ Admin page action ideas:
 	Email event ad - for users who are not signed up
 	Email event reminder - for users who are signed up
 
-When a user signs up, give them the option to send in a note.
-This could be useful if an event requires different types of volunteers, and the user would like to sign up for a specific type of job.
-
-Add a mandatory short description field to events so they are easier to list and display, as well as search. We could put keywords in the
-short description field. Alternatively, the title might be a good enough short description since most staff will know what the event is just
-by looking at the title.
-
-Redirect logged in users at / to /{{ user profile }}  -global intranet profile
-	Will have chaperone info such as current events, events remaining, etc...
-	General user bio
-
 Custom layout JS Widget for user profile
 
 Add event search filtering criteria for the event index page
 	+ Expired/not expired
 	+ By year
-
-On event page, show the user his/her current events, and how many he/she still needs
 
 Drop the admin interface and replace it with custom pages for more fine tuned functionality
 
@@ -62,6 +48,7 @@ Future app ideas? Make sure there's room for future expansion
 
 On the "sign someone up" form on the eventPage, add a search feature. There will be a lot of teachers and it will be a hassle to go down the list until you find the right one.
 Or at least alphabetize the users by last name, and remove the users that are already signed up from the list.
+    + Typeahead for users!!!
 
 BUG: When a user registers for an event, their eventsNeeded field should decrease by 1.
 	Inversely, when the deregister, their eventsNeeded field should increase by 1

@@ -131,6 +131,10 @@ class Event(models.Model):
             return 'error', 'Sorry, no more volunteers needed'
 
         self.save()
+        if not self.expired(): # so users dont cheat and sign up for past events
+            profile = user.get_profile()
+            profile.eventsNeeded -= 1
+            profile.save()
         return 'success', 'Signed up %s' % username
 
     def removeVolunteer(self, user):
@@ -143,6 +147,10 @@ class Event(models.Model):
         self.volunteersRegistered = json.dumps(volunteerPks)
         self.volunteersNeeded += 1
         self.save()
+        if not self.expired():
+            profile = user.get_profile()
+            profile.eventsNeeded += 1
+            profile.save()
         return 'info', 'Unregistered: %s' % username
 
     def get_description(self):
