@@ -117,8 +117,9 @@
             
             <!-- End -->
 
-        {% if sign_up %}
+        
         <div class="row">
+        			{% if sign_up %}
                 <div class="span3">
                         <form method="GET" action="{{ event.get_absolute_url }}/signUp">
                         {% csrf_token %}
@@ -131,6 +132,8 @@
                         <button class="btn btn-large btn-success" type="submit">Sign up for this event!</button>
                         </form>
 
+			{% endif %}
+			{% if unsign_up %}
 
 
                 </div>
@@ -140,8 +143,9 @@
                         <button class="btn btn-large btn-warning" type="submit" name="userPk" value="{{ user.pk }}">Unregister</button>
                         </form>
                 </div>
-        </div>
         {% endif %}
+        </div>
+
 
 
 
