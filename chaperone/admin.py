@@ -21,7 +21,7 @@ class EventAdmin(admin.ModelAdmin):
 
 class NoteAdmin(admin.ModelAdmin):
     date_hierarchy = 'pub_date'
-    list_display = ['event', 'author', 'pub_date']
+    list_display = ['getText', 'event', 'author', 'pub_date']
 
 admin.site.register(Event, EventAdmin)
 admin.site.register(Note, NoteAdmin)

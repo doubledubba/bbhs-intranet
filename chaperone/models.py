@@ -155,7 +155,13 @@ class Note(models.Model):
     event = models.ForeignKey(Event)
     author = models.ForeignKey(User)
     text = models.TextField("Note text")
+    public = models.BooleanField(default=True)
     pub_date = models.DateTimeField("Creation date", auto_now_add=True)
 
     def __unicode__(self):
         return 'From "%s" about "%s"' % (self.author, self.event)
+
+    def getText(self):
+        length = len(self.text)
+        return self.text if length < 80 else self.text[:80] + '...'
+    getText.short_description = 'Note content'

@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from markdown import markdown
 
-from chaperone.models import Event
+from chaperone.models import Event, Note
 from query import get_query
 from datetime import datetime
 from urllib import urlencode
@@ -78,10 +78,23 @@ def eventPage(request, eventID):
 
 
 def signUp(request, eventID):
+
     event = get_object_or_404(Event, pk=eventID)
     userPk = request.POST.get('userPk') or str(request.user.pk)
     user = User.objects.get(pk=userPk)
     alert, message = event.signUp(user)
+
+    text = request.GET.get('note')
+    if text:
+        private = request.GET.get('private')
+        private = True if private else False
+        note = Note()
+        note.event = event
+        note.author = user
+        note.text = text
+        note.public = not private
+        note.save()
+        message = message + ' and note added' # todo: Better UX feedback
     return notify(alert, message, event.get_absolute_url())
 
 
