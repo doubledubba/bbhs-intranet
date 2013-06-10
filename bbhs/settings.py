@@ -149,9 +149,6 @@ INSTALLED_APPS = (
     'service',
     'shortener',
 
-    'clippy',
-
-
 )
 
 # A sample logging configuration. The only tangible logging
@@ -172,7 +169,11 @@ LOGGING = {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+        },
+        'stream_to_console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler'
+        },
     },
     'loggers': {
         'django.request': {
@@ -180,11 +181,16 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+        'django_auth_ldap': {
+            'handlers': ['stream_to_console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
     }
 }
 
 # LDAP Auth config
-#sdfas http://packages.python.org/django-auth-ldap/index.html
+# http://packages.python.org/django-auth-ldap/index.html
 AUTHENTICATION_BACKENDS = (
  'django_auth_ldap.backend.LDAPBackend',
  'django.contrib.auth.backends.ModelBackend',
@@ -202,13 +208,11 @@ AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn",
         'email': 'mail'}
 
 faculty = 'OU=Faculty,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
-
-AUTH_LDAP_PROFILE_FLAGS_BY_GROUP = {
-    'isFaculty' : faculty
-}
-
 super_admin = 'cn=Intranet_Super_Admin,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org'
 
+AUTH_LDAP_PROFILE_FLAGS_BY_GROUP = {
+    'isFaculty' : super_admin # MAKE A SECURITY GROUP FOR FACULTY
+}
 
 AUTH_LDAP_USER_FLAGS_BY_GROUP = {
     'is_superuser': super_admin,
@@ -220,9 +224,15 @@ AUTH_LDAP_GROUP_TYPE = ActiveDirectoryGroupType()
 AUTH_LDAP_GROUP_SEARCH = LDAPSearch('ou=Staff,dc=campus,dc=bishopblanchet,dc=org',
         ldap.SCOPE_SUBTREE, '(cn=Staff)')
 
-AUTH_LDAP_MIRROR_GROUPS = True
 
 AUTH_LDAP_REQUIRE_GROUP = "cn=Staff,ou=staff,dc=campus,dc=bishopblanchet,dc=org"
+
+AUTH_LDAP_MIRROR_GROUPS = True
+'''
+AUTH_LDAP_FIND_GROUP_PERMS = True
+AUTH_LDAP_CACHE_GROUPS = True
+AUTH_LDAP_GROUP_CACHE_TIMEOUT = 300
+'''
 
 # Use the security group only, don't rely on the OU
 
