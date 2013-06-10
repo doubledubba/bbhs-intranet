@@ -35,12 +35,23 @@ def notify(alert, message, thanks='/chaperone/'):
 
     return redirect(thanks)
 
+def getTypeAhead():
+    names = []
+    string = '['
+    for event in Event.objects.all():
+        string += '"%s",' % event.name
+    string = string[:-1]
+    string += ']'
+    print string
+    return string
+
 @login_required
 def index(request):
     params = {'events': Event.future_events()}
     params['enable_search_bar'] = True
     params['alert'] = request.GET.get('alert')
     params['message'] = request.GET.get('message')
+    params['typeAheadSource'] = getTypeAhead()
     q = request.GET.get('q')
     params['q'] = q
     if q and q.strip():
