@@ -1,3 +1,10 @@
+Fix LDAP Group mirroring bug with a replacement method
+    + You can't modify what groups a user belongs to. You can't them to any
+    other groups or remove them from the Staff group, because the LDAP auth
+    module is set to mirror his/her LDAP groups over to Django.
+    + Solution: Use security groups for everything OR drop LDAP mirroring and
+    use something less invasive in the backend
+
 Fix the html layout/formatting
     + Make the public/private notes be in a hideable accordion type thing
 Improve the UX feedback system
