@@ -159,7 +159,8 @@ class Note(models.Model):
     pub_date = models.DateTimeField("Creation date", auto_now_add=True)
 
     def __unicode__(self):
-        return 'From "%s" about "%s"' % (self.author, self.event)
+        return '<Note #%d event#%d private=%s' % (self.pk,self.event.pk, not
+                self.public)
 
     def getText(self):
         length = len(self.text)

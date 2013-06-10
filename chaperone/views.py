@@ -57,6 +57,11 @@ def index(request):
 def eventPage(request, eventID):
     event = get_object_or_404(Event, pk=eventID)
     params = {'event': event}
+    params['public_notes'] = Note.objects.filter(event=event,
+            public=True).order_by('-pub_date')
+    isAdmin = request.user.pk == event.admin.pk
+    params['isAdmin'] = isAdmin
+    params['private_notes'] = Note.objects.filter(event=event, public=False) if isAdmin else False
     params['alert'] = request.GET.get('alert')
     params['message'] = request.GET.get('message')
 

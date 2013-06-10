@@ -1,3 +1,5 @@
+Fix the html layout/formatting
+    + Make the public/private notes be in a hideable accordion type thing
 Improve the UX feedback system
 
 Correct the time zone settings
