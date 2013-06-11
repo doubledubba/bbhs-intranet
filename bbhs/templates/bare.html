@@ -79,8 +79,11 @@
 		</div>
 		{% if enable_search_bar %}
 		<form class="navbar-search" action="/chaperone">
-			<input type="text" class="search-query" placeholder="{% firstof q "Search" %}" name="q" data-provide="typeahead" data-items="4" 
-			autocomplete="off" data-source="{{ typeAheadSource }}" >
+			<div class="input-append">
+				<input type="text" class="span2" placeholder="{% firstof q "Search" %}" name="q" data-provide="typeahead" data-items="4" 
+				autocomplete="off" data-source="{{ typeAheadSource }}" id="appendedInputButtons">
+				<button class="btn" type="button">Search</button>
+			</div>
 			
 		</form>
 		{% endif %}
