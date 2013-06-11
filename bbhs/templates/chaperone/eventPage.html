@@ -174,13 +174,15 @@
               {% endfor %}
           </select>
           <br/>
-          <button type="submit" class="btn">Sign up</button> -->
+          <button type="submit" class="btn">Sign up</button>
+      </form> -->
+          <form method="POST" action="{{ event.get_absolute_url }}/handleRegistration">
+          	{% csrf_token %}
+				<input type="text" placeholder="{% firstof q "Search" %}" name="q" data-provide="typeahead" data-items="4" 
+				autocomplete="off" data-source="{{ signUpTAH }}" >
+			</form>
           
-			<input type="text" placeholder="{% firstof q "Search" %}" name="q" data-provide="typeahead" data-items="4" 
-			autocomplete="off" data-source="{{ typeAheadSource }}" >
           
-          
-      </form>
   </div>
   {% endif %}
 

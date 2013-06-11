@@ -35,15 +35,20 @@ def notify(alert, message, thanks='/chaperone/'):
 
     return redirect(thanks)
 
-def getTypeAhead(Model, *attrs):
-    names = []
+def formatTAH(TAH):
     string = '['
-    for model in Model.objects.all():
-        for attr in attrs:
-            string += '"%s",' % getattr(model, attr)
+    for item in TAH:
+        string += '"%s",' % item
     string = string[:-1]
     string += ']'
-    print string
+    return string
+
+def getTypeAhead(Model, *attrs):
+    names = []
+    for model in Model.objects.all():
+        for attr in attrs:
+            names.append(getattr(model, attr))
+    string = formatTAH(names)
     return string
 
 @login_required
@@ -84,6 +89,15 @@ def eventPage(request, eventID):
     params['sign_up'] = request.user.has_perm('chaperone.sign_up')
     params['unsign_up'] = request.user.has_perm('chaperone.unsign_up')
 
+    signUpTAH = []
+    for user in User.objects.filter(is_active=True):
+        fName = user.get_full_name()
+        if fName:
+            signUpTAH.append(fName)
+        signUpTAH.append(user.username)
+    params['signUpTAH'] = formatTAH(signUpTAH)
+
+
     if params['add_chaperones']:
         all_users = User.objects.all()
         users = []
@@ -96,6 +110,10 @@ def eventPage(request, eventID):
     return render(request, 'chaperone/eventPage.html', params)
 
 
+def handleRegistration(request, eventID):
+    return HttpResponse(eventID)
+
+
 def signUp(request, eventID):
 
     event = get_object_or_404(Event, pk=eventID)
@@ -103,20 +121,7 @@ def signUp(request, eventID):
     user = User.objects.get(pk=userPk)
     alert, message = event.signUp(user)
 
-    text = request.GET.get('note')
-    if text:
-        private = request.GET.get('private')
-        private = True if private else False
-        note = Note()
-        note.event = event
-        note.author = user
-        note.text = text
-        note.public = not private
-        note.save()
-        message = message + ' and note added' # todo: Better UX feedback
     return notify(alert, message, event.get_absolute_url())
-
-from cgi import escape
 
 def addNote(request, eventID):
     event = get_object_or_404(Event, pk=eventID)
