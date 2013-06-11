@@ -91,43 +91,43 @@ def eventPage(request, eventID):
     params['sign_up'] = request.user.has_perm('chaperone.sign_up')
     params['unsign_up'] = request.user.has_perm('chaperone.unsign_up')
 
-    signUpTAH = []
-    for user in User.objects.filter(is_active=True):
-        fName = user.get_full_name()
-        if fName:
-            name = '%s (%s)' % (fName, user.username)
-        else:
-            name = user.username
-        signUpTAH.append(name)
-    params['signUpTAH'] = formatTAH(signUpTAH)
-
-
     if params['add_chaperones']:
-        all_users = User.objects.all()
-        users = []
-        for user in all_users:
-            if str(user.pk) not in event.volunteersRegistered:
-                users.append(user)
-        params['users'] = users
+        signUpTAH = []
+        for user in User.objects.filter(is_active=True):
+            fName = user.get_full_name()
+            if fName:
+                name = '%s (%s)' % (fName, user.username)
+            else:
+                name = user.username
+            signUpTAH.append(name)
+        params['signUpTAH'] = formatTAH(signUpTAH)
+
+
     params['description'] = markdown(event.description) if event.markdown else event.description
 
     return render(request, 'chaperone/eventPage.html', params)
 
 regex = re.compile(r'\([^)]+\)')
-
-def handleRegistration(request, eventID):
-    query = request.POST.get('q')
+def full_to_user(query):
     r = regex.search(query)
     username = r.string[r.start() + 1 : r.end() -1]
-    user = User.objects.get(username=username)
+    return User.objects.get(username=username)
+
+def handleRegistration(request, eventID):
+    signUpQ = request.POST.get('signUpQ')
+    deSignUpQ = request.POST.get('deSignUpQ')
+    if signUpQ:
+        user = full_to_user(signUpQ)
+        return signUp(request, eventID, user)
+
     return HttpResponse(user.pk)
 
 
-def signUp(request, eventID):
+def signUp(request, eventID, _user=None):
 
     event = get_object_or_404(Event, pk=eventID)
     userPk = request.POST.get('userPk') or str(request.user.pk)
-    user = User.objects.get(pk=userPk)
+    user = _user or User.objects.get(pk=userPk)
     alert, message = event.signUp(user)
 
     return notify(alert, message, event.get_absolute_url())

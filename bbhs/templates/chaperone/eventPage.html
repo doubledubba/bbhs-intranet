@@ -177,7 +177,7 @@
       </form> -->
           <form class="form-search" method="POST" action="{{ event.get_absolute_url }}/handleRegistration">
           	{% csrf_token %}
-				<input type="text" placeholder="{% firstof q "Search" %}" name="q" data-provide="typeahead" data-items="4" 
+				<input type="text" placeholder="{% firstof signUpQ "Search" %}" name="signUpQ" data-provide="typeahead" data-items="4" 
 				autocomplete="off" data-source="{{ signUpTAH }}" class="input-medium search-query">
 				<button type="submit" class="btn">Search</button>
 				<span class="help-block">
