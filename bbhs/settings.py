@@ -148,7 +148,8 @@ INSTALLED_APPS = (
     'chaperone',
     'service',
     'shortener',
-
+    
+    'clippy',
 )
 
 # A sample logging configuration. The only tangible logging

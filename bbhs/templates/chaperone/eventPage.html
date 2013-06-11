@@ -3,8 +3,11 @@
 {% block sidebar %}
 
 <!-- Start general info -->
-          <h5>When: </h5>
+          <h5>Event Date: </h5>
                 {{ event.date }}
+                
+          <h5>Date event created</h5>
+          	{{ event.pub_date }}
 
             <h5>Person in charge:</h5>
             <p><a href="{{ event.admin.get_absolute_url }}">

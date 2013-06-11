@@ -13,6 +13,7 @@ class Event(models.Model):
     name = models.CharField(max_length=80)
     admin = models.ForeignKey(User)
     date = models.DateTimeField()
+    pub_date = models.DateTimeField(auto_now_add=True)
     volunteersNeeded = models.IntegerField()
     volunteersRegistered = models.CharField(max_length=80, blank=True)
     description = models.TextField(blank=True)

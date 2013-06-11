@@ -24,6 +24,8 @@ events = [
             }
         ]
 
+events[0]['date'].day = 30
+
 for info in events:
     event = Event(**info)
     event.save()
