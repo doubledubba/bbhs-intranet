@@ -35,11 +35,12 @@ def notify(alert, message, thanks='/chaperone/'):
 
     return redirect(thanks)
 
-def getTypeAhead(Model, attr):
+def getTypeAhead(Model, *attrs):
     names = []
     string = '['
     for model in Model.objects.all():
-        string += '"%s",' % getattr(model, attr)
+        for attr in attrs:
+            string += '"%s",' % getattr(model, attr)
     string = string[:-1]
     string += ']'
     print string
