@@ -1,3 +1,5 @@
+import re
+
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
@@ -111,10 +113,14 @@ def eventPage(request, eventID):
 
     return render(request, 'chaperone/eventPage.html', params)
 
+regex = re.compile(r'\([^)]+\)')
 
 def handleRegistration(request, eventID):
-    eventID = request.POST.get('q') or eventID
-    return HttpResponse(eventID)
+    query = request.POST.get('q')
+    r = regex.search(query)
+    username = r.string[r.start() + 1 : r.end() -1]
+    user = User.objects.get(username=username)
+    return HttpResponse(user.pk)
 
 
 def signUp(request, eventID):
