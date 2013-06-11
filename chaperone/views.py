@@ -35,11 +35,11 @@ def notify(alert, message, thanks='/chaperone/'):
 
     return redirect(thanks)
 
-def getTypeAhead():
+def getTypeAhead(Model, attr):
     names = []
     string = '['
-    for event in Event.objects.all():
-        string += '"%s",' % event.name
+    for model in Model.objects.all():
+        string += '"%s",' % getattr(model, attr)
     string = string[:-1]
     string += ']'
     print string
@@ -51,7 +51,7 @@ def index(request):
     params['enable_search_bar'] = True
     params['alert'] = request.GET.get('alert')
     params['message'] = request.GET.get('message')
-    params['typeAheadSource'] = getTypeAhead()
+    params['typeAheadSource'] = getTypeAhead(Event, 'name')
     q = request.GET.get('q')
     params['q'] = q
     if q and q.strip():

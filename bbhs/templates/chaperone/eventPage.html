@@ -165,16 +165,21 @@
   {% if add_chaperones %}
   <div class="tab-pane" id="tab4">
       <p>Add another user to the event chaperone list</p>
+      <!--
       <form method="POST" action="{{ event.get_absolute_url }}/signUp">
           {% csrf_token %}
           <select name="userPk">
               {% for user in users %}
               <option value="{{ user.pk }}">{{ user }}</option>
-              <!-- TODO: Test for logged in user, and continue -->
               {% endfor %}
           </select>
           <br/>
-          <button type="submit" class="btn">Sign up</button>
+          <button type="submit" class="btn">Sign up</button> -->
+          
+			<input type="text" placeholder="{% firstof q "Search" %}" name="q" data-provide="typeahead" data-items="4" 
+			autocomplete="off" data-source="{{ typeAheadSource }}" >
+          
+          
       </form>
   </div>
   {% endif %}
