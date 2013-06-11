@@ -256,7 +256,7 @@ username = 'bbhschaperone'
 password = 'gobraves'
 fromaddr = username+'@gmail.com'
 
-from smtplib import SMTP
+from smtplib import SMTP, SMTPRecipientsRefused
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -264,7 +264,10 @@ def send(msg, toaddrs):
     server = SMTP('smtp.gmail.com:587')
     server.starttls()
     server.login(username,password)
-    server.sendmail(fromaddr, [toaddrs], msg)
+    try:
+        server.sendmail(fromaddr, [toaddrs], msg)
+    except SMTPRecipientsRefused:
+        print 'error'
     server.quit()
 
 def sendTextEmail(msg, subject, toaddrs):
@@ -286,3 +289,7 @@ def sendHTMLEmail(text, html, subject, toaddrs):
     msg.attach(part2)
 
     send(msg.as_string(), toaddrs)
+
+from datetime import datetime
+
+endOfYear = datetime(2013, 7, 1)

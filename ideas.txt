@@ -1,12 +1,15 @@
+Fix the external BBHS logo <img src> reference
+    + Used it because I was having issues serving newly added static files
+
+Go through and make sure we are only using users who have is_active=True so
+that feature works consistently across the board
+
 Fix LDAP Group mirroring bug with a replacement method
     + You can't modify what groups a user belongs to. You can't them to any
     other groups or remove them from the Staff group, because the LDAP auth
     module is set to mirror his/her LDAP groups over to Django.
     + Solution: Use security groups for everything OR drop LDAP mirroring and
     use something less invasive in the backend
-
-Fix the html layout/formatting
-    + Make the public/private notes be in a hideable accordion type thing
 
 Correct the time zone settings
 
@@ -42,16 +45,10 @@ Daily cron job that reminds users of events that they've signed up for starting 
 Cron job alerts - email/text/call ? combination?
 
 Bash installation script for the intranet, installs dependencies, pulls code from github, apache, mod_wsgi, django, markdown, django_auth_ldap, bootstrap, server settings, etc
+
 	* "A developer's job is to put himself/herself out of work"
 
 Future app ideas? Make sure there's room for future expansion
-
-On the "sign someone up" form on the eventPage, add a search feature. There will be a lot of teachers and it will be a hassle to go down the list until you find the right one.
-Or at least alphabetize the users by last name, and remove the users that are already signed up from the list.
-    + Typeahead for users!!!
-
-BUG: When a user registers for an event, their eventsNeeded field should decrease by 1.
-	Inversely, when the deregister, their eventsNeeded field should increase by 1
 
 Have django keep track of who is a Faculty member, member of ou=faculty,ou=Staff
 either by seeing if they are in the OU or creating a security group for them. Bug them about

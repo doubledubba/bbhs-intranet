@@ -1,0 +1,66 @@
+{% extends "fluid.html" %}
+
+{% block style %}
+p.pad
+{
+padding:10px;
+}
+
+{% endblock style %}
+
+{% block sidebar %}
+<div class="well">
+Sidebar <hr>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<h1>Welcome to the Chaperone system!</h1>
+
+{% if events %}
+
+{% if n and latency and q %}
+<h5 style="font-family:verdana;color:brown;">Found {{ n }} results searching for "{{ q }}" in {{ latency }} seconds</h5>
+{% endif %}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th class="numeric">Admin</th>
+            <th class="numeric">Date</th>
+            <th class="numeric">Volunteers Needed</th>
+            <th class="numeric">Volunteers Registered</th>
+        </tr>
+    </thead>
+ 
+
+    <tbody>
+{% for event in events %}
+        <tr>
+
+            <td>
+                <a href="{{ event.get_absolute_url }}">
+                    {{ event.name }}
+                </a>
+            </td>
+            {% if event.admin.get_full_name %}
+            <td>{{ event.admin.get_full_name }}</td>
+            {% else %}
+            <td>{{ event.admin }}</td>
+            {% endif %}
+            <td>{{ event.date }}</td>
+            <td>{{ event.volunteersNeeded }}</td>
+            <td>{% firstof event.showVolunteerLinks "None" %}</td>
+ 
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<h4 style="font-family:verdana;color:red;">No future events currently listed!</h4>
+{% endif %}
+
+{% endblock %}

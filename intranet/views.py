@@ -74,3 +74,8 @@ def userPage(request, username):
     params['home'] = request.GET.get('home')
     return render(request, 'userPage.html', params)
 
+
+def temp(request, username):
+    user = User.objects.get(username=username)
+    events = Event.future_events().order_by('date')[:5]
+    return render(request, 'email/duty.html', {'user': user, 'events': events})

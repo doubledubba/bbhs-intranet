@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 
+from datetime import datetime
+from bbhs.settings import endOfYear
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
@@ -12,7 +14,7 @@ class UserProfile(models.Model):
     isFaculty = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return self.user.username
+        return self.user.get_full_name() or self.user.username
 
     def save(self, *args, **kwargs):
         try:
@@ -21,6 +23,11 @@ class UserProfile(models.Model):
         except UserProfile.DoesNotExist:
             pass 
         models.Model.save(self, *args, **kwargs)
+
+    def daysLeft(self, _endOfYear=endOfYear):
+        now = datetime.now()
+        return (_endOfYear - now).days
+        
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
