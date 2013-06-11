@@ -3,6 +3,7 @@ import re
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 
 from django.contrib.auth.models import User
 from markdown import markdown
@@ -108,19 +109,16 @@ def eventPage(request, eventID):
     return render(request, 'chaperone/eventPage.html', params)
 
 regex = re.compile(r'\([^)]+\)')
-def full_to_user(query):
-    r = regex.search(query)
-    username = r.string[r.start() + 1 : r.end() -1]
-    return User.objects.get(username=username)
 
 def handleRegistration(request, eventID):
-    signUpQ = request.POST.get('signUpQ')
-    deSignUpQ = request.POST.get('deSignUpQ')
-    if signUpQ:
-        user = full_to_user(signUpQ)
-        return signUp(request, eventID, user)
+    if request.method != 'POST':
+        raise Http404
+    query = request.POST.get('signUpQ')
+    r = regex.search(query)
+    username = r.string[r.start() + 1 : r.end() -1]
+    user = User.objects.get(username=username)
+    return signUp(request, eventID, user)
 
-    return HttpResponse(user.pk)
 
 
 def signUp(request, eventID, _user=None):
