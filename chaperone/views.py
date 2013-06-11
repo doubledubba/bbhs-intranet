@@ -93,8 +93,10 @@ def eventPage(request, eventID):
     for user in User.objects.filter(is_active=True):
         fName = user.get_full_name()
         if fName:
-            signUpTAH.append(fName)
-        signUpTAH.append(user.username)
+            name = '%s (%s)' % (fName, user.username)
+        else:
+            name = user.username
+        signUpTAH.append(name)
     params['signUpTAH'] = formatTAH(signUpTAH)
 
 
@@ -111,6 +113,7 @@ def eventPage(request, eventID):
 
 
 def handleRegistration(request, eventID):
+    eventID = request.POST.get('q') or eventID
     return HttpResponse(eventID)
 
 

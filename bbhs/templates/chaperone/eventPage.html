@@ -164,7 +164,6 @@
  <div class="tab-pane" id="tab3">
   {% if add_chaperones %}
   <div class="tab-pane" id="tab4">
-      <p>Add another user to the event chaperone list</p>
       <!--
       <form method="POST" action="{{ event.get_absolute_url }}/signUp">
           {% csrf_token %}
@@ -176,10 +175,14 @@
           <br/>
           <button type="submit" class="btn">Sign up</button>
       </form> -->
-          <form method="POST" action="{{ event.get_absolute_url }}/handleRegistration">
+          <form class="form-search" method="POST" action="{{ event.get_absolute_url }}/handleRegistration">
           	{% csrf_token %}
 				<input type="text" placeholder="{% firstof q "Search" %}" name="q" data-provide="typeahead" data-items="4" 
-				autocomplete="off" data-source="{{ signUpTAH }}" >
+				autocomplete="off" data-source="{{ signUpTAH }}" class="input-medium search-query">
+				<button type="submit" class="btn">Search</button>
+				<span class="help-block">
+					Add another user to the event chaperone list
+				</span>
 			</form>
           
           
