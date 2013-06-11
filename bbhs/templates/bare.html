@@ -23,6 +23,10 @@
 	  padding-top: 60px;
 	  padding-bottom: 40px;
 	}
+	
+	{% block style %}
+	{% endblock style %}	
+	
 	</style>
 	<link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.min.css">
 	<link rel="stylesheet" href="{{ STATIC_URL }}css/basic.css">
@@ -80,7 +84,7 @@
 		{% if enable_search_bar %}
 		<form class="navbar-search" action="/chaperone">
 			<div class="input-append">
-				<input type="text" class="span2" placeholder="{% firstof q "Search" %}" name="q" data-provide="typeahead" data-items="4" 
+				<input type="text" class="span2O" placeholder="{% firstof q "Search" %}" name="q" data-provide="typeahead" data-items="4" 
 				autocomplete="off" data-source="{{ typeAheadSource }}" id="appendedInputButtons">
 				<button class="btn" type="button">Search</button>
 			</div>

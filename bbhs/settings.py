@@ -251,3 +251,38 @@ logger.addHandler(logging.StreamHandler())
 logger.setLevel(logging.DEBUG)
 
 DOMAIN = 'faculty.bishopblanchet.org'
+
+username = 'bbhschaperone'
+password = 'gobraves'
+fromaddr = username+'@gmail.com'
+
+from smtplib import SMTP
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+def send(msg, toaddrs):
+    server = SMTP('smtp.gmail.com:587')
+    server.starttls()
+    server.login(username,password)
+    server.sendmail(fromaddr, [toaddrs], msg)
+    server.quit()
+
+def sendTextEmail(msg, subject, toaddrs):
+    msg = MIMEText(msg)
+    msg['Subject'] = subject
+    msg['From'] = fromaddr
+    msg['to'] = toaddrs
+    send(msg.as_string(), toaddrs)
+    
+def sendHTMLEmail(text, html, subject, toaddrs):
+    ''''Pass in alternative text and the intended html'''
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = subject
+    msg['From'] = fromaddr
+    msg['To'] = toaddrs
+    part1 = MIMEText(text, 'plain')
+    part2 = MIMEText(html, 'html')
+    msg.attach(part1)
+    msg.attach(part2)
+
+    send(msg.as_string(), toaddrs)
