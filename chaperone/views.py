@@ -125,9 +125,9 @@ def eventPage(request, eventID):
         for i in tabs:
             tabs[i] = ''
         tabs[tab] = 'active'
-    params['tab1_active'] = tabs[1]
-    params['tab2_active'] = tabs[2]
-    params['tab3_active'] = tabs[3]
+    params['tab1'] = tabs[1]
+    params['tab2'] = tabs[2]
+    params['tab3'] = tabs[3]
 
     return render(request, 'chaperone/eventPage.html', params)
 
@@ -172,7 +172,7 @@ def addNote(request, eventID):
     else:
         alert= 'error'
         message = 'Something went wrong!'
-    return notify(alert, message, event.get_absolute_url())
+    return notify(alert, message, event.get_absolute_url(), tab=2)
 
 def removeUser(request, eventID):
     event = Event.objects.get(pk=eventID)

@@ -61,14 +61,14 @@
 
 <div class="tabbable">
     <ul class="nav nav-tabs">
-        <li class="{{ tab1_active }}"><a href="#tab1" data-toggle="tab">Event Info</a></li>
-        <li class="{{ tab2_active }}"><a href="#tab2" data-toggle="tab">Event Notes</a></li>
+        <li class="{{ tab1 }}"><a href="#tab1" data-toggle="tab">Event Info</a></li>
+        <li class="{{ tab2 }}"><a href="#tab2" data-toggle="tab">Event Notes</a></li>
         {% if remove_chaperones or add_chaperones %}
-        <li class="{{ tab3_active }}"><a href="#tab3" data-toggle="tab">Administration</a></li> <!-- Admin only -->
+        <li class="{{ tab3 }}"><a href="#tab3" data-toggle="tab">Administration</a></li> <!-- Admin only -->
         {% endif %}
     </ul>
     <div class="tab-content">
-        <div class="tab-pane active" id="tab1">
+        <div class="tab-pane {{ tab1 }}" id="tab1">
         	{% if event.expired %}
 			<h4 style="font-family:verdana;color:red;"> Warning: This event has already taken place </h4>
             {% endif %}
@@ -79,7 +79,7 @@
 	</div> <!-- close tab -->
 
 
-<div class="tab-pane" id="tab2">
+<div class="tab-pane {{ tab2 }}" id="tab2">
 				<!-- Start notes code -->
 	<div class="accordion" id="accordion2">
 		<div class="accordion-group">
@@ -161,7 +161,8 @@
 </div> <!-- close tab -->
 
 
- <div class="tab-pane" id="tab3">
+
+ <div class="tab-pane {{ tab3 }}" id="tab3">
   {% if add_chaperones %}
           <form class="form-search" method="POST" action="{{ event.get_absolute_url }}/handleRegistration">
           	{% csrf_token %}
@@ -180,7 +181,6 @@
   {% if remove_chaperones %} <!-- TODO: Find a way to remove the form if
   not volunteers left to remove -->
   <p>Remove a user from the event chaperone list</p>
-  <div class="tab-pane" id="tab5">
       <form method="POST" action="{{ event.get_absolute_url }}/removeUser/">
           {% csrf_token %}
           <select name="userPk">
@@ -191,7 +191,6 @@
           <br/>
           <button type="submit" class="btn">Remove</button>
       </form>
-  </div>
   {% endif %}
 </div>
 
