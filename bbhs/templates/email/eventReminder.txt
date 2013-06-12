@@ -1,0 +1,19 @@
+Hello {% firstof user.first_name user.username %}!
+
+Here is a friendly reminder that you have signed up to chaperone for the 
+"{{ event.name.capitalize }}" event on {{ event.date }}
+	
+The event administrator is {% firstof event.admin.get_full_name event.admin %}. 
+If you'd like to get in touch with the administrator, his or her email is {{ event.admin.email }}
+
+Feel free to send notes to the event administrator by clicking on the "Notes" tab on the event page.
+
+You can send public notes (any interested faculty member can see it on the event page)
+OR private notes (only the event administrator can see it).
+
+Go to http://faculty.bishopblanchet.org
+to get more information about this event.
+
+
+Sincerely,
+	{% firstof event.admin.get_full_name event.admin %}

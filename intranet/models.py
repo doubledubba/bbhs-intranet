@@ -27,7 +27,10 @@ class UserProfile(models.Model):
     def daysLeft(self, _endOfYear=endOfYear):
         now = datetime.now()
         return (_endOfYear - now).days
-        
+
+    def eventsCompleted(self):
+        completed = 4 - self.eventsNeeded
+        return completed        
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

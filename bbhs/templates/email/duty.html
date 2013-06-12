@@ -168,7 +168,7 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
 	
 	<br /><br />
 	We just want to remind you that our records indicate that you have completed
-	{{ user.get_profile.eventsNeeded }} out of 4 events of your yearly event chaperone obligation. <br />
+	{{ user.get_profile.eventsCompleted }} out of 4 events of your yearly event chaperone obligation. <br />
 	<br />
 	You have {{ user.get_profile.daysLeft }} remaining days to fulfill your obligation before the end of the school year.
 	<br /> <br />
@@ -186,7 +186,7 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
 	for more events that you can now sign up for online.
 	<br /> <br />
 	Sincerely, <br /> 
-	The Administration</p>
+	{% firstof event.admin.get_full_name event.admin.username %}</p>
                                     </div>
                                 </td>
                             </tr>

@@ -79,7 +79,8 @@ def userPage(request, username):
 def monthlyCron(request, username):
     user = User.objects.get(username=username)
     events = Event.future_events().order_by('date')[:5]
-    return render(request, 'email/duty.html', {'user': user, 'events': events})
+    return render(request, 'email/duty.html', {'user': user, 'events': events},
+            content_type='text/html')
 
 def dailyCron(request, username):
     user = User.objects.get(username=username)
@@ -88,7 +89,8 @@ def dailyCron(request, username):
             break
     params = {'user': user, 'event': event}
     params['imglink'] = 'http://faculty.bishopblanchet.org/chaperone/eventPage/%d' % event.pk
-    return render(request, 'email/eventReminder.html', params)
+    return render(request, 'email/eventReminder.html', params,
+            content_type='text/html')
 
 def viewPK(request):
     string = ''

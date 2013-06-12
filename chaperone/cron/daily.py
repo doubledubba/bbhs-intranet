@@ -18,8 +18,10 @@ from bbhs.settings import sendTextEmail, sendHTMLEmail, PROJECT_ROOT
 TEMPLATE_DIR = os.path.join(PROJECT_ROOT, 'templates')
 TEMPLATE_DIR = os.path.join(TEMPLATE_DIR, 'email')
 with open(os.path.join(TEMPLATE_DIR, 'eventReminder.html'), 'r') as fh:
-    template = fh.read()
+    HTMLTemplate = fh.read()
 
+with open(os.path.join(TEMPLATE_DIR, 'eventReminder.txt'), 'r') as fh:
+    TextTemplate = fh.read()
 
 for event in Event.future_events():
     now = datetime.utcnow().replace(tzinfo=utc)
@@ -29,11 +31,17 @@ for event in Event.future_events():
             print 'No volunteers for ' + str(event)
             continue
         for user in volunteers:
-            t = Template(template)
             params = {'user': user, 'event': event}
+
+            t = Template(HTMLTemplate)
             c = Context(params)
             html = t.render(c)
+
+            t = Template(TextTemplate)
+            c = Context(params)
+            text = t.render(c)
+
             subject = 'Reminder about "%s"' % event.name.capitalize()
-            sendHTMLEmail('Placeholder', html, subject, user.email)
+            sendHTMLEmail(text, html, subject, user.email)
             print 'Bugging "%s" about "%s"' % (user.username, event.name)
 

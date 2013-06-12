@@ -1,3 +1,7 @@
+Write a script that populates the database with all of the faculty members
+    + Restrict the cron job scripts to email only those who are Faculty
+    + Implement the isFaculty attribute on the UserProfile model
+
 Fix the external BBHS logo <img src> reference
     + Used it because I was having issues serving newly added static files
 

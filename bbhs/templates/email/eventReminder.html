@@ -168,8 +168,8 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
 	<br /> <br />
 	The event administrator is 
 	<a href="http://faculty.bishopblanchet.org/user/{{ event.admin.username }}">
-	{% firstof event.admin.get_full_name event.admin %}.
-	</a>
+	{% firstof event.admin.get_full_name event.admin %}
+	</a>.
 	If you'd like to get in touch with the administrator, his or her email is {{ event.admin.email }}
 	<br /><br />
 	
@@ -184,7 +184,7 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
 	<br /><br />
 	
 		Sincerely, <br /> 
-	The Administration</p>
+	{% firstof event.admin.get_full_name event.admin.username %}</p>
                                     </div>
                                 </td>
                             </tr>

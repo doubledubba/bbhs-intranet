@@ -1,0 +1,26 @@
+Hello {% firstof user.first_name user.username %}!
+
+As a faculty member of Bishop Blanchet High school, you probably know that
+you are required to chaperone for at least 4 events every school year.
+This service is vital to our community, and we value your participation.
+
+We just want to remind you that our records indicate that you have completed
+{{ user.get_profile.eventsCompleted }} out of 4 events of your yearly event 
+chaperone obligation.
+
+You have {{ user.get_profile.daysLeft }} remaining days to fulfill your
+obligation before the end of the school year.
+
+Here are the 5 nearest future events:
+		{% for event in events %}
+		+ {{ event.name }} (http://faculty.bishopblanchet.org{{ event.get_absolute_url }})
+		{% endfor %}
+
+In order to gain access to the chaperone website, be sure to sign in with the same credentials
+you would use to log on to a computer at school.
+
+Please take a look at http://faculty.bishopblanchet.org/chaperone
+for more events that you can now sign up for online.
+
+Sincerely, 
+	{% firstof event.admin.get_full_name event.admin.username %}

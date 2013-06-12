@@ -161,6 +161,8 @@ class Event(models.Model):
             text = text[:limit] + '... (more on event page)'
         return text
 
+
+
 class Note(models.Model):
     event = models.ForeignKey(Event)
     author = models.ForeignKey(User)
