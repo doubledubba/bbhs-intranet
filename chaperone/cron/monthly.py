@@ -19,7 +19,6 @@ with open(os.path.join(TEMPLATE_DIR, 'duty.html'), 'r') as fh:
     template = fh.read()
 
 def sendEmail(user):
-    statement = '%s needs %d more events' % (profile, profile.eventsNeeded)
     email = profile.user.email
     t = Template(template)
     events = Event.future_events().order_by('date')[:5] 

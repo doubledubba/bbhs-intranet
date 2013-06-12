@@ -20,7 +20,6 @@ urlpatterns = patterns('intranet.views',
 urlpatterns += patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^chaperone/', include('chaperone.urls'),),
-    url(r'^service/', include('service.urls'))
 )
 
 short = '(?P<short>.{6})'

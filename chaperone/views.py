@@ -99,7 +99,7 @@ def eventPage(request, eventID):
             if fName:
                 name = '%s (%s)' % (fName, user.username)
             else:
-                name = user.username
+                name = '%s (%s)' % (user.username, user.username)
             signUpTAH.append(name)
         params['signUpTAH'] = formatTAH(signUpTAH)
 

@@ -1,7 +1,21 @@
+import os
+
+from markdown import markdown
+
 from django.contrib import admin
+from django.template import Context, Template
 from chaperone.models import Event, Note
 from bbhs.settings import sendHTMLEmail
 from chaperone.cron import monthly, daily
+from intranet.models import UserProfile
+
+from bbhs.settings import sendHTMLEmail, PROJECT_ROOT
+
+TEMPLATE_DIR = os.path.join(PROJECT_ROOT, 'templates')
+TEMPLATE_DIR = os.path.join(TEMPLATE_DIR, 'email')
+with open(os.path.join(TEMPLATE_DIR, 'ad.html'), 'r') as fh:
+    template = fh.read()
+
 
 def turnOnRender(modelAdmin, request, querySet):
     querySet.update(markdown=True)
@@ -10,13 +24,26 @@ def turnOffRender(modelAdmin, request, querySet):
     querySet.update(markdown=False)
 
 def eventAd(modelAdmin, request, querySet):
-    print 'ad!'
+    users = UserProfile.objects.filter(eventsNeeded__gt=0, user__is_active=True)
+    for event in querySet:
+        for user in users:
+            if event.signedUp(user):
+                continue
+            t = Template(template)
+            params = {'user': user, 'event': event}
+            params['body'] = markdown(event.description) if event.markdown else event.description
+            c = Context(params)
+            html = t.render(c)
+            email = user.user.email
+            sendHTMLEmail('Placeholder', html, 'Chaperone obligation', email)
+
 
 def eventReminder(modelAdmin, request, querySet):
     print 'Reminder!'
     for event in querySet:
         for user in event.getVolunteers():
             daily.sendEmail(user, event)
+
 
 turnOnRender.short_description = 'Turn on the markdown rendering feature'
 turnOffRender.short_description = 'Turn off the markdown rendering feature'

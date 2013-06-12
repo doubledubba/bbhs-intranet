@@ -107,8 +107,7 @@ class Event(models.Model):
 
     def signedUp(self, user):
         '''Return true if the User is signed up for this event.
-        
-        Experimental functionality - not tested'''
+        '''
         pks = self.getPks()
         for pk in pks:
             if user.pk == pk:

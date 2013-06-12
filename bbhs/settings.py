@@ -146,7 +146,6 @@ INSTALLED_APPS = (
 
     'intranet',
     'chaperone',
-    'service',
     'shortener',
     
     'clippy',
