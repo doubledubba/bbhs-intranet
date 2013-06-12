@@ -169,7 +169,7 @@ def addNote(request, eventID):
         note.text = text
         note.public = not private
         note.save()
-        message = 'Note added'
+        message = 'Private note added' if private else 'Public note added'
         alert = 'success'
     else:
         alert= 'error'
