@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html><head><title>Chaperone | BBHS</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=320, target-densitydpi=device-dpi">
+<html><head><title>{{ event.name.capitalize }}</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=320, target-densitydpi=device-dpi">
 <style type="text/css">
 @media only screen and (max-width: 660px) { 
 table[class=w0], td[class=w0] { width: 0 !important; }
@@ -162,30 +162,28 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
                                     <p class="article-title" style="font-size:18px;line-height:24px;color:#e97900;font-weight:bold;margin-top:0px;margin-bottom:18px;font-family:'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif;" align="left">Hello {% firstof user.first_name user.username %}!</p>
                                     <div class="article-content" style="font-size:13px;line-height:18px;color:#444444;margin-top:0px;margin-bottom:18px;font-family:'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif;" align="left">
                                         <p style="margin-bottom:15px;">
-	As a faculty member of Bishop Blanchet High school, you probably know that
-	you are required to chaperone for at least 4 events every school year.
-	This service is vital to our community, and we value your participation.
+	Here is a friendly reminder that you have signed up to chaperone for the 
+	<b>"{{ event.name.capitalize }}"</b> event on {{ event.date }}
 	
+	<br /> <br />
+	The event administrator is 
+	<a href="http://faculty.bishopblanchet.org/user/{{ event.admin.username }}">
+	{% firstof event.admin.get_full_name event.admin %}.
+	</a>
+	If you'd like to get in touch with the administrator, his or her email is {{ event.admin.email }}
 	<br /><br />
-	We just want to remind you that our records indicate that you have completed
-	{{ user.get_profile.eventsNeeded }} out of 4 events of your yearly event chaperone obligation. <br />
+	
+	Feel free to send notes to the event administrator by clicking on the "Notes" tab on the event page.
 	<br />
-	You have {{ user.get_profile.daysLeft }} remaining days to fulfill your obligation before the end of the school year.
+	You can send public notes (any interested faculty member can see it on the event page)
+	OR private notes (only the event administrator can see it).
 	<br /> <br />
 	
-	Here are the 5 nearest future events:
-		<ul>
-			{% for event in events %}
-			<li><a href="http://faculty.bishopblanchet.org{{ event.get_absolute_url }}">{{ event.name }}</a></li>
-			{% endfor %}
-		</ul>
-	In order to gain access to the chaperone website, be sure to sign in with the same credentials
-	you would use to log on to a computer at school.
-	<br /> <br />
-	Please take a look at <a href="http://faculty.bishopblanchet.org/chaperone">this link</a>
-	for more events that you can now sign up for online.
-	<br /> <br />
-	Sincerely, <br /> 
+	Click <a href="http://faculty.bishopblanchet.org{{ event.get_absolute_url }}#notes">here</a>
+	to get more information about this event.
+	<br /><br />
+	
+		Sincerely, <br /> 
 	The Administration</p>
                                     </div>
                                 </td>

@@ -69,7 +69,3 @@ Emailing users and event administrators
 User reports
 	All users
 	Individual users (search)?
-
-Separate permissions into
-	User can sign up
-	User can deregister

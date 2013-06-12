@@ -75,7 +75,15 @@ def userPage(request, username):
     return render(request, 'userPage.html', params)
 
 
-def temp(request, username):
+def monthlyCron(request, username):
     user = User.objects.get(username=username)
     events = Event.future_events().order_by('date')[:5]
     return render(request, 'email/duty.html', {'user': user, 'events': events})
+
+def dailyCron(request, username):
+    user = User.objects.get(username=username)
+    for event in Event.objects.all():
+        if str(user.pk) in event.volunteersRegistered:
+            break
+    return render(request, 'email/eventReminder.html', {'user': user, 'event': event})
+

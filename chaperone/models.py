@@ -33,7 +33,7 @@ class Event(models.Model):
         )
 
     def __unicode__(self):
-        return '%s on %s with %s' % (self.name, self.date.strftime('%c'),
+        return '"%s" on %s with %s' % (self.name, self.date,
                 self.admin)
 
     def get_absolute_url(self):
@@ -65,7 +65,8 @@ class Event(models.Model):
         users = []
         for pk in volunteerPKs:
             user = User.objects.get(pk=pk)
-            users.append(user)
+            if user.is_active:
+                users.append(user)
 
         return users
  
