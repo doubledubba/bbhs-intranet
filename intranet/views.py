@@ -8,6 +8,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from chaperone.models import Event
 
+from markdown import markdown
+
 Message = lambda request, msg: render(request, 'message.html', {'msg': msg})
 
 def index(request):
@@ -99,3 +101,9 @@ def viewPK(request):
         string += '<br />'
     return HttpResponse(string)
 
+def eventAd(request, eventPK):
+    event = get_object_or_404(Event, pk=eventPK)
+    params = {'user': request.user, 'event': event}
+    params['body'] = markdown(event.description) if event.markdown else event.description
+    return render(request, 'email/ad.html', params,
+            content_type='text/html')

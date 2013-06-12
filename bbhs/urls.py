@@ -12,6 +12,7 @@ urlpatterns = patterns('intranet.views',
     url(r'^user/daily/(?P<username>.+)/$', 'dailyCron'),
     url(r'^user/pk/$', 'viewPK'),
     url(r'^user/(?P<username>.+)/$', 'userPage'),
+    url(r'^ad/(?P<eventPK>.+)/$', 'eventAd'),
 
 
 )
