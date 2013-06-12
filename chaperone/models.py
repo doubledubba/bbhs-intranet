@@ -176,3 +176,13 @@ class Note(models.Model):
         length = len(self.text)
         return self.text if length < 80 else self.text[:80] + '...'
     getText.short_description = 'Note content'
+
+
+from django.db.models.signals import pre_delete
+
+def delete_user_profile(sender, instance, using, **kwargs):
+    print "Deleting", instance
+    for event in Event.objects.all():
+        event.removeVolunteer(instance)
+
+pre_delete.connect(delete_user_profile, sender=User)
