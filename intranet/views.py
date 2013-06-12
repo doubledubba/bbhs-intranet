@@ -93,7 +93,7 @@ def dailyCron(request, username):
 def viewPK(request):
     string = ''
     for user in User.objects.all():
-        string += user.username + ' ' + str(user.pk)
+        string += user.username + ' ' + str(user.pk)  + ' ' + str(user.get_profile().pk)
         string += '<br />'
     return HttpResponse(string)
 
