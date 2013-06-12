@@ -39,6 +39,7 @@ Have an interface where the user can search events by categories organized by ye
 
 Make the user profile page more lively.
 	Add profile pictures
+        Phone directory project?
 
 Monthly cron job that will remind users of their yearly chaperone obligations
 

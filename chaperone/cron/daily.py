@@ -23,25 +23,33 @@ with open(os.path.join(TEMPLATE_DIR, 'eventReminder.html'), 'r') as fh:
 with open(os.path.join(TEMPLATE_DIR, 'eventReminder.txt'), 'r') as fh:
     TextTemplate = fh.read()
 
-for event in Event.future_events():
-    now = datetime.utcnow().replace(tzinfo=utc)
-    if (event.date - now).days <= 2:
-        volunteers = event.getVolunteers()
-        if not volunteers:
-            print 'No volunteers for ' + str(event)
-            continue
-        for user in volunteers:
-            params = {'user': user, 'event': event}
+def sendEmail(user, event):
+    params = {'user': user, 'event': event}
 
-            t = Template(HTMLTemplate)
-            c = Context(params)
-            html = t.render(c)
+    t = Template(HTMLTemplate)
+    c = Context(params)
+    html = t.render(c)
 
-            t = Template(TextTemplate)
-            c = Context(params)
-            text = t.render(c)
+    t = Template(TextTemplate)
+    c = Context(params)
+    text = t.render(c)
 
-            subject = 'Reminder about "%s"' % event.name.capitalize()
-            sendHTMLEmail(text, html, subject, user.email)
-            print 'Bugging "%s" about "%s"' % (user.username, event.name)
+    subject = 'Reminder about "%s"' % event.name.capitalize()
+    sendHTMLEmail(text, html, subject, user.email)
+    print 'Bugging "%s" about "%s"' % (user.username, event.name)
 
+def run():
+    for event in Event.future_events():
+        now = datetime.utcnow().replace(tzinfo=utc)
+        if (event.date - now).days <= 2:
+            volunteers = event.getVolunteers()
+            if not volunteers:
+                print 'No volunteers for ' + str(event)
+                continue
+            for user in volunteers:
+                sendEmail(user)
+
+
+
+if __name__ == '__main__':
+    run()
