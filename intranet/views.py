@@ -54,6 +54,7 @@ def logoutView(request):
     return Message(request, 'Logged out!')
 
 def userPage(request, username):
+    print 'adsfadsf'
     params = {}
     user = get_object_or_404(User, username=username)
     events = []
@@ -88,4 +89,11 @@ def dailyCron(request, username):
     params = {'user': user, 'event': event}
     params['imglink'] = 'http://faculty.bishopblanchet.org/chaperone/eventPage/%d' % event.pk
     return render(request, 'email/eventReminder.html', params)
+
+def viewPK(request):
+    string = ''
+    for user in User.objects.all():
+        string += user.username + ' ' + str(user.pk)
+        string += '<br />'
+    return HttpResponse(string)
 

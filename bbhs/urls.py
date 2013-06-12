@@ -7,9 +7,11 @@ urlpatterns = patterns('intranet.views',
     url(r'^$', 'index'),
     url(r'^login/$', 'loginView'),
     url(r'^logout/$', 'logoutView'),
+
+    url(r'^user/monthly/(?P<username>.+)/$', 'monthlyCron'),
+    url(r'^user/daily/(?P<username>.+)/$', 'dailyCron'),
+    url(r'^user/pk/$', 'viewPK'),
     url(r'^user/(?P<username>.+)/$', 'userPage'),
-    url(r'^user/(?P<username>.+)/monthly$', 'monthlyCron'),
-    url(r'^user/(?P<username>.+)/daily$', 'dailyCron'),
 
 
 )

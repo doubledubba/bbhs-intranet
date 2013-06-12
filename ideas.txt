@@ -1,3 +1,24 @@
+If I delete user X and X happens to be the most recent (highest PK) in the DB,
+then the next user to be created will take user X's pk and inherit any previous
+references to his/her predecessor's PK.
+
+When I delete a user that has already signed up for things:
+    + User's PK information is left behind in the events he/she has signed up
+    for.
+    + This raises errors when we try to query for each PK in that field.
+
+I think that django is re-using old deleted PK's.
+I need to verify that this is truly a problem.
+Possible Solutions
+    + Add a cleanup function that gets called when a user is deleted. This
+    would remove all references to him/her in the database, which would "clean"
+    that PK for future users
+    + Find a way for django to keep incrementing user PKs even if there are
+    lower unused numbers. This could be an issue that comes from sharing auth
+    between LDAP and local.
+    + Make it impossible to actually delete User objects, and make it so you
+    can only disable them.
+
 Fix the external BBHS logo <img src> reference
     + Used it because I was having issues serving newly added static files
 
