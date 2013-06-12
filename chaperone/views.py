@@ -31,10 +31,15 @@ from urllib import urlencode
 + Add URL Shortener app
 + Collect contact info from users
 '''
+tabs = {
+    1: 'active',
+    2: '',
+    3: ''
+}
 
-def notify(alert, message, thanks='/chaperone/'):
+def notify(alert, message, thanks='/chaperone/', tab=1):
     thanks += '?'
-    thanks += urlencode({'alert': alert, 'message': message})
+    thanks += urlencode({'alert': alert, 'message': message, 'tab': tab})
 
     return redirect(thanks)
 
@@ -56,6 +61,11 @@ def getTypeAhead(Model, *attrs):
 
 @login_required
 def index(request):
+    tabs = {
+        1: 'active',
+        2: '',
+        3: ''
+    }
     params = {'events': Event.future_events()}
     params['enable_search_bar'] = True
     params['alert'] = request.GET.get('alert')
@@ -70,7 +80,10 @@ def index(request):
         params['events'] = found_entries
         params['latency'] = (datetime.now() - start).total_seconds()
         params['n'] = len(found_entries)
+
+
     return render(request, 'chaperone/index.html', params)
+
 
 
 @login_required
@@ -106,6 +119,16 @@ def eventPage(request, eventID):
 
     params['description'] = markdown(event.description) if event.markdown else event.description
 
+    tab = request.GET.get('tab')
+    if tab:
+        tab = int(tab)
+        for i in tabs:
+            tabs[i] = ''
+        tabs[tab] = 'active'
+    params['tab1_active'] = tabs[1]
+    params['tab2_active'] = tabs[2]
+    params['tab3_active'] = tabs[3]
+
     return render(request, 'chaperone/eventPage.html', params)
 
 regex = re.compile(r'\([^)]+\)')
@@ -128,7 +151,7 @@ def signUp(request, eventID, _user=None):
     user = _user or User.objects.get(pk=userPk)
     alert, message = event.signUp(user)
 
-    return notify(alert, message, event.get_absolute_url())
+    return notify(alert, message, event.get_absolute_url(), tab=3)
 
 def addNote(request, eventID):
     event = get_object_or_404(Event, pk=eventID)
@@ -160,5 +183,5 @@ def removeUser(request, eventID):
         return redirect(url)
     user = User.objects.get(pk=userPk)
     alert, message = event.removeVolunteer(user)
-    return notify(alert, message, event.get_absolute_url())
+    return notify(alert, message, event.get_absolute_url(), tab=3)
     

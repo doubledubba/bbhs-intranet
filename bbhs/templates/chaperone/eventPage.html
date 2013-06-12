@@ -61,10 +61,10 @@
 
 <div class="tabbable">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab1" data-toggle="tab">Event Info</a></li>
-        <li><a href="#tab2" data-toggle="tab">Event Notes</a></li>
+        <li class="{{ tab1_active }}"><a href="#tab1" data-toggle="tab">Event Info</a></li>
+        <li class="{{ tab2_active }}"><a href="#tab2" data-toggle="tab">Event Notes</a></li>
         {% if remove_chaperones or add_chaperones %}
-        <li><a href="#tab3" data-toggle="tab">Administration</a></li> <!-- Admin only -->
+        <li class="{{ tab3_active }}"><a href="#tab3" data-toggle="tab">Administration</a></li> <!-- Admin only -->
         {% endif %}
     </ul>
     <div class="tab-content">
@@ -163,18 +163,6 @@
 
  <div class="tab-pane" id="tab3">
   {% if add_chaperones %}
-  <div class="tab-pane" id="tab4">
-      <!--
-      <form method="POST" action="{{ event.get_absolute_url }}/signUp">
-          {% csrf_token %}
-          <select name="userPk">
-              {% for user in users %}
-              <option value="{{ user.pk }}">{{ user }}</option>
-              {% endfor %}
-          </select>
-          <br/>
-          <button type="submit" class="btn">Sign up</button>
-      </form> -->
           <form class="form-search" method="POST" action="{{ event.get_absolute_url }}/handleRegistration">
           	{% csrf_token %}
 				<input type="text" placeholder="{% firstof signUpQ "Search" %}" name="signUpQ" data-provide="typeahead" data-items="4" 
