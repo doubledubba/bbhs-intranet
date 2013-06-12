@@ -23,12 +23,17 @@ with open(os.path.join(TEMPLATE_DIR, 'eventReminder.html'), 'r') as fh:
 
 for event in Event.future_events():
     now = datetime.utcnow().replace(tzinfo=utc)
-    if (event.date - now).days <= 2 and event.volunteersRegistered:
-        for user in event.getVolunteers():
+    if (event.date - now).days <= 2:
+        volunteers = event.getVolunteers()
+        if not volunteers:
+            print 'No volunteers for ' + str(event)
+            continue
+        for user in volunteers:
             t = Template(template)
             params = {'user': user, 'event': event}
             c = Context(params)
             html = t.render(c)
-            #sendHTMLEmail('Placeholder', html, 'Chaperone obligation', user.email)
+            subject = 'Reminder about "%s"' % event.name.capitalize()
+            sendHTMLEmail('Placeholder', html, subject, user.email)
             print 'Bugging "%s" about "%s"' % (user.username, event.name)
 

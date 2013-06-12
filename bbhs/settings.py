@@ -267,7 +267,7 @@ def send(msg, toaddrs):
     try:
         server.sendmail(fromaddr, [toaddrs], msg)
     except SMTPRecipientsRefused:
-        print 'error'
+        print 'Failed to email: ' + toaddrs
     server.quit()
 
 def sendTextEmail(msg, subject, toaddrs):

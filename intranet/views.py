@@ -85,5 +85,7 @@ def dailyCron(request, username):
     for event in Event.objects.all():
         if str(user.pk) in event.volunteersRegistered:
             break
-    return render(request, 'email/eventReminder.html', {'user': user, 'event': event})
+    params = {'user': user, 'event': event}
+    params['imglink'] = 'http://faculty.bishopblanchet.org/chaperone/eventPage/%d' % event.pk
+    return render(request, 'email/eventReminder.html', params)
 

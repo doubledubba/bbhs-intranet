@@ -85,16 +85,15 @@ class Event(models.Model):
         for pk in pks:
             try:
                 user = User.objects.get(pk=pk)
-            except:
-                pass
-            string = '<a href="%s">%s</a>'
-            url = user.get_absolute_url()
-            username = user.get_full_name() or str(user)
-            string = string % (url, username)
-            if links == '':
-                links += string
-            else:
-                links += ',' + string
+                string = '<a href="%s">%s</a>'
+                url = user.get_absolute_url()
+                username = user.get_full_name() or str(user)
+                string = string % (url, username)
+                if links == '':
+                    links += string
+                else:
+                    links += ',' + string
+            except ValueError: pass
         return links
 
     def expired(self, now=datetime.utcnow().replace(tzinfo=utc)):

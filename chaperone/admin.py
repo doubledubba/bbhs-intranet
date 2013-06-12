@@ -12,7 +12,7 @@ turnOffRender.short_description = 'Turn off the markdown rendering feature'
 
 class EventAdmin(admin.ModelAdmin):
     date_hierarchy = 'date'
-    exclude = ('volunteersRegistered',)
+    #exclude = ('volunteersRegistered',)
     list_display = ('name', 'date', 'admin', 'volunteersNeeded', 'showVolunteers', 'markdown')
     list_editable = ['volunteersNeeded',]
     list_filter = ('date', 'admin')
