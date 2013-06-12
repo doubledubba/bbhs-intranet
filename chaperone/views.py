@@ -119,12 +119,14 @@ def eventPage(request, eventID):
 
     params['description'] = markdown(event.description) if event.markdown else event.description
 
+    for i in tabs:
+        tabs[i] = ''
     tab = request.GET.get('tab')
     if tab:
         tab = int(tab)
-        for i in tabs:
-            tabs[i] = ''
         tabs[tab] = 'active'
+    else:
+        tabs[1] = 'active'
     params['tab1'] = tabs[1]
     params['tab2'] = tabs[2]
     params['tab3'] = tabs[3]
