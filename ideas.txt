@@ -1,3 +1,6 @@
+Map a userprofile attributes to an LDAP UAC attribute
+    Write a method that returns a bool for enabled/disabled
+
 Write a script that populates the database with all of the faculty members
     + Restrict the cron job scripts to email only those who are Faculty
     + Implement the isFaculty attribute on the UserProfile model
