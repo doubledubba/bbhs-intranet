@@ -84,8 +84,6 @@ def index(request):
 
     return render(request, 'chaperone/index.html', params)
 
-
-
 @login_required
 def eventPage(request, eventID):
     event = get_object_or_404(Event, pk=eventID)

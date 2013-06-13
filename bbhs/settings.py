@@ -207,7 +207,7 @@ AUTH_LDAP_USER_SEARCH = LDAPSearch('ou=Staff,dc=campus,dc=bishopblanchet,dc=org'
 AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn",
         'email': 'mail'}
 
-faculty = 'OU=Faculty,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
+faculty_cn = 'OU=Faculty,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
 super_admin = 'cn=Intranet_Super_Admin,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org'
 
 AUTH_LDAP_PROFILE_FLAGS_BY_GROUP = {
@@ -292,3 +292,4 @@ def sendHTMLEmail(text, html, subject, toaddrs):
 from datetime import datetime
 
 endOfYear = datetime(2013, 7, 1)
+startOfYear = datetime(2013, 9, 1)
