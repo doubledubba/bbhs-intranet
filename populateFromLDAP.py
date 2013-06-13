@@ -2,7 +2,7 @@ import os
 os.environ['DJANGO_SETTINGS_MODULE'] = 'bbhs.settings'
 from tempfile import NamedTemporaryFile as temp
 from ldif import LDIFParser
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from bbhs.settings import PROJECT_ROOT, AUTH_LDAP_SERVER_URI
 from bbhs.settings import AUTH_LDAP_BIND_PASSWORD, AUTH_LDAP_BIND_DN, faculty_cn
 
@@ -62,6 +62,8 @@ users = parser.users
 fh.close()
 del parser, fh, os, temp, LDIFParser
 
+staff = Group.objects.get(name="Staff")
+
 for user in users:
     username = user.get('username')
     email = user.get('email')
@@ -78,6 +80,7 @@ for user in users:
         user.first_name = first_name
         user.last_name = last_name
         user.save()
+        staff.user_set.add(user)
         print 'Created:', username
     
 
