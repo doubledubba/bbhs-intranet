@@ -26,10 +26,10 @@
 				<li><a href="#tab2" data-toggle="tab">Past Events</a></li>
 			</ul>
 			<div class="tab-content">
-                        <div class="tab-pane active" id="tab1">
-                                        <ul>
-					    {% for event in active %}
-                                            <li><a href="{{event.get_absolute_url}}">
+         	<div class="tab-pane active" id="tab1">
+            	<ul>
+					{% for event in active %}
+ 					<li><a href="{{event.get_absolute_url}}">
                                             "{{ event.name }}" on {{ event.date }}
                                             </a></li>
 					    {% endfor %}
@@ -51,13 +51,11 @@
 
 </div>
 
+<br />
+<br />
+<iframe
+    src="https://www.google.com/calendar/embed?title=BBHS%20Internal%20Calendars&amp;mode=AGENDA&amp;height=900&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=bbhscalendar%40gmail.com&amp;color=%23125A12&amp;src=6m67tvpmmadgsg0cgplgehqo3c%40group.calendar.google.com&amp;color=%23875509&amp;src=oc0nifcvnlp3dgq3tpvecab7ls%40group.calendar.google.com&amp;color=%23711616&amp;src=43j670bpge31ga6sq6tvea58r4%40group.calendar.google.com&amp;color=%2323164E&amp;src=9oounb9m5790te7qdeccr1acos%40group.calendar.google.com&amp;color=%23853104&amp;src=mp1du636dvotr2gf5honp0c1pk%40group.calendar.google.com&amp;color=%236B3304&amp;src=o2adfh6o04ji0e01mo9e0m6gl4%40group.calendar.google.com&amp;color=%232952A3&amp;src=28j5legh1r3c2tdp7demq6b4lk%40group.calendar.google.com&amp;color=%23B1365F&amp;src=bcka6ulnsuemkk40llrc7lhe8c%40group.calendar.google.com&amp;color=%23182C57&amp;src=q2p463ait14tig1iog3dca141s%40group.calendar.google.com&amp;color=%232F6309&amp;src=ajfretm1425r1u05fgvem49t8c%40group.calendar.google.com&amp;color=%23AB8B00&amp;src=ajtvvqauv2vve92sso48bvr3bo%40group.calendar.google.com&amp;color=%235F6B02&amp;src=n3tcf39j9pri6ho35v283h0h1k%40group.calendar.google.com&amp;color=%23333333&amp;src=n9cgb51noutrnll5a30ovhm8v4%40group.calendar.google.com&amp;color=%23B1440E&amp;src=50ul1lh5iev5tqfhl1cab6gke8%40group.calendar.google.com&amp;color=%230F4B38&amp;src=en.usa%23holiday%40group.v.calendar.google.com&amp;color=%23060D5E&amp;ctz=America%2FLos_Angeles"
+    style=" border-width:0 " width="600" height="900" frameborder="0"
+    scrolling="no"></iframe>
 
-	<div class="bigger_center">
-
-<iframe src="https://www.google.com/calendar/embed?title=Please%20note%20that%20the%20default%20view%20of%20the%20calendar%20is%20the%20%E2%80%9CAgenda%E2%80%9D%20view%20which%20provides%20a%20list%20of%20daily%20events.%20%20Should%20you%20wish%20to%20see%20a%20weekly%20or%20monthly%20view%2C%20those%20options%20are%20available%20in%20the%20upper%20right%20hand%20corner%20of%20the%20calendar.%20&amp;mode=AGENDA&amp;height=900&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=bbhscalendar%40gmail.com&amp;color=%23125A12&amp;src=6m67tvpmmadgsg0cgplgehqo3c%40group.calendar.google.com&amp;color=%23875509&amp;src=oc0nifcvnlp3dgq3tpvecab7ls%40group.calendar.google.com&amp;color=%23711616&amp;src=43j670bpge31ga6sq6tvea58r4%40group.calendar.google.com&amp;color=%2323164E&amp;src=9oounb9m5790te7qdeccr1acos%40group.calendar.google.com&amp;color=%23853104&amp;src=mp1du636dvotr2gf5honp0c1pk%40group.calendar.google.com&amp;color=%236B3304&amp;src=o2adfh6o04ji0e01mo9e0m6gl4%40group.calendar.google.com&amp;color=%232952A3&amp;src=28j5legh1r3c2tdp7demq6b4lk%40group.calendar.google.com&amp;color=%23B1365F&amp;src=bcka6ulnsuemkk40llrc7lhe8c%40group.calendar.google.com&amp;color=%23182C57&amp;src=ajfretm1425r1u05fgvem49t8c%40group.calendar.google.com&amp;color=%23AB8B00&amp;src=ajtvvqauv2vve92sso48bvr3bo%40group.calendar.google.com&amp;color=%235F6B02&amp;src=n3tcf39j9pri6ho35v283h0h1k%40group.calendar.google.com&amp;color=%23333333&amp;src=50ul1lh5iev5tqfhl1cab6gke8%40group.calendar.google.com&amp;color=%230F4B38&amp;src=en.usa%23holiday%40group.v.calendar.google.com&amp;color=%23060D5E&amp;ctz=America%2FLos_Angeles" style=" border-width:0 " width="900" height="900" frameborder="0" scrolling="no"></iframe>
-
-		<br />
-		<br>
-		<br />
-        </div>
 {% endblock body %}
