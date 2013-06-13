@@ -67,86 +67,83 @@
         <li class="{{ tab3 }}"><a href="#tab3" data-toggle="tab">Administration</a></li> <!-- Admin only -->
         {% endif %}
     </ul>
-    <div class="tab-content">
-        <div class="tab-pane {{ tab1 }}" id="tab1">
-        	{% if event.expired %}
+	<div class="tab-content">
+		<div class="tab-pane {{ tab1 }}" id="tab1">
+			{% if event.expired %}
 			<h4 style="font-family:verdana;color:red;"> Warning: This event has already taken place </h4>
-            {% endif %}
-
-           <div class="well"> <p>{{ description | safe }}</p></div>
-
-
-	</div> <!-- close tab -->
-
-
-<div class="tab-pane {{ tab2 }}" id="tab2">
-				<!-- Start notes code -->
-	<div class="accordion" id="accordion2">
-		<div class="accordion-group">
-			<div class="accordion-heading">
-			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-			Public Notes
-			</a>
-			</div>
-			<div id="collapseOne" class="accordion-body collapse">
-				<div class="accordion-inner">
-	          {% if public_notes %}
-	            <ul>
-	            {% for note in public_notes %}
-	            	<h6>User</h6>
-	            	<p>{% firstof note.author.get_full_name note.author %}</p>
-	            	
-	            	<h6>Date noted</h6>
-	            	<p>{{ note.pub_date }}</p>
-	            	
-	            	<h6>Content</h6>
-	            	<p>{{ note.text }}</p>
-	            	<hr>
-	            {% endfor %}
-	            </ul>
-	            </h5>
-	            {% else %}
-	            None
-	            {% endif %}
-				</div>
-			</div>
-		</div>
-		
-		<div class="accordion-group">
-			<div class="accordion-heading">
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-				Private Notes
-				</a>
-			</div>
-			<div id="collapseTwo" class="accordion-body collapse">
-				<div class="accordion-inner">
-					{% if private_notes %}
-					<ul>
-						{% for note in private_notes %}
-	            	<h6>User</h6>
-	            	<p>{% firstof note.author.get_full_name note.author %}</p>
-	            	
-	            	<h6>Date noted</h6>
-	            	<p>{{ note.pub_date }}</p>
-	            	
-	            	<h6>Content</h6>
-	            	<p>{{ note.text }}</p>
-	            	<hr>
-						{% endfor %}
-					</ul>
-					{% else %}
-						{% if isAdmin %}
-						<p>No private notes available</p>
-						{% else %}
-						<p>You don't have security clearance to view private notes</p>
-						{% endif %}
-					{% endif %}
-				</div>
-			</div>
-		</div>
-		
-	</div>
+			{% endif %}
 	
+			<div class="well"> <p>{{ description | safe }}</p></div>
+		</div> <!-- close tab pane-->
+		<div class="tab-pane {{ tab2 }}" id="tab2">
+<!-- Start tab 2 -->
+				<!-- Start notes code -->
+			<div class="accordion" id="accordion2">
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+						Public Notes
+						</a>
+					</div>
+					
+					<div id="collapseOne" class="accordion-body collapse">
+						<div class="accordion-inner">
+							{% if public_notes %}
+							<ul>
+							{% for note in public_notes %}
+	            		<h6>User</h6>
+	            		<p>{% firstof note.author.get_full_name note.author %}</p>
+	            	
+	            		<h6>Date noted</h6>
+	            		<p>{{ note.pub_date }}</p>
+	            	
+	            		<h6>Content</h6>
+	            		<p>{{ note.text }}</p>
+	            		<hr>
+	            		{% endfor %}
+	            		</ul>
+			            </h5>
+			            {% else %}
+			            None
+			            {% endif %}
+						</div>
+					</div>
+				</div>
+		
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+						Private Notes
+						</a>
+					</div>
+					<div id="collapseTwo" class="accordion-body collapse">
+						<div class="accordion-inner">
+							{% if private_notes %}
+							<ul>
+								{% for note in private_notes %}
+			            	<h6>User</h6>
+			            	<p>{% firstof note.author.get_full_name note.author %}</p>
+			            	
+			            	<h6>Date noted</h6>
+			            	<p>{{ note.pub_date }}</p>
+			            	
+			            	<h6>Content</h6>
+			            	<p>{{ note.text }}</p>
+			            	<hr>
+								{% endfor %}
+							</ul>
+							{% else %}
+								{% if isAdmin %}
+								<p>No private notes available</p>
+								{% else %}
+								<p>You don't have security clearance to view private notes</p>
+								{% endif %}
+							{% endif %}
+						</div>
+					</div>
+				</div>	
+			</div>
+
 <form method="POST" action="{{ event.get_absolute_url }}/addNote">
 {% csrf_token %}
 <textarea rows="3" name="note"></textarea>
@@ -155,12 +152,13 @@
 	<input type="checkbox" name="private" value="true">
 	Private note
 </label>
-<input type="submit">
-</form>
-	            <!-- End notes code-->
-</div> <!-- close tab -->
-
-
+<input type="submit" value="Send Note">
+</form>			
+			
+			
+<!-- End tab 2 -->
+		</div> <!-- Close tab -->
+	
 
  <div class="tab-pane {{ tab3 }}" id="tab3">
   {% if add_chaperones %}
@@ -174,10 +172,6 @@
 				</span>
 			</form>
           
-          
-  </div>
-  {% endif %}
-
   {% if remove_chaperones %} <!-- TODO: Find a way to remove the form if
   not volunteers left to remove -->
   <p>Remove a user from the event chaperone list</p>
@@ -192,6 +186,11 @@
           <button type="submit" class="btn">Remove</button>
       </form>
   {% endif %}
+          
+  </div>
+  {% endif %}
+
+
 </div>
 
     </div>
