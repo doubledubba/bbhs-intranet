@@ -21,10 +21,6 @@ What do you do when no more volunteers are needed?
 	Email admin?
 	Stop allowing users to sign up
 
-Admin page action ideas:
-	Email event ad - for users who are not signed up
-	Email event reminder - for users who are signed up
-
 Custom layout JS Widget for user profile
 
 Add event search filtering criteria for the event index page
@@ -32,6 +28,7 @@ Add event search filtering criteria for the event index page
 	+ By year
 
 Drop the admin interface and replace it with custom pages for more fine tuned functionality
+    + Decision
 
 Sort the event index page the way the user wants (date published, date of event, ascending, descending, etc...)
 
