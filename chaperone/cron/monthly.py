@@ -16,16 +16,25 @@ from bbhs.settings import sendTextEmail, sendHTMLEmail, PROJECT_ROOT
 TEMPLATE_DIR = os.path.join(PROJECT_ROOT, 'templates')
 TEMPLATE_DIR = os.path.join(TEMPLATE_DIR, 'email')
 with open(os.path.join(TEMPLATE_DIR, 'duty.html'), 'r') as fh:
-    template = fh.read()
+    HTMLTemplate = fh.read()
+
+with open(os.path.join(TEMPLATE_DIR, 'duty.txt'), 'r') as fh:
+    TextTemplate = fh.read()
 
 def sendEmail(user):
     email = user.email
-    t = Template(template)
     events = Event.future_events().order_by('date')[:5] 
     params = {'user': user, 'events': events}
+
+    t = Template(HTMLTemplate)
     c = Context(params)
     html = t.render(c)
-    sendHTMLEmail('Placeholder', html, 'Chaperone obligation', email)
+
+    t = Template(TextTemplate)
+    c = Context(params)
+    text = t.render(c)
+
+    sendHTMLEmail(text, html, 'Chaperone obligation', email)
 #adsfdas
 
 def run():
