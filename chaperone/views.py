@@ -185,3 +185,10 @@ def removeUser(request, eventID):
     alert, message = event.removeVolunteer(user)
     return notify(alert, message, event.get_absolute_url(), tab=3)
     
+
+def userReport(request, username=''):
+    if username:
+        user = get_object_or_404(User, username=username)
+        return HttpResponse(user)
+    else:
+        return HttpResponse('adsf')
