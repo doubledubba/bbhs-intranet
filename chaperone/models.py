@@ -133,7 +133,8 @@ class Event(models.Model):
         self.save()
         if not self.expired(): # so users dont cheat and sign up for past events
             profile = user.get_profile()
-            profile.eventsNeeded -= 1
+            if profile.eventsNeeded > 0:
+                profile.eventsNeeded -= 1
             profile.eventsDone += 1
             profile.save()
         return 'success', 'Signed up %s' % username

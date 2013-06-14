@@ -203,7 +203,6 @@ from passReader import AUTH_LDAP_BIND_PASSWORD
 
 AUTH_LDAP_USER_SEARCH = LDAPSearch('ou=Staff,dc=campus,dc=bishopblanchet,dc=org', ldap.SCOPE_SUBTREE, '(sAMAccountName=%(user)s)')
 
-
 AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn",
         'email': 'mail'}
 
