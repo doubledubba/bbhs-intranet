@@ -29,7 +29,7 @@ def sendEmail(user):
 #adsfdas
 
 def run():
-    for user in User.objects.filter(is_active=True):
+    for user in User.objects.filter(is_active=True, userprofile__isFaculty=True):
         profile = user.get_profile()
         if profile.eventsNeeded > 0:
             if user.email:

@@ -103,7 +103,7 @@ def viewPK(request):
 
 def eventAd(request, eventPK):
     event = get_object_or_404(Event, pk=eventPK)
-    params = {'user': request.user, 'event': event}
+    params = {'user': request.user.get_profile(), 'event': event}
     params['body'] = markdown(event.description) if event.markdown else event.description
     return render(request, 'email/ad.html', params,
             content_type='text/html')

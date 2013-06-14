@@ -1,0 +1,28 @@
+Hello {{ user.user.first_name }}!
+
+We'd like you to know that the "{{ event.name.capitalize }}"event
+is coming up on {{ event.date }} and we were wondering
+if you were interested in coming.
+
+The event is being administrated by {% firstof event.admin.get_full_name event.admin.username %}
+and it still needs {{ event.volunteersNeeded }} volunteers.
+{% if body %}
+Here is a brief description of the event:
+
+========================================================================
+{{ event.description }}
+========================================================================
+{% endif %}
+{% if user.eventsNeeded > 0 %}
+As a faculty member of Bishop Blanchet High school, you probably know that
+you are required to chaperone for at least 4 events every school year.
+This service is vital to our community, and we value your participation.	
+
+Our records indicate that you have completed
+{{ user.eventsCompleted }} out of 4 events of your yearly event chaperone obligation. <br />
+
+You have {{ user.daysLeft }} remaining days to fulfill your obligation before the end of the school year.
+{% endif %}
+
+Please let us know if you are interested by signing up at:
+	http://faculty.bishopblanchet.org{{ event.get_absolute_url }}

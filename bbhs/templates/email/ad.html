@@ -181,6 +181,7 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
 	
 	<br />{% endif %}
 
+	{% if user.eventsNeeded > 0 %}
 	As a faculty member of Bishop Blanchet High school, you probably know that
 	you are required to chaperone for at least 4 events every school year.
 	This service is vital to our community, and we value your participation.	
@@ -190,12 +191,10 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
 	<br />
 	You have {{ user.daysLeft }} remaining days to fulfill your obligation before the end of the school year.
 	<br /> <br />  
+	{% endif %}
 	
 	Please let us know if you are interested by <a href="http://faculty.bishopblanchet.org{{ event.get_absolute_url }}">signing up!</a>
-	
-	<br /> <br />
-	Sincerely, <br /> 
-	{% firstof event.admin.get_full_name event.admin.username %}</p>
+</p>
                                     </div>
                                 </td>
                             </tr>

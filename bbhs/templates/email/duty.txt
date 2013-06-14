@@ -21,6 +21,3 @@ you would use to log on to a computer at school.
 
 Please take a look at http://faculty.bishopblanchet.org/chaperone
 for more events that you can now sign up for online.
-
-Sincerely, 
-	{% firstof event.admin.get_full_name event.admin.username %}

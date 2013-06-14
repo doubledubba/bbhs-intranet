@@ -13,7 +13,3 @@ OR private notes (only the event administrator can see it).
 
 Go to http://faculty.bishopblanchet.org
 to get more information about this event.
-
-
-Sincerely,
-	{% firstof event.admin.get_full_name event.admin %}

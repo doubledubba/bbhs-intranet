@@ -14,8 +14,10 @@ from bbhs.settings import sendHTMLEmail, PROJECT_ROOT
 TEMPLATE_DIR = os.path.join(PROJECT_ROOT, 'templates')
 TEMPLATE_DIR = os.path.join(TEMPLATE_DIR, 'email')
 with open(os.path.join(TEMPLATE_DIR, 'ad.html'), 'r') as fh:
-    template = fh.read()
+    HTMLTemplate = fh.read()
 
+with open(os.path.join(TEMPLATE_DIR, 'ad.txt'), 'r') as fh:
+    TextTemplate = fh.read()
 
 def turnOnRender(modelAdmin, request, querySet):
     querySet.update(markdown=True)
@@ -24,19 +26,25 @@ def turnOffRender(modelAdmin, request, querySet):
     querySet.update(markdown=False)
 
 def eventAd(modelAdmin, request, querySet):
-    users = UserProfile.objects.filter(eventsNeeded__gt=0, user__is_active=True)
+    users = UserProfile.objects.filter(eventsNeeded__gt=0,
+            user__is_active=True)
     for event in querySet:
         for user in users:
             email = user.user.email
             if not email: continue
             if event.signedUp(user):
                 continue
-            t = Template(template)
             params = {'user': user, 'event': event}
             params['body'] = markdown(event.description) if event.markdown else event.description
+
+            t = Template(HTMLTemplate)
             c = Context(params)
             html = t.render(c)
-            sendHTMLEmail('Placeholder', html, 'Chaperone obligation', email)
+
+            t = Template(TextTemplate)
+            c = Context(params)
+            text = t.render(c)
+            sendHTMLEmail(text, html, 'Chaperone obligation', email)
 
 
 def eventReminder(modelAdmin, request, querySet):
