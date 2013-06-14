@@ -27,6 +27,8 @@ def eventAd(modelAdmin, request, querySet):
     users = UserProfile.objects.filter(eventsNeeded__gt=0, user__is_active=True)
     for event in querySet:
         for user in users:
+            email = user.user.email
+            if not email: continue
             if event.signedUp(user):
                 continue
             t = Template(template)
@@ -34,12 +36,10 @@ def eventAd(modelAdmin, request, querySet):
             params['body'] = markdown(event.description) if event.markdown else event.description
             c = Context(params)
             html = t.render(c)
-            email = user.user.email
             sendHTMLEmail('Placeholder', html, 'Chaperone obligation', email)
 
 
 def eventReminder(modelAdmin, request, querySet):
-    print 'Reminder!'
     for event in querySet:
         for user in event.getVolunteers():
             daily.sendEmail(user, event)

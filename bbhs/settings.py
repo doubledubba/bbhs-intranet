@@ -211,7 +211,7 @@ faculty_cn = 'OU=Faculty,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
 super_admin = 'cn=Intranet_Super_Admin,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org'
 
 AUTH_LDAP_PROFILE_FLAGS_BY_GROUP = {
-    'isFaculty' : super_admin # MAKE A SECURITY GROUP FOR FACULTY
+    'isFaculty' : 'CN=intranet_faculty,' + faculty_cn
 }
 
 AUTH_LDAP_USER_FLAGS_BY_GROUP = {
@@ -265,8 +265,9 @@ def send(msg, toaddrs):
     server.login(username,password)
     try:
         server.sendmail(fromaddr, [toaddrs], msg)
-    except SMTPRecipientsRefused:
+    except SMTPRecipientsRefused, tb:
         print 'Failed to email: ' + toaddrs
+        print tb
     server.quit()
 
 def sendTextEmail(msg, subject, toaddrs):

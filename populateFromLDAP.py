@@ -10,7 +10,6 @@ fh = temp()
 command = 'ldapsearch -a always -H %s -w %s -D "%s" -b "%s" "sAMAccountName=*" -u -s sub sAMAccountName mail givenName sn userAccountControl> %s'
 command = command % (AUTH_LDAP_SERVER_URI, AUTH_LDAP_BIND_PASSWORD, AUTH_LDAP_BIND_DN, faculty_cn, fh.name)
 os.system(command)
-
 deList = lambda obj: obj[0] if obj else ''
 
 '''
@@ -63,6 +62,12 @@ fh.close()
 del parser, fh, os, temp, LDIFParser
 
 staff = Group.objects.get(name="Staff")
+
+for user in users:
+    print user['username']
+
+exit(0)
+
 
 for user in users:
     username = user.get('username')

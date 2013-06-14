@@ -17,6 +17,7 @@ from bbhs.settings import sendTextEmail, sendHTMLEmail, PROJECT_ROOT
 
 TEMPLATE_DIR = os.path.join(PROJECT_ROOT, 'templates')
 TEMPLATE_DIR = os.path.join(TEMPLATE_DIR, 'email')
+
 with open(os.path.join(TEMPLATE_DIR, 'eventReminder.html'), 'r') as fh:
     HTMLTemplate = fh.read()
 
@@ -47,7 +48,7 @@ def run():
                 print 'No volunteers for ' + str(event)
                 continue
             for user in volunteers:
-                sendEmail(user)
+                sendEmail(user, event)
 
 
 
