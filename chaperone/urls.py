@@ -10,4 +10,6 @@ urlpatterns = patterns('chaperone.views',
 
     url(r'^userReport/$', 'userReport'),
     url(r'^userReport/(?P<username>.+)/$', 'userReport'),
+
+    url(r'^addEvent/$', 'addEvent'),
 )

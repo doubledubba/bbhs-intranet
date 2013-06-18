@@ -1,3 +1,13 @@
+Deployment error:
+    mod_wsgi runs before $HOME variable is defined
+    Add a 10 second pause or something in the code
+
+Add incrementer widget in addEvent.html
+
+Remove external dependencies in HTML
+    + Some external scripts are being referenced. At some point I should
+    store them locally in case they ever go down or are altered
+
 Fix the external BBHS logo <img src> reference on emails
     + Used it because I was having issues serving newly added static files
     + Make the HTML emails inherit from a template

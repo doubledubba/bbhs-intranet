@@ -193,3 +193,6 @@ def userReport(request, username=''):
         return HttpResponse(user)
     else:
         return HttpResponse('adsf')
+
+def addEvent(request):
+    return render(request, 'chaperone/addEvent.html')

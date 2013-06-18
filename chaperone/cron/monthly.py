@@ -4,7 +4,8 @@ obligations (4)
 '''
 import os
 import sys
-path = os.path.join(os.environ['HOME'], 'bbhs_intranet')
+#path = os.path.join(os.environ['HOME'], 'bbhs_intranet')
+path = os.path.join('/home/luis', 'bbhs_intranet')
 sys.path.append(path)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'bbhs.settings'
 
