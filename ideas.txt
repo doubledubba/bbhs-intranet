@@ -2,6 +2,9 @@ Fix the external BBHS logo <img src> reference on emails
     + Used it because I was having issues serving newly added static files
     + Make the HTML emails inherit from a template
 
+Zero out eventsNeeded when over signedUp
+    + But only in display, actually have neg numbers in db
+
 Email event admin when:
     + A user signs up
     + The total volunteer limit has been reached

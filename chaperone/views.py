@@ -73,6 +73,7 @@ def index(request):
     params['typeAheadSource'] = getTypeAhead(Event, 'name')
     q = request.GET.get('q')
     params['q'] = q
+    params['chaperone_page'] = True
     if q and q.strip():
         start = datetime.now()
         event_query = get_query(q, ['name', 'description'])
