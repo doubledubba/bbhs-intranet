@@ -1,0 +1,20 @@
+<html>
+	<head>
+	<title></title>
+	<script language="javascript">
+	fields = 0;
+	function addInput() {
+	document.getElementById('text').innerHTML += "<input type='text' value='' /><br />";
+	fields += 1;
+	}
+	</script>
+	</head>
+	<body>
+<form name="form">
+<input type="button" onclick="addInput()" name="add" value="Add input field" />
+</form>
+<div id="text">
+
+</div>
+</body>
+</html>

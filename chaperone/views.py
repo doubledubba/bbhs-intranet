@@ -198,6 +198,7 @@ def userReport(request, username=''):
 
 def addEvent(request):
     if request.method == 'POST':
+        return HttpResponse(str(request.POST), content_type='text/plain')
         info = {
             'name': request.POST.get('eventName'),
             'admin': request.POST.get('admin'),

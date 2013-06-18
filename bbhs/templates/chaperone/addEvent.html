@@ -41,6 +41,16 @@
         language: 'en-us',
         pick12HourFormat: true
       });
+      
+   fields = 0;
+	function addInput() {
+		fields += 1;
+		string = "<input type='text' value='' name='date";
+		string += fields.toString() + "' ";
+		string += "/><br />";
+		document.getElementById('date').innerHTML += string;
+	}	
+	
     </script>
 {% endblock script %}
 
@@ -62,6 +72,7 @@
 				{% endfor %}
 			</select>
 			
+			
 			<label>Date</label>
 			    <div id="datetimepicker" class="input-append date">
 			      <input type="text" style="width:95%;clear:both;" name="date"></input>
@@ -69,6 +80,9 @@
 			        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 			      </span>
 			    </div>
+			<div id="date">    
+			</div>
+			<input type="button" style="" value="Add more dates" onclick="addInput()">
 			    
 			<label>Volunteers Needed (Enter a number: 4 not four)</label>
 			<input type="number" name="volunteers"><br />
