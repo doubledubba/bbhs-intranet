@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
@@ -195,6 +196,39 @@ def userReport(request, username=''):
         return HttpResponse('adsf')
 
 def addEvent(request):
+    if request.method == 'POST':
+        eventName = request.POST.get('eventName')
+        admin = request.POST.get('admin')
+        volunteers = request.POST.get('volunteers')
+        date = request.POST.get('date')
+        description = request.POST.get('desc')
+        markdown = request.POST.get('markdown') or False
+        print 'Event name:', repr(eventName)
+        print 'Admin:', repr(admin)
+        print 'Volunteers:', repr(volunteers)
+        print 'Date:', repr(date)
+        print 'Description:', repr(description)
+        print 'Markdown:', repr(markdown)
+        # add GET param UX feedback
+        # or re-fill incomplete forms
+        try:
+            time = datetime.strptime(date, '%m/%d/%Y %X %p')
+        except ValueError:
+            return HttpResponse('Invalid format!', content_type='text/plain')
+        text = 'Month: %s\n' % time.strftime('%m')
+        text += 'Day: %s\n' % time.day
+        text += 'Year: %s\n' % time.year
+        text += 'Hour: %s\n' % time.hour
+        text += 'Minutes: %s\n' % time.minute
+        text += 'Hemihour: %s' % time.strftime('%p')
+        text += '''\n\nBug: 
+
+>>> a=datetime.strptime('06/03/2013 01:17:12 PM', '%m/%d/%Y %X %p')
+>>> a.strftime('%p')
+'AM'
+'''        
+        return HttpResponse(text, content_type='text/plain')
+
     params = {
         'admins': User.objects.filter(userprofile__canAdminEvents=True)
     }

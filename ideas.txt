@@ -5,10 +5,17 @@ Deployment error:
 Add admin action:
     Toggle canAdminEvents in userprofile
 
+create addMultipleEvents.html
+    + Single form with a + plus sign that will add another datepicker form when
+    you clicked it and they will be stacked vertically and an event will be
+    created for every date that is picked
+
 Add admin page:
     Show all users who can admin events
 
 Add incrementer widget in addEvent.html
+
+In addEvent.html refill forms when they aren't submitted properly
 
 Remove external dependencies in HTML
     + Some external scripts are being referenced. At some point I should

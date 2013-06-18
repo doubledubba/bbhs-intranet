@@ -47,11 +47,13 @@
 
 {% block body %}
 <h2>Create an Event</h2>
+<form action="/chaperone/addEvent/" method="POST">
+{% csrf_token %}
 <div class="row">
 	<div class="span7">
 		<div class="form_container"
 			<label>Event Name</label>
-			<input type="text" name="first"><br />
+			<input type="text" name="eventName"><br />
 			
 			<label>Admin</label>
 			<select name="admin">
@@ -62,7 +64,7 @@
 			
 			<label>Date</label>
 			    <div id="datetimepicker" class="input-append date">
-			      <input type="text" style="width:95%;clear:both;"></input>
+			      <input type="text" style="width:95%;clear:both;" name="date"></input>
 			      <span class="add-on">
 			        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 			      </span>
@@ -74,10 +76,14 @@
 	</div>
 	<div class="span5">
 		<label>Event Description</label>
-		<textarea style="width: 350px; height: 175px;" placeholder="Describe your event!"></textarea>
+		<textarea style="width: 350px; height: 175px;" placeholder="Describe your event!" name="desc"></textarea>
 		<br />
 		
-		<label><input type="checkbox" name="checkbox" value="value" /> Markdown</label>
+		<label><input type="checkbox" name="markdown" value="true" /> Markdown</label>
 	</div>
 </div>
+
+<input type="submit" value="Submit!">
+
+</form>
 {% endblock body %}
