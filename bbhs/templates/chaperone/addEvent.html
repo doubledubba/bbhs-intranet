@@ -54,11 +54,10 @@
 			<input type="text" name="first"><br />
 			
 			<label>Admin</label>
-			<select name="cars">
-				<option value="volvo">Volvo</option>
-				<option value="saab">Saab</option>
-				<option value="fiat">Fiat</option>
-				<option value="audi">Audi</option>
+			<select name="admin">
+				{% for admin in admins %}
+				<option value="{{ admin.pk }}">{{ admin }}</option>
+				{% endfor %}
 			</select>
 			
 			<label>Date</label>

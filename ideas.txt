@@ -2,6 +2,12 @@ Deployment error:
     mod_wsgi runs before $HOME variable is defined
     Add a 10 second pause or something in the code
 
+Add admin action:
+    Toggle canAdminEvents in userprofile
+
+Add admin page:
+    Show all users who can admin events
+
 Add incrementer widget in addEvent.html
 
 Remove external dependencies in HTML

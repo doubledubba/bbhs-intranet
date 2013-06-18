@@ -195,4 +195,7 @@ def userReport(request, username=''):
         return HttpResponse('adsf')
 
 def addEvent(request):
-    return render(request, 'chaperone/addEvent.html')
+    params = {
+        'admins': User.objects.filter(userprofile__canAdminEvents=True)
+    }
+    return render(request, 'chaperone/addEvent.html', params)
