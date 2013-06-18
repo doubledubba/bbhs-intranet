@@ -5,6 +5,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
+from django.utils.timezone import utc
 
 from django.contrib.auth.models import User
 from markdown import markdown
@@ -197,37 +198,32 @@ def userReport(request, username=''):
 
 def addEvent(request):
     if request.method == 'POST':
-        eventName = request.POST.get('eventName')
-        admin = request.POST.get('admin')
-        volunteers = request.POST.get('volunteers')
-        date = request.POST.get('date')
-        description = request.POST.get('desc')
-        markdown = request.POST.get('markdown') or False
-        print 'Event name:', repr(eventName)
-        print 'Admin:', repr(admin)
-        print 'Volunteers:', repr(volunteers)
-        print 'Date:', repr(date)
-        print 'Description:', repr(description)
-        print 'Markdown:', repr(markdown)
+        info = {
+            'name': request.POST.get('eventName'),
+            'admin': request.POST.get('admin'),
+            'volunteersNeeded': request.POST.get('volunteers'),
+            'date': request.POST.get('date'),
+            'description': request.POST.get('desc'),
+            'markdown': request.POST.get('markdown') == 'true' or False,
+        }
         # add GET param UX feedback
         # or re-fill incomplete forms
         try:
-            time = datetime.strptime(date, '%m/%d/%Y %X %p')
+            info['date'] = datetime.strptime(info['date'], '%m/%d/%Y %I:%M:%S %p').replace(tzinfo=utc)
         except ValueError:
             return HttpResponse('Invalid format!', content_type='text/plain')
-        text = 'Month: %s\n' % time.strftime('%m')
-        text += 'Day: %s\n' % time.day
-        text += 'Year: %s\n' % time.year
-        text += 'Hour: %s\n' % time.hour
-        text += 'Minutes: %s\n' % time.minute
-        text += 'Hemihour: %s' % time.strftime('%p')
-        text += '''\n\nBug: 
 
->>> a=datetime.strptime('06/03/2013 01:17:12 PM', '%m/%d/%Y %X %p')
->>> a.strftime('%p')
-'AM'
-'''        
-        return HttpResponse(text, content_type='text/plain')
+        try:
+            info['volunteersNeeded'] = int(info['volunteersNeeded'])
+            print 'ined'
+        except ValueError:
+            return HttpResponse('you need to enter a number for volunteers needed')
+
+        info['admin'] = get_object_or_404(User, pk=info['admin'])
+        event = Event(**info)
+        event.save()
+        print info
+        return HttpResponse('text', content_type='text/plain')
 
     params = {
         'admins': User.objects.filter(userprofile__canAdminEvents=True)
