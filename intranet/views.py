@@ -6,7 +6,7 @@ from django import forms
 from django.contrib.auth import authenticate, login, logout
 
 from django.contrib.auth.models import User
-from chaperone.models import Event
+from chaperone.models import Event, Note
 
 from markdown import markdown
 
@@ -107,3 +107,21 @@ def eventAd(request, eventPK):
     params['body'] = markdown(event.description) if event.markdown else event.description
     return render(request, 'email/ad.html', params,
             content_type='text/html')
+
+event = get_object_or_404(Event, pk=1)
+params = {'event': event}
+
+def signedUp_user(request, text=None):
+    params['user'] = request.user.get_profile()
+    params['admin'] = request.user.get_profile()
+    if text:
+        return render(request, 'email/signedUp_user.txt', params)
+    return render(request, 'email/signedUp_user.html', params)
+
+def signedUp_admin(request, text=None):
+    params['user'] = request.user.get_profile()
+    params['admin'] = request.user.get_profile()
+    params['notes'] = Note.objects.filter(event=params['event'])
+    if text:
+        return render(request, 'email/signedUp_admin.txt', params)
+    return render(request, 'email/signedUp_admin.html', params)

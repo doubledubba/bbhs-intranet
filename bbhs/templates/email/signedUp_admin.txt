@@ -1,0 +1,9 @@
+Your event just got a new volunteer!
+
+Event: {{ event.name }} on {{ event.date }}
+
+User: {{ user }}
+
+User profile: http:://faculty.bishopblanchet.org/{{ user.get_absolute_url }}
+
+When: {{ date }}

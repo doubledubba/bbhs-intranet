@@ -1,12 +1,30 @@
 import json
 from datetime import datetime
-
+from time import sleep
+import os
 from markdown import markdown
 
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import utc
+from django.template import Context, Template
 from intranet.models import UserProfile
+from bbhs.settings import sendHTMLEmail, sendTextEmail, PROJECT_ROOT
+
+TEMPLATE_DIR = os.path.join(PROJECT_ROOT, 'templates')
+TEMPLATE_DIR = os.path.join(TEMPLATE_DIR, 'email')
+
+with open(os.path.join(TEMPLATE_DIR, 'signedUp_user.html'), 'r') as fh:
+    chapHTMLTemplate = fh.read()
+
+with open(os.path.join(TEMPLATE_DIR, 'signedUp_user.txt'), 'r') as fh:
+    chapTextTemplate = fh.read()
+
+with open(os.path.join(TEMPLATE_DIR, 'signedUp_admin.html'), 'r') as fh:
+    adminHTMLTemplate = fh.read()
+
+with open(os.path.join(TEMPLATE_DIR, 'signedUp_admin.txt'), 'r') as fh:
+    adminTextTemplate = fh.read()
 
 
 class Event(models.Model):
@@ -131,12 +149,40 @@ class Event(models.Model):
             return 'error', 'Sorry, no more volunteers needed'
 
         self.save()
+        profile = user.get_profile()
         if not self.expired(): # so users dont cheat and sign up for past events
-            profile = user.get_profile()
             if profile.eventsNeeded > 0:
                 profile.eventsNeeded -= 1
             profile.eventsDone += 1
             profile.save()
+
+        params = {'event': self, 'admin': self.admin}
+
+        t = Template(chapHTMLTemplate)
+        c = Context(params)
+        html = t.render(c)
+
+        t = Template(chapTextTemplate)
+        c = Context(params)
+        text = t.render(c)
+
+        subject = 'You signed up for "%s"!' % self.name
+        sendHTMLEmail(text, html, subject, user.email)
+
+        sleep(1)
+        
+        params = {'event': self, 'user': profile, 'date': datetime.now()}
+
+        t = Template(adminHTMLTemplate)
+        c = Context(params)
+        html = t.render(c)
+
+        t = Template(adminTextTemplate)
+        c = Context(params)
+        text = t.render(c)
+
+        subject = '%s signed up for "%s"!' % (profile, self.name)
+        sendHTMLEmail(text, html, subject, self.admin.email)
         return 'success', 'Signed up %s' % username
 
     def removeVolunteer(self, user):
@@ -158,10 +204,7 @@ class Event(models.Model):
 
     def get_description(self):
         text = self.description
-        limit = 150
-        if len(text) > limit:
-            text = text[:limit] + '... (more on event page)'
-        return text
+        return markdown(text) if self.markdown else text
 
 
 

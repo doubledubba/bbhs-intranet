@@ -1,0 +1,6 @@
+Success!
+You signed up for "{{ event.name }}" on {{ event.date }}!
+
+The event administrator is {{ event.admin }}
+
+For more information, please click here: http://faculty.bishopblanchet.org{{ event.get_absolute_url }}

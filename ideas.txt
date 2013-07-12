@@ -1,10 +1,14 @@
+Gcalendar should only show up on the front page
+    + Introduce boolean logic
+
+Should email event admin when a user sends in a note
+
 Deployment error:
     mod_wsgi runs before $HOME variable is defined
     Add a 10 second pause or something in the code
 
-Add admin action:
-    Toggle canAdminEvents in userprofile
-
+add a thank you redirect and UX confirmation of how many new events were added
+and their titles
 create addMultipleEvents.html
     + Single form with a + plus sign that will add another datepicker form when
     you clicked it and they will be stacked vertically and an event will be
@@ -75,3 +79,5 @@ Security Groups
 
 Set up cron jobs
     + Reset job on September 1 that sets eventsNeeded to 4
+
+Get rid of old email testing views

@@ -47,15 +47,13 @@
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="icon-user"></i>
                 {{ user.username }}
-              <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
               <li><a href="/logout/">Sign out</a></li>
             {% else %}
-                <a class="btn dropdown-toggle" data-toggle="dropdown" href="/login/">
+                <a class="btn dropdown-toggle" href="/login/">
                 <i class="icon-user"></i>
                 Sign in
-              <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
               <li><a href="/login/">Sign in</a></li>

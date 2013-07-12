@@ -1,0 +1,10 @@
+{% extends "email/template.html" %}
+
+{% block title %}Your event just got a new volunteer!{% endblock title %}
+{% block body %}
+<b>Event: </b> {{ event.name }} on {{ event.date }}
+<br>
+<b>User: </b> <a href="http://faculty.bishopblanchet.org{{ user.get_absolute_url }}">{{ user }}</a>
+<br>
+<b>When: </b> {{ date }}
+{% endblock body %}

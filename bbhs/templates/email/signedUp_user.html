@@ -1,0 +1,12 @@
+{% extends "email/template.html" %}
+
+{% block title %}Success!{% endblock title %}
+{% block body %}
+You signed up for "<a href="http://faculty.bishopblanchet.org{{ event.get_absolute_url }}"/>{{ event.name }}</a>" on {{ event.date }}!
+<br >
+The event administrator is <b>{{ event.admin }}</b>
+<br>
+
+<div class="well">
+{{ event.get_description | safe}}</div>
+{% endblock body %}
