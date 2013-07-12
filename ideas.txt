@@ -11,12 +11,15 @@ create addMultipleEvents.html
     created for every date that is picked
     + using same addEvents.html
     + needs a delete button for each created text input
+    + make sure to check for empty text inputs and not create them or handle
+    the errors
     + views need to catch all of the fields and adjust in the code
 
 Add admin page:
     Show all users who can admin events
 
 Add incrementer widget in addEvent.html
+    + js number picker
 
 In addEvent.html refill forms when they aren't submitted properly
 

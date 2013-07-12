@@ -198,7 +198,7 @@ def userReport(request, username=''):
 
 def addEvent(request):
     if request.method == 'POST':
-        return HttpResponse(str(request.POST), content_type='text/plain')
+        #return HttpResponse(str(request.POST), content_type='text/plain')
         info = {
             'name': request.POST.get('eventName'),
             'admin': request.POST.get('admin'),
@@ -223,7 +223,28 @@ def addEvent(request):
         info['admin'] = get_object_or_404(User, pk=info['admin'])
         event = Event(**info)
         event.save()
-        print info
+
+        i = 1
+        dates = []
+        for each in range(365): # precautionary infinite recursion prevention
+            date = request.POST.get('date' + str(i))
+            if date:
+                i += 1
+                # check for strptime correct format
+                try:
+                    date = datetime.strptime(date, '%m/%d/%Y %I:%M:%S %p').replace(tzinfo=utc)
+                except ValueError:
+                    print 'Invalid format!'
+                dates.append(date)
+            else:
+                break
+
+        for date in dates:
+            info['date'] = date
+            event = Event(**info)
+            event.save()
+        
+
         return HttpResponse('text', content_type='text/plain')
 
     params = {
