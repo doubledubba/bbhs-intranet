@@ -136,7 +136,7 @@
 								{% if isAdmin %}
 								<p>No private notes available</p>
 								{% else %}
-								<p>You don't have security clearance to view private notes</p>
+								<p>Sorry, only the event administrator may see private event notes</p>
 								{% endif %}
 							{% endif %}
 						</div>
@@ -166,7 +166,7 @@
           	{% csrf_token %}
 				<input type="text" placeholder="{% firstof signUpQ "Search" %}" name="signUpQ" data-provide="typeahead" data-items="4" 
 				autocomplete="off" data-source="{{ signUpTAH }}" class="input-medium search-query">
-				<button type="submit" class="btn">Search</button>
+				<button type="submit" class="btn">Sign up</button>
 				<span class="help-block">
 					Add another user to the event chaperone list
 				</span>

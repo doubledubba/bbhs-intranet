@@ -1,9 +1,3 @@
-change private notes security clearance message to:
-    Only the event administrator may see private notes
-
-change the "search" button to "add" on the add users search bar on an event
-page
-
 Deployment error:
     mod_wsgi runs before $HOME variable is defined
     Add a 10 second pause or something in the code

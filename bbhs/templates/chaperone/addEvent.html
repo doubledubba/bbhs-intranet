@@ -30,9 +30,6 @@
      src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
     </script> 
     <script type="text/javascript"
-     src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
-    </script>
-    <script type="text/javascript"
      src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
     </script>
     <script type="text/javascript">
@@ -48,8 +45,20 @@
 		string = "<input type='text' value='' name='date";
 		string += fields.toString() + "' ";
 		string += "/><br />";
-		document.getElementById('date').innerHTML += string;
+		document.getElementById('dates').innerHTML += string;
 	}	
+
+	root = document.getElementById('dates');
+	function addInputs() {
+		fields += 1;
+		input = document.createElement('input');
+		input.setAttribute('type', 'text');
+		input.setAttribute('name', 'date' + fields.toString());
+		
+		
+		root.innerHTML += input;
+	}	
+	
 	
     </script>
 {% endblock script %}
@@ -80,7 +89,7 @@
 			        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 			      </span>
 			    </div>
-			<div id="date">    
+			<div id="dates">    
 			</div>
 			<input type="button" style="" value="Add more dates" onclick="addInput()">
 			    
