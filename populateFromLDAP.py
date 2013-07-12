@@ -66,7 +66,7 @@ staff = Group.objects.get(name="Staff")
 for user in users:
     print user['username']
 
-exit(0)
+#exit(0)
 
 
 for user in users:

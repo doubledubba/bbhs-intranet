@@ -197,14 +197,12 @@ AUTHENTICATION_BACKENDS = (
 )
 
 AUTH_LDAP_SERVER_URI = "ldap://10.10.10.1"
-AUTH_LDAP_SERVER_URI = "ldap://10.10.10.2"
 
-AUTH_LDAP_BIND_DN  = 'CN=Luis Naranjo,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
+AUTH_LDAP_BIND_DN  = 'CN=Luis Naranjo,OU=Technology,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
 from passReader import AUTH_LDAP_BIND_PASSWORD
 
 AUTH_LDAP_USER_SEARCH = LDAPSearch('ou=Staff,dc=campus,dc=bishopblanchet,dc=org', ldap.SCOPE_SUBTREE, '(sAMAccountName=%(user)s)')
 # search for any user object under the Staff ou when authenticating
-'''
 AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn",
         'email': 'mail'}
 
@@ -228,7 +226,7 @@ AUTH_LDAP_GROUP_SEARCH = LDAPSearch('ou=Staff,dc=campus,dc=bishopblanchet,dc=org
 
 AUTH_LDAP_REQUIRE_GROUP = "cn=Staff,ou=staff,dc=campus,dc=bishopblanchet,dc=org"
 
-AUTH_LDAP_MIRROR_GROUPS = True'''
+AUTH_LDAP_MIRROR_GROUPS = True
 
 # Use the security group only, don't rely on the OU
 
