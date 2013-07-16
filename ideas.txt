@@ -1,5 +1,10 @@
-Add administration to LDAP
-    + kries can't log in right now
+ANOTHER GODAMN LDAP BUG
+    Made a user in the staff, administration ou
+    Added him to the Staff sec group
+    Gave him staff status, set his canAdminEvents to True
+    Logged him in, and he no longer had staff status :(
+
+Regulate what a "staff" member is an make it standard to avoid confusion
 
 @login_required for index view
 
