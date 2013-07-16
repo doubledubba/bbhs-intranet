@@ -47,7 +47,8 @@ class Event(models.Model):
                 ('remove_chaperones', 'Can remove other chaperones'),
                 ('view_chaperones', 'Can view other chaperones'),
                 ('sign_up', 'Can sign up self from an event'),
-                ('unsign_up', 'Can unsign up self from an event')
+                ('unsign_up', 'Can unsign up self from an event'),
+                ('create_event', 'Can create events'),
         )
 
     def __unicode__(self):

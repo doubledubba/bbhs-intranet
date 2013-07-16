@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.utils.timezone import utc
+from django.contrib.auth.decorators import permission_required
 
 from django.contrib.auth.models import User
 from markdown import markdown
@@ -117,8 +118,13 @@ def eventPage(request, eventID):
             signUpTAH.append(name)
         params['signUpTAH'] = formatTAH(signUpTAH)
 
+    if event.markdown:
+        description = markdown(event.description)
+    else:
+        description = '<pre>' + event.description + '</pre>'
 
-    params['description'] = markdown(event.description) if event.markdown else event.description
+    params['description'] = description
+    params['markdown'] = event.markdown
 
     for i in tabs:
         tabs[i] = ''
@@ -196,6 +202,8 @@ def userReport(request, username=''):
     else:
         return HttpResponse('adsf')
 
+@permission_required('chaperone.create_event')
+@login_required
 def addEvent(request):
     if request.method == 'POST':
         #return HttpResponse(str(request.POST), content_type='text/plain')

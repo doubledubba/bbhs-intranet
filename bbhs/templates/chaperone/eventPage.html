@@ -73,7 +73,11 @@
 			<h4 style="font-family:verdana;color:red;"> Warning: This event has already taken place </h4>
 			{% endif %}
 	
+			{% if markdown %}
 			<div class="well"> <p>{{ description | safe }}</p></div>
+			{% else %}
+			{{ description | safe}}
+			{% endif %}
 		</div> <!-- close tab pane-->
 		<div class="tab-pane {{ tab2 }}" id="tab2">
 <!-- Start tab 2 -->

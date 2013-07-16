@@ -1,3 +1,6 @@
+Add administration to LDAP
+    + kries can't log in right now
+
 @login_required for index view
 
 Have an option for viewing past events even if you are not an admin
