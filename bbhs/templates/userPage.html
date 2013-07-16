@@ -27,6 +27,7 @@
 			</ul>
 			<div class="tab-content">
          	<div class="tab-pane active" id="tab1">
+         		{% if active %}
             	<ul>
 					{% for event in active %}
  					<li><a href="{{event.get_absolute_url}}">
@@ -34,8 +35,12 @@
                                             </a></li>
 					    {% endfor %}
                                         </ul>
+               {% else %}
+               No active events!
+               {% endif %}
 				</div>
-                                <div class="tab-pane" id="tab2">
+            <div class="tab-pane" id="tab2">
+            {% if expired %}
                                         <ul>
 					    {% for event in expired %}
                                             <li><a href="{{event.get_absolute_url}}">
@@ -43,6 +48,9 @@
                                             </a></li>
 					    {% endfor %}
                                         </ul>
+            {% else %}
+            No past events!
+            {% endif %}
 				</div>
 			</div>
 		</div>

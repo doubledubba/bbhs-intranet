@@ -1,0 +1,15 @@
+{% extends "bare_alt.html" %}
+
+{% block container %}
+    <div class="container">
+        {% if alert and message %}
+        <div class="alert alert-{{ alert }}">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endif %}
+
+	{% block body %}
+	{% endblock body %}	
+	</div>
+ {% endblock container %}
