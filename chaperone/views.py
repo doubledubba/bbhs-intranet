@@ -244,10 +244,24 @@ def addEvent(request):
             event = Event(**info)
             event.save()
         
-
+        url = '/chaperone/eventAdded/?' + urlencode({'i': i})
+        return redirect(url)
         return HttpResponse('text', content_type='text/plain')
 
     params = {
         'admins': User.objects.filter(userprofile__canAdminEvents=True)
     }
     return render(request, 'chaperone/addEvent.html', params)
+
+def eventAdded(request):
+    message = ''
+    i = request.GET.get('i')
+    if i:
+        i = int(i) if i.isdigit() else None
+        if i > 1:
+            message = '%d events added!' % i
+        else:
+            message = '%d event added!' % i
+    params = {'alert': 'success', 'message': message}
+    return redirect('/chaperone/?' + urlencode(params))
+    return render(request, 'chaperone/index.html', params)

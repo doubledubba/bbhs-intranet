@@ -1,14 +1,11 @@
-Gcalendar should only show up on the front page
-    + Introduce boolean logic
+@login_required for index view
 
-Should email event admin when a user sends in a note
+Have an option for viewing past events even if you are not an admin
 
 Deployment error:
     mod_wsgi runs before $HOME variable is defined
     Add a 10 second pause or something in the code
 
-add a thank you redirect and UX confirmation of how many new events were added
-and their titles
 create addMultipleEvents.html
     + Single form with a + plus sign that will add another datepicker form when
     you clicked it and they will be stacked vertically and an event will be
@@ -37,10 +34,6 @@ Fix the external BBHS logo <img src> reference on emails
 
 Zero out eventsNeeded when over signedUp
     + But only in display, actually have neg numbers in db
-
-Email event admin when:
-    + A user signs up
-    + The total volunteer limit has been reached
 
 Custom add event page
     + No 24 hour time format

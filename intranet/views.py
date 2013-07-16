@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django import forms
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.models import User
 from chaperone.models import Event, Note
@@ -12,6 +13,7 @@ from markdown import markdown
 
 Message = lambda request, msg: render(request, 'message.html', {'msg': msg})
 
+@login_required
 def index(request):
     if request.user.is_authenticated():
         profile = request.user.get_absolute_url()
@@ -25,6 +27,10 @@ class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)
     password = forms.CharField(max_length=100, widget=forms.PasswordInput)
 
+    
+def message(msg, next=None):
+    params = {'message': msg, 'alert': 'error', 'next': next}
+    return redirect('/login?' + urlencode(params))
 
 def loginView(request):
     redirectUrl = request.GET.get('next') or '/'
@@ -39,15 +45,19 @@ def loginView(request):
                     login(request, user)
                     return HttpResponseRedirect(redirectUrl) # Redirect after POST
                 else:
-                    return Message(request, 'Your account has been disabled!')
+                    return message('Your account has been disabled!',
+                            redirectUrl)
             else:
-                return Message(request, 'Your username and password were wrong')
+                return message('Your username and password were wrong',
+                        redirectUrl)
 
     else:
         form = LoginForm() # An unbound form
 
     return render(request, 'login.html', {
         'form': form,
+        'message': request.GET.get('message'),
+        'alert': request.GET.get('alert'),
     })
 
 
