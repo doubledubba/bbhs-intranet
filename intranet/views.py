@@ -13,7 +13,6 @@ from markdown import markdown
 
 Message = lambda request, msg: render(request, 'message.html', {'msg': msg})
 
-@login_required
 def index(request):
     if request.user.is_authenticated():
         profile = request.user.get_absolute_url()
@@ -66,7 +65,6 @@ def logoutView(request):
     return Message(request, 'Logged out!')
 
 def userPage(request, username):
-    print 'adsfadsf'
     params = {}
     user = get_object_or_404(User, username=username)
     events = []
@@ -118,8 +116,8 @@ def eventAd(request, eventPK):
     return render(request, 'email/ad.html', params,
             content_type='text/html')
 
-event = get_object_or_404(Event, pk=1)
-params = {'event': event}
+#event = get_object_or_404(Event, pk=1)
+#params = {'event': event}
 
 def signedUp_user(request, text=None):
     params['user'] = request.user.get_profile()
