@@ -74,18 +74,20 @@
               {% if user.is_staff %}<li><a href="/admin">Admin</a></li>
               {% endif %}      
               
+              {% if user.is_staff or user.get_profile.canAdminEvents %}
              <li class="dropdown">
                <a href="/chaperone" class="dropdown-toggle" data-toggle="dropdown">Chaperone <b class="caret"></b></a>
                <ul class="dropdown-menu">
                  <li><a href="/chaperone">Event Listings</a></li>
-               	{% if user.is_staff%}
                  <li class="divider"></li>
                  <li class="nav-header">Admin links</li>
                  <li><a href="/chaperone/userReport">User Report</a></li>
                  <li><a href="/chaperone/addEvent">Add Event</a></li>
-                 {% endif %}
                </ul>
              </li>
+             {% else %}
+             <li><a href="/chaperone">Chaperone</a></li>
+             {% endif %}
               
               
             </ul>

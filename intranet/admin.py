@@ -6,12 +6,16 @@ from intranet.models import UserProfile
 
 def turnOnAdmin(modelAdmin, request, querySet):
     for user in querySet:
-        profile = user.get_profile()
+        user.is_staff = True
+        user.save()
+        profile = user.get_profile()        
         profile.canAdminEvents = True
         profile.save()
 
 def turnOffAdmin(modelAdmin, request, querySet):
     for user in querySet:
+        user.is_staff = False
+        user.save()
         profile = user.get_profile()
         profile.canAdminEvents = False
         profile.save()
