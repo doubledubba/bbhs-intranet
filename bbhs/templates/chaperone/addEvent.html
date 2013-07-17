@@ -41,27 +41,16 @@
         language: 'en-us',
         pick12HourFormat: true
       });
-      
-   fields = 0;
-	function addInput() {
-		fields += 1;
-		string = "<input type='text' value='' name='date";
-		string += fields.toString() + "' ";
-		string += "/><br />";
-		document.getElementById('dates').innerHTML += string;
-	}	
 
-	root = document.getElementById('dates');
+	i = 1;
 	function addInputs() {
-		fields += 1;
-		input = document.createElement('input');
-		input.setAttribute('type', 'text');
-		input.setAttribute('name', 'date' + fields.toString());
-		
-		
-		root.innerHTML += input;
-	}	
-	
+		main = document.getElementById('dates');
+		child = document.createElement('input');
+		child.setAttribute('type', 'text');
+		child.setAttribute('name', 'date' + i.toString());
+		main.appendChild(child);
+		i += 1;
+	}
 	
     </script>
 {% endblock script %}
@@ -94,7 +83,7 @@
 			    </div>
 			<div id="dates">    
 			</div>
-			<input type="button" style="" value="Add more dates" onclick="addInput()">
+			<input type="button" style="" value="Add more dates" onclick="addInputs()">
 			    
 			<label>Volunteers Needed (Enter a number: 4 not four)</label>
 			<input type="number" name="volunteers"><br />
