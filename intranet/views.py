@@ -13,6 +13,7 @@ from markdown import markdown
 
 Message = lambda request, msg: render(request, 'message.html', {'msg': msg})
 
+@login_required
 def index(request):
     if request.user.is_authenticated():
         profile = request.user.get_absolute_url()
