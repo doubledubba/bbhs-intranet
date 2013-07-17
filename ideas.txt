@@ -1,8 +1,4 @@
-ANOTHER GODAMN LDAP BUG
-    Made a user in the staff, administration ou
-    Added him to the Staff sec group
-    Gave him staff status, set his canAdminEvents to True
-    Logged him in, and he no longer had staff status :(
+Fix mobile dropdown bugs
 
 Regulate what a "staff" member is an make it standard to avoid confusion
 
@@ -82,3 +78,19 @@ Set up cron jobs
     + Reset job on September 1 that sets eventsNeeded to 4
 
 Get rid of old email testing views
+
+Documentation:
+
+LDAP settings and groups override local settings and groups
+    + Predict potential issues
+
+Define levels of permissions and how to assign them/remove them collectively
+and specifically
+
+Define all of the actions and show what they do
+
+Screenshots of all of the emails
+
+How to disable/enable the cron jobs
+
+
