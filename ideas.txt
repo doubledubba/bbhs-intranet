@@ -106,4 +106,4 @@ Screenshots of all of the emails
 
 How to disable/enable the cron jobs
 
-
+Explain markdown and give examples

@@ -40,7 +40,9 @@ def getTypeAhead(Model, *attrs):
     names = []
     for model in Model.objects.all():
         for attr in attrs:
-            names.append(getattr(model, attr))
+            name = getattr(model, attr)
+            if name not in names:
+                names.append(name)
     string = formatTAH(names)
     return string
 
