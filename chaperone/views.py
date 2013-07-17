@@ -188,17 +188,15 @@ def removeUser(request, eventID):
     
 
 def userReport(request, username=''):
-    if username:
-        user = get_object_or_404(User, username=username)
-        return HttpResponse(user)
-    else:
-        return HttpResponse('adsf')
+    params = {
+        'users': User.objects.filter(is_active=True)
+    }
+    return render(request, 'chaperone/userReport.html', params)
 
 @permission_required('chaperone.create_event')
 @login_required
 def addEvent(request):
     if request.method == 'POST':
-        #return HttpResponse(str(request.POST), content_type='text/plain')
         info = {
             'name': request.POST.get('eventName'),
             'admin': request.POST.get('admin'),
