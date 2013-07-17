@@ -16,24 +16,6 @@ from query import get_query
 from datetime import datetime
 from urllib import urlencode
 
-'''TODO:
-+ Increment/Decrement USER'S eventsNeeeded
-+ User Profile pages
-+ LDAP Bug
-    - Over-riding
-    - Updating db
-+ Custom links for auth'ed users
-+ Setup groups
-+ Remove users who are already signed up on the event signup page
-+ Automatic Email/Twilio Notifications for users/admins
-+ Form for manual notifications
-+ Hosting
-    - Web Server (Gunicon? Nginx?)
-+ Re-structuring code
-    - Add eventPK in a field for userProfile in chaperone
-+ Add URL Shortener app
-+ Collect contact info from users
-'''
 tabs = {
     1: 'active',
     2: '',
@@ -64,11 +46,6 @@ def getTypeAhead(Model, *attrs):
 
 @login_required
 def index(request):
-    tabs = {
-        1: 'active',
-        2: '',
-        3: ''
-    }
     params = {'events': Event.future_events()}
     params['enable_search_bar'] = True
     params['alert'] = request.GET.get('alert')
@@ -104,12 +81,15 @@ def eventPage(request, eventID):
     params['view_chaperones'] = request.user.has_perm('chaperone.view_chaperones')
     params['add_chaperones'] = request.user.has_perm('chaperone.add_chaperones')
     params['remove_chaperones'] = request.user.has_perm('chaperone.remove_chaperones')
-    params['sign_up'] = request.user.has_perm('chaperone.sign_up')
-    params['unsign_up'] = request.user.has_perm('chaperone.unsign_up')
+    is_admin = event.admin == request.user
+    params['sign_up'] = request.user.has_perm('chaperone.sign_up') and  not is_admin
+    params['unsign_up'] = request.user.has_perm('chaperone.unsign_up') and not is_admin
 
     if params['add_chaperones']:
         signUpTAH = []
         for user in User.objects.filter(is_active=True):
+            if user == event.admin:
+                continue
             fName = user.get_full_name()
             if fName:
                 name = '%s (%s)' % (fName, user.username)
@@ -147,9 +127,19 @@ def handleRegistration(request, eventID):
         raise Http404
     query = request.POST.get('signUpQ')
     r = regex.search(query)
-    username = r.string[r.start() + 1 : r.end() -1]
-    user = User.objects.get(username=username)
-    return signUp(request, eventID, user)
+    if r:
+        username = r.string[r.start() + 1 : r.end() -1]
+        user = get_object_or_404(User, username=username)
+        return signUp(request, eventID, user)
+    else:
+        event = get_object_or_404(Event, pk=eventID)
+        params = {
+            'tab': '3',
+            'message': 'Sorry, "%s" is not a real user!' % query,
+            'alert': 'error'
+        }
+        url = event.get_absolute_url() + '?' + urlencode(params)
+        return redirect(url)
 
 
 
