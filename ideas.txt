@@ -1,8 +1,11 @@
 Fix mobile dropdown bugs
+    + chaperone dropdown for admins doesnt work on ipad
 
 Double check all views for correct permissions and security leaks
 Double check all models and views and admins to make sure we aren't using
     disabled users
+
+re-fill username when logging in and password failed
 
 Regulate what a "staff" member is an make it standard to avoid confusion
 

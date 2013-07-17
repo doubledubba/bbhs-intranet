@@ -28,9 +28,10 @@ class LoginForm(forms.Form):
     password = forms.CharField(max_length=100, widget=forms.PasswordInput)
 
     
-def message(msg, next=None):
-    params = {'message': msg, 'alert': 'error', 'next': next}
-    return redirect('/login?' + urlencode(params))
+def message(**kwargs):
+    if 'alert' not in kwargs:
+        kwargs['alert'] = 'error'
+    return redirect('/login?' + urlencode(kwargs))
 
 def loginView(request):
     redirectUrl = request.GET.get('next') or '/'
@@ -45,11 +46,11 @@ def loginView(request):
                     login(request, user)
                     return HttpResponseRedirect(redirectUrl) # Redirect after POST
                 else:
-                    return message('Your account has been disabled!',
-                            redirectUrl)
+                    return message(message='Your account has been disabled!',
+                            next=redirectUrl)
             else:
-                return message('Your username and password were wrong',
-                        redirectUrl)
+                return message(message='Your username and password were wrong',
+                        next=redirectUrl)
 
     else:
         form = LoginForm() # An unbound form
@@ -63,7 +64,7 @@ def loginView(request):
 
 def logoutView(request):
     logout(request)
-    return Message(request, 'Logged out!')
+    return message(message='Logged out!', next='/', alert='success')
 
 def userPage(request, username):
     params = {}
