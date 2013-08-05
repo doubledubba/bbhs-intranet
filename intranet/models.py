@@ -7,10 +7,10 @@ from bbhs.settings import endOfYear
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-
     eventsNeeded = models.IntegerField(null=True, default=4)
-    eventsNeeded.verbose_name = '(Chaperone) Events Needed'
+    eventsInfo = models.TextField(null=True, blank=True)
 
+    eventsNeeded.verbose_name = '(Chaperone) Events Needed'
     eventsDone = models.IntegerField(null=True, default=0)
     canAdminEvents = models.BooleanField(default=False)
     isFaculty = models.BooleanField(default=False) # for do/don't send obligation emails

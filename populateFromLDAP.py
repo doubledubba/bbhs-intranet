@@ -1,4 +1,5 @@
 import os
+from sys import argv
 os.environ['DJANGO_SETTINGS_MODULE'] = 'bbhs.settings'
 from tempfile import NamedTemporaryFile as temp
 from ldif import LDIFParser
@@ -6,9 +7,18 @@ from django.contrib.auth.models import User, Group
 from bbhs.settings import PROJECT_ROOT, AUTH_LDAP_SERVER_URI
 from bbhs.settings import AUTH_LDAP_BIND_PASSWORD, AUTH_LDAP_BIND_DN, faculty_cn
 
+faculty_cn = 'OU=Faculty,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
+staff_cn = 'OU=Administration,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
+
+if 'staff' in argv:
+    cn = staff_cn
+else:
+    cn = faculty_cn
+
+
 fh = temp()
 command = 'ldapsearch -a always -H %s -w %s -D "%s" -b "%s" "sAMAccountName=*" -u -s sub sAMAccountName mail givenName sn userAccountControl> %s'
-command = command % (AUTH_LDAP_SERVER_URI, AUTH_LDAP_BIND_PASSWORD, AUTH_LDAP_BIND_DN, faculty_cn, fh.name)
+command = command % (AUTH_LDAP_SERVER_URI, AUTH_LDAP_BIND_PASSWORD, AUTH_LDAP_BIND_DN, cn, fh.name)
 os.system(command)
 deList = lambda obj: obj[0] if obj else ''
 

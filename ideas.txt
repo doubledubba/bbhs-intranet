@@ -5,6 +5,9 @@ Get datetimepicker to work on all of the additional inputs
 OR
 screw datetimepicker and get a new one
 
+
+Add ou=Administration,ou=Staff to the typeaheads
+
 Double check all views for correct permissions and security leaks
 Double check all models and views and admins to make sure we aren't using
     disabled users
@@ -112,3 +115,6 @@ How to disable/enable the cron jobs
 Explain markdown and give examples
 
 How to change the year start/end dates
+
+You need to create the staff group before you can use populateFromLDAP.py
+    + You need to use the staff argument to create the admin's profiles

@@ -188,10 +188,11 @@ def removeUser(request, eventID):
     
 
 def userReport(request, username=''):
-    params = {
-        'users': User.objects.filter(is_active=True)
-    }
-    return render(request, 'chaperone/userReport.html', params)
+    if username:
+        user = get_object_or_404(User, username=username)
+        return render(request, 'chaperone/userReport.html', params)
+    else:
+        return HttpResponse('boo')
 
 @permission_required('chaperone.create_event')
 @login_required
