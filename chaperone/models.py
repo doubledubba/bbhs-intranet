@@ -118,9 +118,7 @@ class Event(models.Model):
     def expired(self, now=datetime.utcnow().replace(tzinfo=utc)):
         ''' Returns True if the event has already passed.
 
-        This will be called every time a user opens an event page.
-        Implementation of this is method is the only missing piece
-        of this functionality.'''
+        This will be called every time a user opens an event page.'''
 
         return self.date < now
 
@@ -219,8 +217,7 @@ class Note(models.Model):
     pub_date = models.DateTimeField("Creation date", auto_now_add=True)
 
     def __unicode__(self):
-        return '<Note #%d event#%d private=%s' % (self.pk,self.event.pk, not
-                self.public)
+        return '<Note #%d event#%d public=%s' % (self.pk,self.event.pk, self.public)
 
     def getText(self):
         length = len(self.text)

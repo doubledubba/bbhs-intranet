@@ -5,6 +5,15 @@ Get datetimepicker to work on all of the additional inputs
 OR
 screw datetimepicker and get a new one
 
+Make sure the eventsNeeded thing gets updated yearly
+==================&*****************************====
+
+Migrate all of the teachers into the faculty security group
+
+clean the ui for the admin page
+    - remove extraneous info, don't expose the machine too much
+
+Set DEBUG = False
 
 Add ou=Administration,ou=Staff to the typeaheads
 

@@ -25,7 +25,7 @@ UNREGISTER FEATURE
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+TEMPLATE_DEBUG = True
 
 ADMINS = (
     ('Luis Naranjo', 'luisnaranjo733@gmail.com'),
@@ -254,7 +254,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 def send(msg, toaddrs):
-    if DEBUG:
+    if False:
         return
     server = SMTP('smtp.gmail.com:587')
     server.starttls()
@@ -274,7 +274,7 @@ def sendTextEmail(msg, subject, toaddrs):
     send(msg.as_string(), toaddrs)
     
 def sendHTMLEmail(text, html, subject, toaddrs):
-    ''''Pass in alternative text and the intended html'''
+    '''Pass in alternative text and the intended html'''
     msg = MIMEMultipart('alternative')
     msg['Subject'] = subject
     msg['From'] = fromaddr

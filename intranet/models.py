@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from datetime import datetime
 from bbhs.settings import endOfYear
 
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     eventsNeeded = models.IntegerField(null=True, default=4)
