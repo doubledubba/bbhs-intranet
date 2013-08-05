@@ -8,6 +8,10 @@ screw datetimepicker and get a new one
 Make sure the eventsNeeded thing gets updated yearly
 ==================&*****************************====
 
+Update twitter bootstrap
+
+Make sure everything has @login_required
+
 Migrate all of the teachers into the faculty security group
 
 clean the ui for the admin page
