@@ -10,6 +10,8 @@ Make sure the eventsNeeded thing gets updated yearly
 
 Update twitter bootstrap
 
+Log signs ups/unsign ups
+
 Make sure everything has @login_required
 
 Migrate all of the teachers into the faculty security group
