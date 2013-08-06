@@ -57,8 +57,9 @@
 
 
 {% block body %}
-<h2>Create an Event</h2>
 <form action="/chaperone/addEvent/" method="POST">
+<fieldset>
+<legend>Create an Event</legend>
 {% csrf_token %}
 <div class="row">
 	<div class="span7">
@@ -99,6 +100,6 @@
 </div>
 
 <input type="submit" value="Submit!">
-
+</fieldset>
 </form>
 {% endblock body %}
