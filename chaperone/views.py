@@ -187,12 +187,13 @@ def removeUser(request, eventID):
     return notify(alert, message, event.get_absolute_url(), tab=3)
     
 
-def userReport(request, username=''):
-    if username:
-        user = get_object_or_404(User, username=username)
-        return render(request, 'chaperone/userReport.html', params)
-    else:
-        return HttpResponse('boo')
+def userReportForm(request, username=''):
+    return HttpResponse('boo')
+
+def userReport(request, username):
+    user = get_object_or_404(User, username=username)
+    params = {}
+    return render(request, 'chaperone/userReport.html', params)
 
 
 @permission_required('chaperone.create_event')

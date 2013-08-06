@@ -82,3 +82,9 @@ action is logged in the database.
 
 Emails/Cron jobs
 ----------------
+
+Groups
+------
+
+Staff
+Event Admins

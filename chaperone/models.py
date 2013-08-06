@@ -185,6 +185,9 @@ class Event(models.Model):
 
         subject = '%s signed up for "%s"!' % (profile, self.name)
         sendHTMLEmail(text, html, subject, self.admin.email)
+
+        profile.logAction('sign up', self)
+        profile.save()
         return 'success', 'Signed up %s' % username
 
     def removeVolunteer(self, user):
@@ -202,6 +205,10 @@ class Event(models.Model):
             profile.eventsNeeded += 1
             profile.eventsDone -= 1
             profile.save()
+
+        profile = user.get_profile()
+        profile.logAction('unsign up', self)
+        profile.save()
         return 'info', 'Unregistered: %s' % username
 
     def get_description(self):

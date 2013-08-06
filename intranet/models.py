@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 
 from datetime import datetime
+import json
 from bbhs.settings import endOfYear
 
 
@@ -39,6 +40,22 @@ class UserProfile(models.Model):
         completed = 4 - self.eventsNeeded
         return completed        
 
+    def logAction(self, action, event):
+        now = datetime.now()
+        params = {
+            'action': action,
+            'action date': now.strftime('%c'),
+            'event PK': event.pk,
+            'event title': event.name,
+        }
+        entry = json.dumps(params)
+        if self.eventsInfo:
+            log = json.loads(self.eventsInfo)
+        else:
+            log = []
+        log.append(entry)
+        self.eventsInfo = json.dumps(log)
+        self.save()
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
