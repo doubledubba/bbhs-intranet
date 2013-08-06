@@ -8,7 +8,7 @@ from django.http import Http404
 from django.utils.timezone import utc
 from django.contrib.auth.decorators import permission_required
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from markdown import markdown
 
 from chaperone.models import Event, Note
@@ -194,6 +194,7 @@ def userReport(request, username=''):
     else:
         return HttpResponse('boo')
 
+
 @permission_required('chaperone.create_event')
 @login_required
 def addEvent(request):
@@ -247,8 +248,9 @@ def addEvent(request):
         return redirect(url)
         return HttpResponse('text', content_type='text/plain')
 
+    event_admins = Group.objects.get(name="Event Admins")
     params = {
-        'admins': User.objects.filter(userprofile__canAdminEvents=True)
+        'admins': event_admins.user_set.all()
     }
     return render(request, 'chaperone/addEvent.html', params)
 

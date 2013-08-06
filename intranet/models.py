@@ -13,7 +13,7 @@ class UserProfile(models.Model):
 
     eventsNeeded.verbose_name = '(Chaperone) Events Needed'
     eventsDone = models.IntegerField(null=True, default=0)
-    canAdminEvents = models.BooleanField(default=False)
+    #canAdminEvents = models.BooleanField(default=False)
     isFaculty = models.BooleanField(default=False) # for do/don't send obligation emails
 #    chaperone_admin
 

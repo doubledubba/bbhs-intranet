@@ -33,14 +33,14 @@ class UserProfileInline(admin.StackedInline):
 # Define a new User admin
 class UserAdmin(UserAdmin):
     inlines = (UserProfileInline, )
-    list_display = ['username', 'get_full_name', 'email', 'canAdmin']
+    list_display = ['username', 'get_full_name', 'email']
     actions = [turnOnAdmin, turnOffAdmin]
 
-    def canAdmin(self, user):
-        return user.get_profile().canAdminEvents and user.is_staff
+    #def canAdmin(self, user):
+     #   return user.get_profile().canAdminEvents and user.is_staff
 
-    canAdmin.short_description = 'Can admin events'
-    canAdmin.boolean = True
+    #canAdmin.short_description = 'Can admin events'
+    #canAdmin.boolean = True
 
 # Re-register UserAdmin
 admin.site.unregister(User)
