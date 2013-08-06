@@ -188,7 +188,7 @@ def removeUser(request, eventID):
     
 
 def userReportForm(request, username=''):
-    return HttpResponse('boo')
+    return render(request, 'chaperone/userReport.html')
 
 def userReport(request, username):
     user = get_object_or_404(User, username=username)
