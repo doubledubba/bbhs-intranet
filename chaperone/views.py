@@ -186,13 +186,47 @@ def removeUser(request, eventID):
     alert, message = event.removeVolunteer(user)
     return notify(alert, message, event.get_absolute_url(), tab=3)
     
+def userReportForm(request):
+    params = {}
+    if request.method == 'POST':
+        params['start'] = request.POST.get('start')
+        params['end'] = request.POST.get('end')
+        url = '/chaperone/userReport/%s?' % request.POST.get('user')
+        url += urlencode(params)
+        return redirect(url)
+    else:
+        return render(request, 'chaperone/userReportForm.html')
 
-def userReportForm(request, username=''):
-    return render(request, 'chaperone/userReport.html')
-
+#from django.utils.timezone import utc
+#datetime.utcnow().replace(tzinfo=utc)
 def userReport(request, username):
     user = get_object_or_404(User, username=username)
-    params = {}
+    start = request.GET.get('start')
+    end = request.GET.get('end')
+    try:
+        start = datetime.strptime(start, '%m/%d/%Y %X %p')
+        end = datetime.strptime(end, '%m/%d/%Y %X %p')
+        range = True
+    except ValueError:
+        range = False
+    events = []
+    print dir(start), type(start), repr(start)
+    for event in Event.objects.all():
+        if not event.signedUp(user):
+            continue
+        if range:
+            start = start.replace(tzinfo=utc)
+            end = end.replace(tzinfo=utc)
+            if start < event.date < end:
+                events.append(event)
+        else:
+            events.append(event)
+            start = ''
+            end = ''
+
+    count = len(events)
+    params = {'user': user, 'events': events,
+            'start': start, 'end': end, 'count': count}
     return render(request, 'chaperone/userReport.html', params)
 
 

@@ -1,87 +1,18 @@
-{% extends "base_alt.html" %}
-
-{% block style %}
-    .form_container {
-        width: 500px;
-        clear: both;
-    }
-    .form_container input {
-        width: 100%;
-        clear: both;
-    }
-    
-    .form_container select {
-        width: 103%;
-        clear: both;
-    }
-  
-{% endblock style %}
-
-{% block head %}
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" media="screen"
-     href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
-  
-{% endblock head %}
-{% block script %}
-    <script type="text/javascript"
-       src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
-     </script> 
-     <script type="text/javascript"
--     src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
--    </script>
--    <script type="text/javascript"
-      src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
-     </script> 
-    <script type="text/javascript">
-      $('#startPicker').datetimepicker({
-        format: 'MM/dd/yyyy HH:mm:ss PP',
-        language: 'en-us',
-        pick12HourFormat: true
-      });
-      
-      $('#endPicker').datetimepicker({
-        format: 'MM/dd/yyyy HH:mm:ss PP',
-        language: 'en-us',
-        pick12HourFormat: true
-      });
-
-    </script>
-{% endblock script %}
-
+{% extends "base.html" %}
 
 {% block body %}
 
-<form>
-  <fieldset>
-    <legend>User Report</legend>
-    
-    <div class="form-group">
-      <label>Start range</label>
-      <div id="startPicker" class="input-append date">
-      <input type="text" name="start" class="form-control" placeholder="Start search date">
-      <span class="add-on">
-			<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-		</span>
-    </div>
-    
-    <div class="form-group">
-      <label>End range</label>
-      <div id="endPicker" class="input-append date">
-      <input type="text" name="end" class="form-control" placeholder="End search date">
-      <span class="add-on">
-			<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-		</span>
-    </div>
-    
-    <div class="form-group">
-		<label>User</label>
-		<input type="text" name="user" class="form-control" placeholder="User to get report on">    
-    </div>
-    
-    <button type="submit" class="btn btn-default">Submit</button>
-  </fieldset>
-</form>
+{% if start and end %}
+Displaying {{ count }} events that {{ user }} has signed up for
+from {{ start }} to {{ end }}
+{% else %}
+Displaying all {{ count }} events for {{ user }}
+{% endif %}
 
+<ul>
+{% for event in events %}
+<li>{{ event.name }} on {{ event.date }}</li>
+{% endfor %}
+</ul>
 
 {% endblock body %}

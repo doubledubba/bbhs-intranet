@@ -42,6 +42,30 @@
         pick12HourFormat: true
       });
 
+/*
+			    <div id="datetimepicker" class="input-append date">
+			      <input type="text" style="width:95%;clear:both;" name="date"></input>
+			      <span class="add-on">
+			        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+			      </span>
+			    </div>
+			    */
+			    
+   fields = 0;
+	function addInput() {
+		fields += 1;
+		id = "datetimepicker" + fields.toString();
+		id = 'datetimepickers';
+		string = '<div id="' + id + '" class="input-append date">\n';
+		string += '<input type="text" style="width:95%;clear:both;" name="date"></input>\n';
+		string += '<span class="add-on">\n';
+		string += '<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>\n';
+		string += '</span>\n';
+		string += '</div>';
+		document.getElementById('dates').innerHTML += string;
+		console.log(string);
+	}	
+
 	i = 1;
 	function addInputs() {
 		main = document.getElementById('dates');
