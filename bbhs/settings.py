@@ -3,32 +3,18 @@ import os
 import ldap
 from django_auth_ldap.config import LDAPSearch, ActiveDirectoryGroupType, LDAPSearchUnion
 
-'''TODO
-In eventPage.html
-    + Change "if superuser" to "if in admin group"
-
-Create user profile 
-
-Phone number and department from LDAP in userprofile
-
-Delete user form on chaperone page
-
-URL Shortener
-
-Implement {{ event.get_absolute_url }}/signup view+url
-
-DJANGO LOGGING
-Tech security group superuser access over LDAP
-UNREGISTER FEATURE
-'''
-
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+
+# Edit this and restart everything in order to change the default yearly
+# chaperone obligation for each user
+OBLIGATION_NUMBER = 4
 
 DEBUG = True
 TEMPLATE_DEBUG = True
 
 ADMINS = (
     ('Luis Naranjo', 'luisnaranjo733@gmail.com'),
+    ('Michael Fox', 'mFox@bishopblanchet.org'),
 )
 
 MANAGERS = ADMINS
@@ -147,8 +133,6 @@ INSTALLED_APPS = (
     'intranet',
     'chaperone',
     'shortener',
-    
-    'clippy',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -227,15 +211,6 @@ AUTH_LDAP_GROUP_SEARCH = LDAPSearch('ou=Staff,dc=campus,dc=bishopblanchet,dc=org
 AUTH_LDAP_REQUIRE_GROUP = "cn=Staff,ou=staff,dc=campus,dc=bishopblanchet,dc=org"
 
 AUTH_LDAP_MIRROR_GROUPS = True
-
-# Use the security group only, don't rely on the OU
-
-''' To do:
-    Configure logging:
-        - Django
-        - Auth LDAP
-        - Custom apps
-'''
 
 import logging
 

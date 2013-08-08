@@ -1,6 +1,3 @@
-Fix mobile dropdown bugs
-    + chaperone dropdown for admins doesnt work on ipad
-
 Get datetimepicker to work on all of the additional inputs
 OR
 screw datetimepicker and get a new one

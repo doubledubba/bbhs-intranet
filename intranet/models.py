@@ -4,12 +4,12 @@ from django.db.models.signals import post_save
 
 from datetime import datetime
 import json
-from bbhs.settings import endOfYear
+from bbhs.settings import endOfYear, OBLIGATION_NUMBER
 
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    eventsNeeded = models.IntegerField(null=True, default=4)
+    eventsNeeded = models.IntegerField(null=True, default=OBLIGATION_NUMBER)
     eventsInfo = models.TextField(null=True, blank=True)
 
     eventsNeeded.verbose_name = '(Chaperone) Events Needed'
@@ -37,7 +37,8 @@ class UserProfile(models.Model):
         return (_endOfYear - now).days
 
     def eventsCompleted(self):
-        completed = 4 - self.eventsNeeded
+        '''Returns the # of events completed THIS YEAR'''
+        completed = OBLIGATION_NUMBER - self.eventsNeeded
         return completed        
 
     def logAction(self, action, event):

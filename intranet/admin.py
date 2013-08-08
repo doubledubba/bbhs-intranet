@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
 from intranet.models import UserProfile
+from bbhs.settings import OBLIGATION_NUMBER
 
 def turnOnAdmin(modelAdmin, request, querySet):
     for user in querySet:
@@ -20,6 +21,12 @@ def turnOffAdmin(modelAdmin, request, querySet):
         profile.canAdminEvents = False
         profile.save()
 
+def normalize_yearly_obligation(modelAdmin, request, querySet):
+    for user in querySet:
+        profile = user.get_profile()
+        profile.eventsNeeded = OBLIGATION_NUMBER
+        profile.save()
+
 turnOnAdmin.short_description = 'Make the user a potential admin'
 turnOffAdmin.short_description = 'Remove the user\'s administration privileges'
 
@@ -34,7 +41,7 @@ class UserProfileInline(admin.StackedInline):
 class UserAdmin(UserAdmin):
     inlines = (UserProfileInline, )
     list_display = ['username', 'get_full_name', 'email']
-    actions = [turnOnAdmin, turnOffAdmin]
+    actions = [turnOnAdmin, turnOffAdmin, normalize_yearly_obligation]
 
     #def canAdmin(self, user):
      #   return user.get_profile().canAdminEvents and user.is_staff
