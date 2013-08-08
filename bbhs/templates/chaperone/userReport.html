@@ -2,17 +2,38 @@
 
 {% block body %}
 
+<legend>{{ user.get_full_name }} ({{ user.username }})</legend>
+
+{% firstof user.get_full_name user.username %} has {{ count }} event{{ count|pluralize }}
 {% if start and end %}
-Displaying {{ count }} events that {{ user }} has signed up for
 from {{ start }} to {{ end }}
-{% else %}
-Displaying all {{ count }} events for {{ user }}
 {% endif %}
 
 <ul>
-{% for event in events %}
-<li>{{ event.name }} on {{ event.date }}</li>
-{% endfor %}
+
 </ul>
+
+           <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Events</th>
+                  <th>Dates</th>
+                  <th>Weight</th>
+                  <th>Event Admin</th>
+                  <th>Already happened?</th>
+                </tr>
+              </thead>
+              <tbody>
+{% for event in events %}
+						<tr>
+							<td><a href="{{ event.get_absolute_url }}">{{ event.name }}</a></td>
+							<td>{{ event.date }}</td>
+							<td>weight</td>
+							<td>{{ event.admin }}</td>
+							<td>{{ event.expired }}</td>
+						</tr>
+{% endfor %}
+              </tbody>
+            </table>
 
 {% endblock body %}

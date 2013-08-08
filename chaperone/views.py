@@ -22,6 +22,15 @@ tabs = {
     3: ''
 }
 
+regex = re.compile(r'\([^)]+\)')
+def parseUsername(username):
+    r = regex.search(username)
+    if r:
+        username = r.string[r.start() + 1 : r.end() -1]
+        return username
+    else:
+        return None
+
 def notify(alert, message, thanks='/chaperone/', tab=1):
     thanks += '?'
     thanks += urlencode({'alert': alert, 'message': message, 'tab': tab})
@@ -29,6 +38,9 @@ def notify(alert, message, thanks='/chaperone/', tab=1):
     return redirect(thanks)
 
 def formatTAH(TAH):
+    '''Give this a list of strings, and it will spit out a formatted string
+    for the typeahead'''
+
     string = '['
     for item in TAH:
         string += '"%s",' % item
@@ -84,7 +96,7 @@ def eventPage(request, eventID):
     params['add_chaperones'] = request.user.has_perm('chaperone.add_chaperones')
     params['remove_chaperones'] = request.user.has_perm('chaperone.remove_chaperones')
     is_admin = event.admin == request.user
-    params['sign_up'] = request.user.has_perm('chaperone.sign_up') and  not is_admin
+    params['sign_up'] = request.user.has_perm('chaperone.sign_up') and not is_admin
     params['unsign_up'] = request.user.has_perm('chaperone.unsign_up') and not is_admin
 
     if params['add_chaperones']:
@@ -122,7 +134,6 @@ def eventPage(request, eventID):
 
     return render(request, 'chaperone/eventPage.html', params)
 
-regex = re.compile(r'\([^)]+\)')
 
 def handleRegistration(request, eventID):
     if request.method != 'POST':
@@ -191,11 +202,32 @@ def userReportForm(request):
     if request.method == 'POST':
         params['start'] = request.POST.get('start')
         params['end'] = request.POST.get('end')
-        url = '/chaperone/userReport/%s?' % request.POST.get('user')
+        username = request.POST.get('user')
+        username = parseUsername(username)
+        if not params['start'] and not params['end'] and not username:
+            return notify('error', 'You need to fill out the form!',
+                    thanks='/chaperone/userReport')
+
+        if not username:
+            return notify('error', 'You need to enter a user!',
+                    thanks='/chaperone/userReport')
+        url = '/chaperone/userReport/%s?' % username
         url += urlencode(params)
+
         return redirect(url)
     else:
-        return render(request, 'chaperone/userReportForm.html')
+        signUpTAH = []
+        for user in User.objects.filter(is_active=True):
+            fName = user.get_full_name()
+            if fName:
+                name = '%s (%s)' % (fName, user.username)
+            else:
+                name = '%s (%s)' % (user.username, user.username)
+            signUpTAH.append(name)
+        params = {'TAH': formatTAH(signUpTAH)}
+        params['message'] = request.GET.get('message')
+        params['alert'] = request.GET.get('alert')
+        return render(request, 'chaperone/userReportForm.html', params)
 
 #from django.utils.timezone import utc
 #datetime.utcnow().replace(tzinfo=utc)
