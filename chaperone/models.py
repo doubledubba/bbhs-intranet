@@ -141,22 +141,25 @@ class Event(models.Model):
             return 'error', 'Sorry, %s is already the event administrator!' % username
         if user.pk in volunteerPks:
             return 'error', 'Sorry, %s is already signed up' % username
+        if self.volunteersNeeded > 0:
+            self.volunteersNeeded -= 1
+        else:
+            return 'error', 'Sorry, no more volunteers needed'
         if volunteerPks:
             volunteerPks.append(user.pk)
             self.volunteersRegistered = json.dumps(volunteerPks)
         else:
             self.volunteersRegistered = json.dumps([user.pk,])
-        if self.volunteersNeeded > 0:
-            self.volunteersNeeded -= 1
-        else:
-            return 'error', 'Sorry, no more volunteers needed'
+
 
         self.save()
         profile = user.get_profile()
         if not self.expired(): # so users dont cheat and sign up for past events
             if profile.eventsNeeded > 0:
-                profile.eventsNeeded -= 1
-            profile.eventsDone += 1
+                #profile.eventsNeeded -= 1
+                profile.eventsNeeded -= self.weight
+            #profile.eventsDone += 1
+            profile.eventsDone += self.weight
             profile.save()
 
         params = {'event': self, 'admin': self.admin}
@@ -203,8 +206,10 @@ class Event(models.Model):
         self.save()
         if not self.expired():
             profile = user.get_profile()
-            profile.eventsNeeded += 1
-            profile.eventsDone -= 1
+            #profile.eventsNeeded += 1
+            #profile.eventsDone -= 1
+            profile.eventsNeeded += self.weight
+            profile.eventsDone -= self.weight
             profile.save()
 
         profile = user.get_profile()
