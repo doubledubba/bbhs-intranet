@@ -123,10 +123,12 @@ function decrementValue() {
 			    </div>
 			<div id="dates">    
 			</div>
-			<input type="button" style="" value="Add more dates" onclick="addInputs()">
-			    
-			<label>Volunteers Needed (Enter a number: 4 not four)</label>
-			<input type="number" name="volunteers"><br />
+			<input type="button" class="btn" value="Add more dates" onclick="addInputs()">
+			<br><br>
+			
+			
+			<input type="number" name="volunteers">
+			<span class="help-block">Volunteers Needed (Enter a number: 4 not four)</span>
 		</div>
 	</div>
 	<div class="span5">
@@ -145,7 +147,8 @@ function decrementValue() {
 	</div>
 </div>
 
-<input type="submit" value="Submit!">
+<hr>
+<input type="submit" class="btn btn-primary" value="Submit!">
 </fieldset>
 </form>
 {% endblock body %}

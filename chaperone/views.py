@@ -273,6 +273,7 @@ def addEvent(request):
             'date': request.POST.get('date'),
             'description': request.POST.get('desc'),
             'markdown': request.POST.get('markdown') == 'true' or False,
+            'weight': request.POST.get('weight')
         }
         # add GET param UX feedback
         # or re-fill incomplete forms
@@ -305,7 +306,7 @@ def addEvent(request):
                 dates.append(date)
             else:
                 break
-
+        
         for date in dates:
             info['date'] = date
             event = Event(**info)
