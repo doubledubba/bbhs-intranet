@@ -23,8 +23,11 @@ def turnOffAdmin(modelAdmin, request, querySet):
 
 def normalize_yearly_obligation(modelAdmin, request, querySet):
     for user in querySet:
+        if not profile.user.is_active:
+            continue
         profile = user.get_profile()
         profile.eventsNeeded = OBLIGATION_NUMBER
+        profile.eventsDoneSoFar = 0
         profile.save()
 
 turnOnAdmin.short_description = 'Make the user a potential admin'

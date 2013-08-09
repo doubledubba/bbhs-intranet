@@ -155,11 +155,9 @@ class Event(models.Model):
         self.save()
         profile = user.get_profile()
         if not self.expired(): # so users dont cheat and sign up for past events
-            if profile.eventsNeeded > 0:
-                #profile.eventsNeeded -= 1
-                profile.eventsNeeded -= self.weight
-            #profile.eventsDone += 1
+            profile.eventsNeeded -= self.weight
             profile.eventsDone += self.weight
+            profile.eventsDoneSoFar += self.weight
             profile.save()
 
         params = {'event': self, 'admin': self.admin}
@@ -210,6 +208,7 @@ class Event(models.Model):
             #profile.eventsDone -= 1
             profile.eventsNeeded += self.weight
             profile.eventsDone -= self.weight
+            profile.eventsDoneSoFar -= self.weight
             profile.save()
 
         profile = user.get_profile()

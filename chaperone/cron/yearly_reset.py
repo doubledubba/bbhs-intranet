@@ -9,7 +9,9 @@ from intranet.models import UserProfile
 for profile in UserProfile.objects.all():
     if not profile.user.is_active:
         continue
+    print 'Resetting', profile
     profile.eventsNeeded = OBLIGATION_NUMBER
+    profile.eventsDoneSoFar = 0
     profile.save()
 
 
