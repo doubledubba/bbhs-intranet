@@ -96,8 +96,8 @@ def eventPage(request, eventID):
     params['add_chaperones'] = request.user.has_perm('chaperone.add_chaperones')
     params['remove_chaperones'] = request.user.has_perm('chaperone.remove_chaperones')
     is_admin = event.admin == request.user
-    params['sign_up'] = request.user.has_perm('chaperone.sign_up') and not is_admin
-    params['unsign_up'] = request.user.has_perm('chaperone.unsign_up') and not is_admin
+    params['sign_up'] = request.user.has_perm('chaperone.sign_up')
+    params['unsign_up'] = request.user.has_perm('chaperone.unsign_up')
 
     if params['add_chaperones']:
         signUpTAH = []

@@ -46,12 +46,17 @@ class UserProfile(models.Model):
 
     def logAction(self, action, event):
         now = datetime.now()
-        params = {
-            'action': action,
-            'action date': now.strftime('%c'),
-            'event PK': event.pk,
-            'event title': event.name,
-        }
+        if action == 'sign up':
+            action = 0
+        elif action == 'unsign up':
+            action = 1
+        params = [
+            action,
+            now.strftime('%c'),
+            event.pk,
+            event.name,
+            event.weight,
+        ]
         entry = json.dumps(params)
         if self.eventsInfo:
             log = json.loads(self.eventsInfo)
