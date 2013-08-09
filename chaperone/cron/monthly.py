@@ -41,6 +41,10 @@ def sendEmail(user):
 def run():
     for user in User.objects.filter(is_active=True, userprofile__isFaculty=True):
         profile = user.get_profile()
+        faculty = True
+        if not faculty:
+            continue
+
         if profile.eventsNeeded > 0:
             if user.email:
                 print 'Emailing:', user.username

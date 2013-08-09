@@ -2,12 +2,7 @@ Get datetimepicker to work on all of the additional inputs
 OR
 screw datetimepicker and get a new one
 
-Make sure the eventsNeeded thing gets updated yearly
-==================&*****************************====
-
 Update twitter bootstrap
-
-Log signs ups/unsign ups
 
 Make sure everything has @login_required
 

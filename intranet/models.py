@@ -6,6 +6,11 @@ from datetime import datetime
 import json
 from bbhs.settings import endOfYear, OBLIGATION_NUMBER
 
+class Action(object):
+    def __init__(self, **kwargs):
+        for arg in kwargs:
+            setattr(self, arg, kwargs[arg])
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
@@ -60,6 +65,7 @@ class UserProfile(models.Model):
         log.append(entry)
         self.eventsInfo = json.dumps(log)
         self.save()
+            
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
