@@ -44,12 +44,10 @@
 
           <div class="btn-group pull-right">
             {% if user.is_authenticated %}
-                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+               <a class="btn" role="button" data-toggle="modal" href="/logout/">
                 <i class="icon-user"></i>
-                {{ user.username }}
+                {{ user.username }} (logout)
             </a>
-            <ul class="dropdown-menu">
-              <li><a href="/logout/">Sign out</a></li>
             {% else %}
                 <a class="btn dropdown-toggle" href="/login/">
                 <i class="icon-user"></i>

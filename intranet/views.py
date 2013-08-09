@@ -85,6 +85,7 @@ def userPage(request, username):
     params['active'] = active
     params['user'] = user
     params['home'] = request.GET.get('home')
+    params['this_years_events'] = user.get_profile().eventsCompleted()
     return render(request, 'userPage.html', params)
 
 

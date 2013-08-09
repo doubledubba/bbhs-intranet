@@ -192,7 +192,7 @@ class Event(models.Model):
 
         profile.logAction('sign up', self)
         profile.save()
-        return 'success', 'Signed up %s' % username
+        return 'success', 'Signed up %s for %r event units' % (username, self.weight)
 
     def removeVolunteer(self, user):
         volunteerPks = self.getPks()

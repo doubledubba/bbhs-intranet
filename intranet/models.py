@@ -10,10 +10,11 @@ from bbhs.settings import endOfYear, OBLIGATION_NUMBER
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     eventsNeeded = models.IntegerField(null=True, default=OBLIGATION_NUMBER)
+    #eventsNeeded reset yearly
     eventsInfo = models.TextField(null=True, blank=True)
 
     eventsNeeded.verbose_name = '(Chaperone) Events Needed'
-    eventsDone = models.IntegerField(null=True, default=0)
+    eventsDone = models.IntegerField(null=True, default=0) #permanent tally
     #canAdminEvents = models.BooleanField(default=False)
     isFaculty = models.BooleanField(default=False) # for do/don't send obligation emails
 #    chaperone_admin
@@ -32,14 +33,16 @@ class UserProfile(models.Model):
     def get_absolute_url(self):
         return '/user/%s' % self.user.username
 
+    def rtEventsNeeded(self):
+        return self.eventsNeeded if self.eventsNeeded > 0 else 0
+
     def daysLeft(self, _endOfYear=endOfYear):
         now = datetime.now()
         return (_endOfYear - now).days
 
     def eventsCompleted(self):
         '''Returns the # of events completed THIS YEAR'''
-        completed = OBLIGATION_NUMBER - self.eventsNeeded
-        return completed        
+        return OBLIGATION_NUMBER - self.eventsNeeded
 
     def logAction(self, action, event):
         now = datetime.now()

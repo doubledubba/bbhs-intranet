@@ -3,8 +3,11 @@
 {% block title %}Success!{% endblock title %}
 {% block body %}
 You signed up for "<a href="http://faculty.bishopblanchet.org{{ event.get_absolute_url }}"/>{{ event.name }}</a>" on {{ event.date }}!
+<br>
+
+This event is worth {{ event.weight }} service requirement unit{{ event.weight|pluralize }}
 <br >
-The event administrator is <b>{{ event.admin }}</b>
+The event administrator is <b><a href="{{ event.admin.get_absolute_url }}">{{ event.admin }}</a></b>
 <br>
 <hr>
 

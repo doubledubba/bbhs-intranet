@@ -16,7 +16,10 @@
 <div class="row">
 	<div class="span6">
 		<b>Username:</b> {{ user }} <br>
-		<b>Events needed for this year:</b> {{ user.get_profile.eventsNeeded }} <br>
+		<b>Events needed for this year:</b> 
+		{{ user.get_profile.rtEventsNeeded }}<br>
+		<b>Events completed for this year:</b> {{ user.get_profile.eventsCompleted }}<br>
+		<b>Total events completed:</b> {{ user.get_profile.eventsDone }}<br>
 		<b>Email:</b> {{ user.email }}
 	</div>
 	<div class="span6">
