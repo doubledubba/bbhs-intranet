@@ -1,6 +1,8 @@
+FIX LDAP GROUPS MIRRORING
+
+RESOLVE isFaculty tracking and functionality
+
 Get datetimepicker to work on all of the additional inputs
-OR
-screw datetimepicker and get a new one
 
 Update twitter bootstrap
 
@@ -11,46 +13,9 @@ Migrate all of the teachers into the faculty security group
 clean the ui for the admin page
     - remove extraneous info, don't expose the machine too much
 
-Set DEBUG = False
-
-Add ou=Administration,ou=Staff to the typeaheads
-
 Double check all views for correct permissions and security leaks
 Double check all models and views and admins to make sure we aren't using
     disabled users
-
-User Report table:
-    http://www.thoughtdelimited.org/thoughts/demos/dataTablesDateRange/
-
-re-fill username when logging in and password failed
-
-Regulate what a "staff" member is an make it standard to avoid confusion
-
-@login_required for index view
-
-Have an option for viewing past events even if you are not an admin
-
-Deployment error:
-    mod_wsgi runs before $HOME variable is defined
-    Add a 10 second pause or something in the code
-
-create addMultipleEvents.html
-    + Single form with a + plus sign that will add another datepicker form when
-    you clicked it and they will be stacked vertically and an event will be
-    created for every date that is picked
-    + using same addEvents.html
-    + needs a delete button for each created text input
-    + make sure to check for empty text inputs and not create them or handle
-    the errors
-    + views need to catch all of the fields and adjust in the code
-
-Add admin page:
-    Show all users who can admin events
-
-Add incrementer widget in addEvent.html
-    + js number picker
-
-In addEvent.html refill forms when they aren't submitted properly
 
 Remove external dependencies in HTML
     + Some external scripts are being referenced. At some point I should
@@ -60,26 +25,7 @@ Fix the external BBHS logo <img src> reference on emails
     + Used it because I was having issues serving newly added static files
     + Make the HTML emails inherit from a template
 
-Zero out eventsNeeded when over signedUp
-    + But only in display, actually have neg numbers in db
-
-Custom add event page
-    + No 24 hour time format
-    + User.objects.filter(userprofile_canAdminEvent=True) only for Event.admin
-    dropdown form
-    + Correct permissions for who gets to use what (@require_perm ?)
-    + Save or Email and Save
-    + Inline event adding
-
-Make the user profile page more lively.
-	Add profile pictures from PALLIUM
-        Phone directory project? Leave placeholders for when they are populated
-
 Bash installation script for the intranet that installs dependencies
-
-Future app ideas? Make sure there's room for future expansion
-    + Substitute teachers (Mary Kay)
-    + Copy queue
 
 Move faculty into faculty security group
 
@@ -88,18 +34,6 @@ Fix home page layout
 
 User reports
     + Only available to chaperone_admin sec group1
-    + Let them pick a date range or fall back to default range
-    + All users
-        + Sorting by most/least events this year
-    + Individual users (search)?a
-        + Display all info and count of events
-
-Security Groups
-    + Intranet_super_users (superuser)
-    + APP_Admin (all APP permissions)
-
-Set up cron jobs
-    + Reset job on September 1 that sets eventsNeeded to 4
 
 Get rid of old email testing views
 

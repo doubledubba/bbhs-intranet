@@ -191,21 +191,21 @@ AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn",
         'email': 'mail'}
 
 faculty_cn = 'OU=Faculty,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
-super_admin = 'cn=Intranet_Super_Admin,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org'
+INTRANET_OU = 'ou=Intranet,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org'
 
 AUTH_LDAP_PROFILE_FLAGS_BY_GROUP = {
-    'isFaculty' : 'CN=intranet_faculty,' + faculty_cn
+    #'hasChaperoneReq' : 'CN=intra_chap_hasReq,' + faculty_cn
 }
 
 AUTH_LDAP_USER_FLAGS_BY_GROUP = {
-    'is_superuser': super_admin,
-    'is_staff': super_admin
+    'is_superuser': 'cn=Intranet_Super_Admin,%s' % INTRANET_OU,
+    'is_staff': 'cn=Intranet_Site_Admin,%s' % INTRANET_OU
 }
 
 AUTH_LDAP_GROUP_TYPE = ActiveDirectoryGroupType()
 
 AUTH_LDAP_GROUP_SEARCH = LDAPSearch('ou=Staff,dc=campus,dc=bishopblanchet,dc=org',
-        ldap.SCOPE_SUBTREE, '(cn=Staff)')
+        ldap.SCOPE_SUBTREE, "(objectClass=*)")
 
 
 AUTH_LDAP_REQUIRE_GROUP = "cn=Staff,ou=staff,dc=campus,dc=bishopblanchet,dc=org"

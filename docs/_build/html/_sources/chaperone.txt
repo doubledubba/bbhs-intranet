@@ -23,32 +23,24 @@ page.
 Types of users in the chaperone app
 -----------------------------------
 
-There are 3 main types of users in this app:
-    * Super Users (globally defined)
-    * Event Administrators (App specific)
-    * Regular users (globally defined)
-
-
-Super users
-***********
-
-To modify who is a site administrator and who is not, add or remove users from
-Intranet_Admin security group in the LDAP directory. This enables global full
-permissions, not just for the chaperone app.
+There are 2 main types of regular users in this app:
+    * Event Administrators
+    * Chaperones
 
 Event Administrators
 ********************
 
-Site administrators can create events that the rest of the community will be
-able to see and register for online.
-
-Each event has a single event administrator, that is set initially by the site
-administrator that created the event (this can be changed by a site admin
-later).
+Each event has a single **event administrator**, that is set initially *by the site
+administrator that created the event*. This can be changed by a site admin
+later.
 
 There is a restricted group of users who are allowed to be event administrators.
-This group can be added to or subtracted from by any site administrator as
-necessary.
+
+Any site administrator can add or remove users from this group.
+
+**This is a Django group, and it is called "Event Admins". If the database is
+every reset, this group needs to be re-created manually through the admin page
+verbatim or else the "Add a new event" page will not work**
 
 The event admin's contact info will be posted on the event's description page,
 as well as a list of all of the other users who have signed up for the event.
@@ -82,3 +74,9 @@ action is logged in the database.
 
 Emails/Cron jobs
 ----------------
+
+Groups
+------
+
+Staff
+Event Admins

@@ -13,10 +13,13 @@ looking at expanding the intranet with more apps in the future.
 Types of users
 ==============
 
-There are primarily two types of users in the intranet.
+There are two main types of users in the intranet.
 
-Any other kind of user is app-specific, but falls within the following two
-categories:
+Every user is either a super user, or a regular user.
+
+All super users have the same full permissions, but not all regular users get
+the same permissions. That depends on which user-specific permissions they have
+been explicitly granted, or which permission groups they belong to.
 
 Super user
 ----------
