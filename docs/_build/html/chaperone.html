@@ -24,6 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Bishop Blanchet Intranet 1.0 documentation" href="index.html" />
+    <link rel="next" title="What to do if:" href="faq.html" />
     <link rel="prev" title="What is it?" href="intranet.html" /> 
   </head>
   <body>
@@ -33,6 +34,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="faq.html" title="What to do if:"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="intranet.html" title="What is it?"
              accesskey="P">previous</a> |</li>
@@ -123,6 +127,30 @@ going into negative numbers in case that data is ever desired.</p>
 action, date and time are logged in the database.</p>
 </div>
 </div>
+<div class="section" id="markdown-rendering-for-event-descriptions">
+<h2>Markdown rendering for event descriptions<a class="headerlink" href="#markdown-rendering-for-event-descriptions" title="Permalink to this headline">¶</a></h2>
+<p>When a user adds an event with the custom form, they get the option to use
+markdown rendering.</p>
+<p>Markdown is a text-to-HTML conversion tool for web writers. Markdown allows you to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML).</p>
+<p>Here is a good example article written in markdown:</p>
+<p><a class="reference external" href="http://daringfireball.net/projects/markdown/">http://daringfireball.net/projects/markdown/</a></p>
+<p>A cheat sheet:</p>
+<p><a class="reference external" href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet</a></p>
+<p>^^^</p>
+<p>This document that I wrote is written using a similar text-to-HTML conversion tool called
+restructured text. It&#8217;s more confusing, don&#8217;t look at the source.</p>
+</div>
+<div class="section" id="yearly-deadline">
+<h2>Yearly Deadline<a class="headerlink" href="#yearly-deadline" title="Permalink to this headline">¶</a></h2>
+<p>On the deadline date, it will check for those who missed the deadline and let
+the interested parties know.</p>
+<p>At the beginning of the school year, it will reset all the yearly counts
+(events done so far, events still needed).</p>
+<p>The correct dates need to be updated in ~/bbhs_intranet/bbhs/settings.py at the
+very bottom. The years need to be incremented by 1 every year.</p>
+<p>It will send the ADMINS in the settings.py file email reminders when this is
+necessary.</p>
+</div>
 </div>
 
 
@@ -141,6 +169,8 @@ action, date and time are logged in the database.</p>
 <li><a class="reference internal" href="#regular-users">Regular users</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#markdown-rendering-for-event-descriptions">Markdown rendering for event descriptions</a></li>
+<li><a class="reference internal" href="#yearly-deadline">Yearly Deadline</a></li>
 </ul>
 </li>
 </ul>
@@ -148,6 +178,9 @@ action, date and time are logged in the database.</p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="intranet.html"
                         title="previous chapter">What is it?</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="faq.html"
+                        title="next chapter">What to do if:</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/chaperone.txt"
@@ -176,6 +209,9 @@ action, date and time are logged in the database.</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="faq.html" title="What to do if:"
+             >next</a> |</li>
         <li class="right" >
           <a href="intranet.html" title="What is it?"
              >previous</a> |</li>

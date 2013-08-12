@@ -120,7 +120,10 @@ I coded it so that disabled users don't get to do anything.
 You want to send an email advertisement for an event
 ----------------------------------------------------
 
-asdf
+Go to the admin page, go to events, and select all of the events you want to
+advertise, then select the "event ad for unregistered users" action and hit go.
+
+Select the "event reminder for registered users" if that's what suits you
 
 You want to change the year end and year start reset dates
 ----------------------------------------------------------
@@ -151,4 +154,43 @@ In case you deleted ~/bbhs_intranet or ~/bbhs-intranet/.git
 
 git clone https://github.com/luisnaranjo733/bbhs-intranet ~/bbhs_intranet
 
+You want to modify or change HTML
+---------------------------------
 
+The html templates are located in ~/bbhs_intranet/bbhs/templates
+
+You can safely make changes, but make sure you don't delete anything that looks
+like:
+
+{% stuff %} // template engine constructs, for loops, block tags, etc..
+or 
+{{ stuff }} variables
+
+If you want to get fancy look up Django's templating system. It's not hard to
+learn.
+
+You could take a look at chaperone/views.py or intranet/views.py file for
+figuring out what objects and lists are being passed to the templates before
+they are rendered in static html
+
+You want to add static files
+----------------------------
+
+Add your static files to ~/bbhs_intranet/bbhs/static/
+
+cd ~/bbhs_intranet/
+sudo python manage.py collectstatic //say yes
+// you may have to restart the apache server
+
+Error: DoesNotExist at /chaperone/addEvent/
+-------------------------------------------
+
+Group matching query does not exist. Lookup parameters were {'name': 'Intranet_Event_Admin'}
+
+Create the Intranet_Event_Admin group in the admin page or log in with a user
+who is a part of that group
+
+What happens to people who miss the deadline?
+---------------------------------------------
+
+There will be consequences.

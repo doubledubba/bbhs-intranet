@@ -138,7 +138,9 @@ Go to the admin page and click disable and them save.</p>
 </div>
 <div class="section" id="you-want-to-send-an-email-advertisement-for-an-event">
 <h2>You want to send an email advertisement for an event<a class="headerlink" href="#you-want-to-send-an-email-advertisement-for-an-event" title="Permalink to this headline">¶</a></h2>
-<p>asdf</p>
+<p>Go to the admin page, go to events, and select all of the events you want to
+advertise, then select the &#8220;event ad for unregistered users&#8221; action and hit go.</p>
+<p>Select the &#8220;event reminder for registered users&#8221; if that&#8217;s what suits you</p>
 </div>
 <div class="section" id="you-want-to-change-the-year-end-and-year-start-reset-dates">
 <h2>You want to change the year end and year start reset dates<a class="headerlink" href="#you-want-to-change-the-year-end-and-year-start-reset-dates" title="Permalink to this headline">¶</a></h2>
@@ -160,6 +162,37 @@ git checkout &#8211; .</p>
 touching that folder</p>
 <p>In case you deleted ~/bbhs_intranet or ~/bbhs-intranet/.git</p>
 <p>git clone <a class="reference external" href="https://github.com/luisnaranjo733/bbhs-intranet">https://github.com/luisnaranjo733/bbhs-intranet</a> ~/bbhs_intranet</p>
+</div>
+<div class="section" id="you-want-to-modify-or-change-html">
+<h2>You want to modify or change HTML<a class="headerlink" href="#you-want-to-modify-or-change-html" title="Permalink to this headline">¶</a></h2>
+<p>The html templates are located in ~/bbhs_intranet/bbhs/templates</p>
+<p>You can safely make changes, but make sure you don&#8217;t delete anything that looks
+like:</p>
+<p>{% stuff %} // template engine constructs, for loops, block tags, etc..
+or
+{{ stuff }} variables</p>
+<p>If you want to get fancy look up Django&#8217;s templating system. It&#8217;s not hard to
+learn.</p>
+<p>You could take a look at chaperone/views.py or intranet/views.py file for
+figuring out what objects and lists are being passed to the templates before
+they are rendered in static html</p>
+</div>
+<div class="section" id="you-want-to-add-static-files">
+<h2>You want to add static files<a class="headerlink" href="#you-want-to-add-static-files" title="Permalink to this headline">¶</a></h2>
+<p>Add your static files to ~/bbhs_intranet/bbhs/static/</p>
+<p>cd ~/bbhs_intranet/
+sudo python manage.py collectstatic //say yes
+// you may have to restart the apache server</p>
+</div>
+<div class="section" id="error-doesnotexist-at-chaperone-addevent">
+<h2>Error: DoesNotExist at /chaperone/addEvent/<a class="headerlink" href="#error-doesnotexist-at-chaperone-addevent" title="Permalink to this headline">¶</a></h2>
+<p>Group matching query does not exist. Lookup parameters were {&#8216;name&#8217;: &#8216;Intranet_Event_Admin&#8217;}</p>
+<p>Create the Intranet_Event_Admin group in the admin page or log in with a user
+who is a part of that group</p>
+</div>
+<div class="section" id="what-happens-to-people-who-miss-the-deadline">
+<h2>What happens to people who miss the deadline?<a class="headerlink" href="#what-happens-to-people-who-miss-the-deadline" title="Permalink to this headline">¶</a></h2>
+<p>There will be consequences.</p>
 </div>
 </div>
 
@@ -184,6 +217,10 @@ touching that folder</p>
 <li><a class="reference internal" href="#you-want-to-change-the-year-end-and-year-start-reset-dates">You want to change the year end and year start reset dates</a></li>
 <li><a class="reference internal" href="#you-want-to-change-ldap-settings">You want to change LDAP settings</a></li>
 <li><a class="reference internal" href="#you-messed-up-deleted-the-code">You messed up/deleted the code</a></li>
+<li><a class="reference internal" href="#you-want-to-modify-or-change-html">You want to modify or change HTML</a></li>
+<li><a class="reference internal" href="#you-want-to-add-static-files">You want to add static files</a></li>
+<li><a class="reference internal" href="#error-doesnotexist-at-chaperone-addevent">Error: DoesNotExist at /chaperone/addEvent/</a></li>
+<li><a class="reference internal" href="#what-happens-to-people-who-miss-the-deadline">What happens to people who miss the deadline?</a></li>
 </ul>
 </li>
 </ul>

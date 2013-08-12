@@ -120,7 +120,10 @@ I coded it so that disabled users don't get to do anything.
 You want to send an email advertisement for an event
 ----------------------------------------------------
 
-asdf
+Go to the admin page, go to events, and select all of the events you want to
+advertise, then select the "event ad for unregistered users" action and hit go.
+
+Select the "event reminder for registered users" if that's what suits you
 
 You want to change the year end and year start reset dates
 ----------------------------------------------------------
@@ -186,3 +189,8 @@ Group matching query does not exist. Lookup parameters were {'name': 'Intranet_E
 
 Create the Intranet_Event_Admin group in the admin page or log in with a user
 who is a part of that group
+
+What happens to people who miss the deadline?
+---------------------------------------------
+
+There will be consequences.

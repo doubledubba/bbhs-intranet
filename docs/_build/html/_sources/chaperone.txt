@@ -84,4 +84,39 @@ going into negative numbers in case that data is ever desired.
 Additionally, every time a user signs up for or unsigns up for an event, the
 action, date and time are logged in the database.
 
+Markdown rendering for event descriptions
+-----------------------------------------
 
+When a user adds an event with the custom form, they get the option to use
+markdown rendering.
+
+Markdown is a text-to-HTML conversion tool for web writers. Markdown allows you to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML).
+
+Here is a good example article written in markdown:
+
+http://daringfireball.net/projects/markdown/
+
+A cheat sheet:
+
+https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+
+^^^
+
+This document that I wrote is written using a similar text-to-HTML conversion tool called
+restructured text. It's more confusing, don't look at the source.
+
+
+Yearly Deadline
+---------------
+
+On the deadline date, it will check for those who missed the deadline and let
+the interested parties know.
+
+At the beginning of the school year, it will reset all the yearly counts
+(events done so far, events still needed).
+
+The correct dates need to be updated in ~/bbhs_intranet/bbhs/settings.py at the
+very bottom. The years need to be incremented by 1 every year.
+
+It will send the ADMINS in the settings.py file email reminders when this is
+necessary.
