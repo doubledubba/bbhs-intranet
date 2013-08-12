@@ -82,7 +82,49 @@ the apps of the intranet.</p>
 </div>
 <div class="section" id="permissions">
 <h1>Permissions<a class="headerlink" href="#permissions" title="Permalink to this headline">¶</a></h1>
-<p>Specific Chaperone permissions will be documented here</p>
+<p>By default, Django comes bundles with a bunch of different permissions that
+users and groups can receive (if a user is a member of a group, that user gets
+all of the group&#8217;s permissions added to his/her own).</p>
+<p>These permissions are all related to editing, adding, and deleting objects in
+the database through the admin page.</p>
+<p>They look like this:</p>
+<p>admin | log entry | can add log entry
+admin | log entry | can change log entry
+admin | log entry | can delete log entry</p>
+<p>In addition to these standard permissions, I&#8217;ve added permissions that are
+specific to each application.</p>
+<p>Here are the relevant permissions for the chaperone app:</p>
+<div class="section" id="can-sign-up-other-chaperones">
+<h2>Can sign up other chaperones<a class="headerlink" href="#can-sign-up-other-chaperones" title="Permalink to this headline">¶</a></h2>
+<p>This allows users to sign up other users at an event&#8217;s page.</p>
+<p>This should not be given to the regular user. Maybe no one should be able to do
+this except the superusers who have this permission implicitly.</p>
+</div>
+<div class="section" id="can-remove-other-chaperones">
+<h2>Can remove other chaperones<a class="headerlink" href="#can-remove-other-chaperones" title="Permalink to this headline">¶</a></h2>
+<p>This allows users to unsign up other users at an event&#8217;s page.</p>
+</div>
+<div class="section" id="can-view-other-chaperones">
+<h2>Can view other chaperones<a class="headerlink" href="#can-view-other-chaperones" title="Permalink to this headline">¶</a></h2>
+<p>This permissions allows users to see what other users have signed up for an
+event.</p>
+<p>By default, everyone can see how many volunteers are still needed, but to see
+who is signed up you need this.</p>
+</div>
+<div class="section" id="can-sign-up-self-from-an-event">
+<h2>Can sign up self from an event<a class="headerlink" href="#can-sign-up-self-from-an-event" title="Permalink to this headline">¶</a></h2>
+<p>Every regular user should have this. Without this, they can&#8217;t sign up for
+events</p>
+</div>
+<div class="section" id="can-unsign-up-self-from-an-event">
+<h2>Can unsign up self from an event<a class="headerlink" href="#can-unsign-up-self-from-an-event" title="Permalink to this headline">¶</a></h2>
+<p>Without this, they can&#8217;t unsign up for events</p>
+</div>
+<div class="section" id="can-create-events">
+<h2>Can create events<a class="headerlink" href="#can-create-events" title="Permalink to this headline">¶</a></h2>
+<p>Give this to whoever might be creating events.</p>
+<p>This allows them to access the /addEvent page</p>
+</div>
 </div>
 <div class="section" id="groups">
 <h1>Groups<a class="headerlink" href="#groups" title="Permalink to this headline">¶</a></h1>
@@ -170,7 +212,15 @@ new Event&#8221; page.</p>
 <li><a class="reference internal" href="#regular-user">Regular user</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#permissions">Permissions</a></li>
+<li><a class="reference internal" href="#permissions">Permissions</a><ul>
+<li><a class="reference internal" href="#can-sign-up-other-chaperones">Can sign up other chaperones</a></li>
+<li><a class="reference internal" href="#can-remove-other-chaperones">Can remove other chaperones</a></li>
+<li><a class="reference internal" href="#can-view-other-chaperones">Can view other chaperones</a></li>
+<li><a class="reference internal" href="#can-sign-up-self-from-an-event">Can sign up self from an event</a></li>
+<li><a class="reference internal" href="#can-unsign-up-self-from-an-event">Can unsign up self from an event</a></li>
+<li><a class="reference internal" href="#can-create-events">Can create events</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#groups">Groups</a><ul>
 <li><a class="reference internal" href="#staff">Staff</a></li>
 <li><a class="reference internal" href="#intranet-chaperones">Intranet_Chaperones</a></li>

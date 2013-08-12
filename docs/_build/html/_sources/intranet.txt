@@ -42,7 +42,64 @@ the apps of the intranet.
 Permissions
 ===========
 
-Specific Chaperone permissions will be documented here
+By default, Django comes bundles with a bunch of different permissions that
+users and groups can receive (if a user is a member of a group, that user gets
+all of the group's permissions added to his/her own).
+
+These permissions are all related to editing, adding, and deleting objects in
+the database through the admin page.
+
+They look like this:
+
+admin | log entry | can add log entry
+admin | log entry | can change log entry
+admin | log entry | can delete log entry
+
+In addition to these standard permissions, I've added permissions that are
+specific to each application.
+
+Here are the relevant permissions for the chaperone app:
+
+Can sign up other chaperones
+-----------------------------
+
+This allows users to sign up other users at an event's page.
+
+This should not be given to the regular user. Maybe no one should be able to do
+this except the superusers who have this permission implicitly.
+
+Can remove other chaperones
+---------------------------
+
+This allows users to unsign up other users at an event's page.
+
+Can view other chaperones
+-------------------------
+
+This permissions allows users to see what other users have signed up for an
+event.
+
+By default, everyone can see how many volunteers are still needed, but to see
+who is signed up you need this.
+
+Can sign up self from an event
+------------------------------
+
+Every regular user should have this. Without this, they can't sign up for
+events
+
+Can unsign up self from an event
+--------------------------------
+
+Without this, they can't unsign up for events
+
+Can create events
+-----------------
+
+Give this to whoever might be creating events.
+
+This allows them to access the /addEvent page
+
 
 Groups
 ======

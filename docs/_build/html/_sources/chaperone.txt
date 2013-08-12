@@ -30,7 +30,8 @@ There are 2 main types of regular users in this app:
 Site Administrators
 *******************
 
-Group doc
+
+
 
 Event Administrators
 ********************
@@ -90,7 +91,11 @@ Markdown rendering for event descriptions
 When a user adds an event with the custom form, they get the option to use
 markdown rendering.
 
-Markdown is a text-to-HTML conversion tool for web writers. Markdown allows you to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML).
+Markdown is a powerful text-to-HTML conversion tool for web writers. Markdown allows you to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML).
+
+This document that I wrote is written using a similar text-to-HTML conversion tool called
+restructured text. It's more confusing, don't look at the source. Check out the
+links below instead.
 
 Here is a good example article written in markdown:
 
@@ -100,10 +105,7 @@ A cheat sheet:
 
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 
-^^^
 
-This document that I wrote is written using a similar text-to-HTML conversion tool called
-restructured text. It's more confusing, don't look at the source.
 
 
 Yearly Deadline
