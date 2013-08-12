@@ -3,7 +3,8 @@ import sys
 sys.path.append('/home/luis/bbhs_intranet/')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'bbhs.settings'
 
-from bbhs.settings import startOfYear, endOfYear, OBLIGATION_NUMBER, sendTextEmail, DEADLINE_EMAIL
+from bbhs.settings import startOfYear, endOfYear, OBLIGATION_NUMBER,
+sendTextEmail, DEADLINE_EMAIL, ADMINS
 from intranet.models import UserProfile
 
 failures = []
@@ -22,7 +23,9 @@ for profile in UserProfile.objects.all():
     profile.save()
 
 msg = '''
-Mr. Fox, this is the BBHS Intranet and I've got an important message for you.
+Hello %s!
+
+This is the BBHS Intranet and I've got an important message for you.
 
 Today is the day.
 I just reset everybody's eventsNeeded count to the OBLIGATION_NUMBER in the
@@ -37,8 +40,9 @@ Then, reset apache.
 Thanks! See ya in a year.
 '''
 
-
-sendTextEmail(msg, 'CRITICAL INTRANET REMINDER', 'mFox@bishopblanchet.org')
+for username, email in ADMINS:
+    a = msg % username
+    sendTextEmail(msg, 'CRITICAL INTRANET REMINDER', email)
 
 txt = '''Hello! This is the chaperone system. I just thought I\'d let you know
 which users failed to complete their chaperone requirements, according to my

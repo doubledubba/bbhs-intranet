@@ -1,6 +1,6 @@
 What do I do if a user misses the yearly obligation deadline?
 
-make sure emailing is enabled
+make sure emailing is enabled and correct emails are set
 
 Figure out the end of year/start of year system
 
