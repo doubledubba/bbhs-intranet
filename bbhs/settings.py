@@ -7,6 +7,9 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 # chaperone obligation for each user
 OBLIGATION_NUMBER = 4
+DEADLINE_EMAIL = 'kSanders@bishopblanchet.org'
+DEADLINE_EMAIL = 'luisnaranjo733@gmail.com'
+
 
 DEBUG = True
 TEMPLATE_DEBUG = True
@@ -229,7 +232,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 def send(msg, toaddrs):
-    return
     server = SMTP('smtp.gmail.com:587')
     server.starttls()
     server.login(username,password)
@@ -262,5 +264,5 @@ def sendHTMLEmail(text, html, subject, toaddrs):
 
 from datetime import datetime
 
-endOfYear = datetime(2013, 7, 1) #year, month, day
-startOfYear = datetime(2013, 9, 1)
+endOfYear = datetime(2014, 7, 1) #year, month, day
+startOfYear = datetime(2014, 9, 1)

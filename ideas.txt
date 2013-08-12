@@ -1,6 +1,8 @@
-FIX LDAP GROUPS MIRRORING
+What do I do if a user misses the yearly obligation deadline?
 
-RESOLVE isFaculty tracking and functionality
+make sure emailing is enabled
+
+Figure out the end of year/start of year system
 
 Get datetimepicker to work on all of the additional inputs
 
@@ -25,9 +27,7 @@ Fix the external BBHS logo <img src> reference on emails
     + Used it because I was having issues serving newly added static files
     + Make the HTML emails inherit from a template
 
-Bash installation script for the intranet that installs dependencies
-
-Move faculty into faculty security group
+Move faculty into chaperone security group
 
 Fix home page layout
     + Resize GCalendar widget
@@ -39,23 +39,9 @@ Get rid of old email testing views
 
 Documentation:
 
-LDAP settings and groups override local settings and groups
-    + Predict potential issues
-
-Make sure they know that events in the past won't show up
-
-Define levels of permissions and how to assign them/remove them collectively
-and specifically
-
 Define all of the actions and show what they do
 
 Screenshots of all of the emails
 
-How to disable/enable the cron jobs
-
 Explain markdown and give examples
 
-How to change the year start/end dates
-
-You need to create the staff group before you can use populateFromLDAP.py
-    + You need to use the staff argument to create the admin's profiles
