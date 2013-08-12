@@ -82,6 +82,9 @@
                  <li class="nav-header">Admin links</li>
                  <li><a href="/chaperone/userReport">User Report</a></li>
                  <li><a href="/chaperone/addEvent">Add Event</a></li>
+                 {% if user.is_superuser %}
+                 <li><a href="/groups/">Groups</a></li>
+                 {% endif %}
                </ul>
              </li>
              {% else %}

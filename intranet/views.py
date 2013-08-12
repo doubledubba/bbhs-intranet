@@ -5,8 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django import forms
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from chaperone.models import Event, Note
 
 from markdown import markdown
@@ -135,3 +134,7 @@ def signedUp_admin(request, text=None):
     if text:
         return render(request, 'email/signedUp_admin.txt', params)
     return render(request, 'email/signedUp_admin.html', params)
+
+def showGroups(request):
+    params = {'groups': Group.objects.all()}
+    return render(request, 'groups.html', params)

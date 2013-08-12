@@ -114,7 +114,7 @@ function decrementValue2() {
 {% block body %}
 <form action="/chaperone/addEvent/" method="POST">
 <fieldset>
-<legend>Create an Event</legend>
+<legend>Create an Event</legend><br>
 {% csrf_token %}
 <div class="row">
 	<div class="span7">
@@ -157,7 +157,7 @@ function decrementValue2() {
 		
 		<label><input type="checkbox" name="markdown" value="true" /> Markdown</label>
 		<br>
-		<label><input type="text" name="weight" placeholder="Weight" 
+		<label><input type="number" name="weight" placeholder="Weight" 
 		id="number" value="1" style="width:95%;clear:both;"/></label>
 		<span class="help-block">Chaperone requirement weight</span>
     	<input type="button" onclick="incrementValue()" value="&#9650;" />

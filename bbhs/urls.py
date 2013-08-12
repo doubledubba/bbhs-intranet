@@ -17,6 +17,7 @@ urlpatterns = patterns('intranet.views',
     url(r'^signedUp_user/(?P<text>.+)/$', 'signedUp_user'),
     url(r'^signedUp_admin/$', 'signedUp_admin'),
     url(r'^signedUp_admin/(?P<text>.+)/$', 'signedUp_admin'),
+    url(r'^groups/$', 'showGroups'),
 
 
 )

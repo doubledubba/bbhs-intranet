@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<ul>
+{% for group in groups %}
+<li><b>{{ group }}</b></li>
+<ul>
+{% for user in group.user_set.all %}
+<li>{{ user.get_full_name }} ({{ user.username }})</li>
+{% endfor %}
+</ul>
+
+
+{% endfor %}
+</ul>
+{% endblock body %}

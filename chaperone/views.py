@@ -275,6 +275,8 @@ def addEvent(request):
             'markdown': request.POST.get('markdown') == 'true' or False,
             'weight': request.POST.get('weight')
         }
+        if info['weight'].isdigit():
+            info['weight'] = abs(info['weight']) # so no one gives negative event bonuses
         # add GET param UX feedback
         # or re-fill incomplete forms
         try:
