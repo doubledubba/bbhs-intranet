@@ -316,7 +316,7 @@ def addEvent(request):
         return redirect(url)
         return HttpResponse('text', content_type='text/plain')
 
-    event_admins = Group.objects.get(name="Event Admins")
+    event_admins = Group.objects.get(name="Intranet_Event_Admin")
     params = {
         'admins': event_admins.user_set.all()
     }

@@ -38,3 +38,102 @@ included in the Staff security group.
 
 A regular user may have further bare-minimum permissions that are specific to
 the apps of the intranet.
+
+Permissions
+===========
+
+Specific Chaperone permissions will be documented here
+
+Groups
+======
+
+The system is set up to be flexible and easily customizable.
+The site primarily uses groups to handle user's permissions. I tried to set it
+up so the group changes are primarily changed in the existing LDAP
+database.
+
+In addition to using groups to handle user's permissions, individual user
+permissions can be modified at will in the admin page with the same effect. 
+
+It's important to note that the site will mirror all of the user's LDAP groups
+over to Django if the groups are within the "Staff" ou. There will probably a
+few extraneous groups out there and should be ignored.
+
+Also, the mirroring system over-writes local permissions with LDAP ones when a user logs in.
+For example, say a user is not part of the event admin LDAP group, but is
+made part of the event admin DJANGO group by a super user. The user will show
+up as an option as an Event Admin in the Add an Event page, and for all practical
+purposes will be an Event Admin - until he/she logs in. When the log in
+happens, the user will be stripped of event admin permissions on the site until he/she is
+actually added to the correct group on the LDAP end.
+
+Moral of the story, make changes on the LDAP end first. After you make a
+change, get the user to log in for the changes to take effect OR manually go in
+to the admin page and update the user's permissions (they will still be
+over-written on log in, but there won't be any change).
+
+There are 5 important security groups to consider.
+
+The following groups **inherently** grant user's specific abilities *just by being members of them*.
+These abilities are described in their corresponding sections below.
+
+But if you click on the groups in the admin page and look at the permissions that they
+propagate, you'll see that by default they grant none. You can customize what
+additional permissions users can get here.
+
+For example, the Intranet_Site_Admin group just grants users the ability to log
+in to the admin page. Users who get this ability will probably want the
+ability to edit certain objects in the database too, and this is the kind of permission
+that can be customized here.
+
+Staff
+-----
+
+cn=Staff,ou=staff,dc=campus,dc=bishopblanchet,dc=org
+
+This security group contains all of BBHS's staff. It is also the requirement
+for authentication. If a user doesn't belong to this security group, the user
+can't log in even if they have the correct username and password.
+
+Intranet_Chaperones
+-------------------
+
+cn=Intranet_Site_Admin,ou=Intranet,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org
+
+To be added soon:
+
+A user will not get any email reminders of their chaperone obligation unless
+they are a part of this group. This security group needs to be populated with
+all of the teachers.
+
+Intranet_Site_Admin
+-------------------
+
+cn=Intranet_Site_Admin,ou=Intranet,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org
+
+Joining this group grants users the permission to log in to the admin page at
+http://faculty.bishpoblanchet.org/admin/, but nothing more (by default).
+
+Intranet_Super_Admin
+--------------------
+
+cn=Intranet_Super_Admin,ou=Intranet,ou=Technology,ou=staff,dc=campus,dc=bishopblanchet,dc=org
+
+Members of this group get full global permission to do anything in the site.
+
+The only exception to the unfettered power that comes from being a member of
+this group is the ability to log in to the admin page (which is essential for a
+"super user"). To be able to do that, 
+**a super user also needs to be a member of
+the Intranet_Site_Admin group.**
+
+Intranet_Event_Admin
+--------------------
+
+cn=Intranet_Event_Admin,ou=Intranet,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org
+
+Joining this group allows users to be Event Administrators. All members of this
+group will show up in the dropdown menu for Event Administrator in the "Add a
+new Event" page.
+
+

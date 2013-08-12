@@ -80,6 +80,81 @@ included in the Staff security group.</p>
 the apps of the intranet.</p>
 </div>
 </div>
+<div class="section" id="permissions">
+<h1>Permissions<a class="headerlink" href="#permissions" title="Permalink to this headline">¶</a></h1>
+<p>Specific Chaperone permissions will be documented here</p>
+</div>
+<div class="section" id="groups">
+<h1>Groups<a class="headerlink" href="#groups" title="Permalink to this headline">¶</a></h1>
+<p>The system is set up to be flexible and easily customizable.
+The site primarily uses groups to handle user&#8217;s permissions. I tried to set it
+up so the group changes are primarily changed in the existing LDAP
+database.</p>
+<p>In addition to using groups to handle user&#8217;s permissions, individual user
+permissions can be modified at will in the admin page with the same effect.</p>
+<p>It&#8217;s important to note that the site will mirror all of the user&#8217;s LDAP groups
+over to Django if the groups are within the &#8220;Staff&#8221; ou. There will probably a
+few extraneous groups out there and should be ignored.</p>
+<p>Also, the mirroring system over-writes local permissions with LDAP ones when a user logs in.
+For example, say a user is not part of the event admin LDAP group, but is
+made part of the event admin DJANGO group by a super user. The user will show
+up as an option as an Event Admin in the Add an Event page, and for all practical
+purposes will be an Event Admin - until he/she logs in. When the log in
+happens, the user will be stripped of event admin permissions on the site until he/she is
+actually added to the correct group on the LDAP end.</p>
+<p>Moral of the story, make changes on the LDAP end first. After you make a
+change, get the user to log in for the changes to take effect OR manually go in
+to the admin page and update the user&#8217;s permissions (they will still be
+over-written on log in, but there won&#8217;t be any change).</p>
+<p>There are 5 important security groups to consider.</p>
+<p>The following groups <strong>inherently</strong> grant user&#8217;s specific abilities <em>just by being members of them</em>.
+These abilities are described in their corresponding sections below.</p>
+<p>But if you click on the groups in the admin page and look at the permissions that they
+propagate, you&#8217;ll see that by default they grant none. You can customize what
+additional permissions users can get here.</p>
+<p>For example, the Intranet_Site_Admin group just grants users the ability to log
+in to the admin page. Users who get this ability will probably want the
+ability to edit certain objects in the database too, and this is the kind of permission
+that can be customized here.</p>
+<div class="section" id="staff">
+<h2>Staff<a class="headerlink" href="#staff" title="Permalink to this headline">¶</a></h2>
+<p>cn=Staff,ou=staff,dc=campus,dc=bishopblanchet,dc=org</p>
+<p>This security group contains all of BBHS&#8217;s staff. It is also the requirement
+for authentication. If a user doesn&#8217;t belong to this security group, the user
+can&#8217;t log in even if they have the correct username and password.</p>
+</div>
+<div class="section" id="intranet-chaperones">
+<h2>Intranet_Chaperones<a class="headerlink" href="#intranet-chaperones" title="Permalink to this headline">¶</a></h2>
+<p>cn=Intranet_Site_Admin,ou=Intranet,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org</p>
+<p>To be added soon:</p>
+<p>A user will not get any email reminders of their chaperone obligation unless
+they are a part of this group. This security group needs to be populated with
+all of the teachers.</p>
+</div>
+<div class="section" id="intranet-site-admin">
+<h2>Intranet_Site_Admin<a class="headerlink" href="#intranet-site-admin" title="Permalink to this headline">¶</a></h2>
+<p>cn=Intranet_Site_Admin,ou=Intranet,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org</p>
+<p>Joining this group grants users the permission to log in to the admin page at
+<a class="reference external" href="http://faculty.bishpoblanchet.org/admin/">http://faculty.bishpoblanchet.org/admin/</a>, but nothing more (by default).</p>
+</div>
+<div class="section" id="intranet-super-admin">
+<h2>Intranet_Super_Admin<a class="headerlink" href="#intranet-super-admin" title="Permalink to this headline">¶</a></h2>
+<p>cn=Intranet_Super_Admin,ou=Intranet,ou=Technology,ou=staff,dc=campus,dc=bishopblanchet,dc=org</p>
+<p>Members of this group get full global permission to do anything in the site.</p>
+<p>The only exception to the unfettered power that comes from being a member of
+this group is the ability to log in to the admin page (which is essential for a
+&#8220;super user&#8221;). To be able to do that,
+<strong>a super user also needs to be a member of
+the Intranet_Site_Admin group.</strong></p>
+</div>
+<div class="section" id="intranet-event-admin">
+<h2>Intranet_Event_Admin<a class="headerlink" href="#intranet-event-admin" title="Permalink to this headline">¶</a></h2>
+<p>cn=Intranet_Event_Admin,ou=Intranet,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org</p>
+<p>Joining this group allows users to be Event Administrators. All members of this
+group will show up in the dropdown menu for Event Administrator in the &#8220;Add a
+new Event&#8221; page.</p>
+</div>
+</div>
 
 
           </div>
@@ -93,6 +168,15 @@ the apps of the intranet.</p>
 <li><a class="reference internal" href="#types-of-users">Types of users</a><ul>
 <li><a class="reference internal" href="#super-user">Super user</a></li>
 <li><a class="reference internal" href="#regular-user">Regular user</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#permissions">Permissions</a></li>
+<li><a class="reference internal" href="#groups">Groups</a><ul>
+<li><a class="reference internal" href="#staff">Staff</a></li>
+<li><a class="reference internal" href="#intranet-chaperones">Intranet_Chaperones</a></li>
+<li><a class="reference internal" href="#intranet-site-admin">Intranet_Site_Admin</a></li>
+<li><a class="reference internal" href="#intranet-super-admin">Intranet_Super_Admin</a></li>
+<li><a class="reference internal" href="#intranet-event-admin">Intranet_Event_Admin</a></li>
 </ul>
 </li>
 </ul>

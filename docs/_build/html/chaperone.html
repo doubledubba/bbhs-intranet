@@ -72,16 +72,21 @@ page.</p>
 </ul>
 </dd>
 </dl>
+<div class="section" id="site-administrators">
+<h3>Site Administrators<a class="headerlink" href="#site-administrators" title="Permalink to this headline">¶</a></h3>
+<p>Group doc</p>
+</div>
 <div class="section" id="event-administrators">
 <h3>Event Administrators<a class="headerlink" href="#event-administrators" title="Permalink to this headline">¶</a></h3>
-<p>Each event has a single <strong>event administrator</strong>, that is set initially <em>by the site
-administrator that created the event</em>. This can be changed by a site admin
+<p>Each event has a single <strong>event administrator</strong>, that is set initially by the site
+administrator that created the event. This can be changed by a site admin
 later.</p>
 <p>There is a restricted group of users who are allowed to be event administrators.</p>
 <p>Any site administrator can add or remove users from this group.</p>
-<p><strong>This is a Django group, and it is called &#8220;Event Admins&#8221;. If the database is
-every reset, this group needs to be re-created manually through the admin page
-verbatim or else the &#8220;Add a new event&#8221; page will not work</strong></p>
+<p><strong>This is a Django group and LDAP Security group, and it is called &#8220;Intranet_Event_Admin&#8221;. If the database is
+ever reset, this group needs to be re-created manually through the admin page
+verbatim or a user who belongs to this security group needs to log in.
+If not, the &#8220;Add a new event&#8221; page will not work</strong></p>
 <p>The event admin&#8217;s contact info will be posted on the event&#8217;s description page,
 as well as a list of all of the other users who have signed up for the event.
 This is safe, because only logged-in users can see this information.</p>
@@ -103,23 +108,20 @@ page</li>
 <h3>Regular users<a class="headerlink" href="#regular-users" title="Permalink to this headline">¶</a></h3>
 <p>Most users in the system will be placed here. The regular user will be able to
 view all future events, and will be able to sign up or unsign up for events.</p>
+<p>The events have a weight system. Every teacher has a fixed yearly requirement.
+At the time of writing, that requirement was 4 event units per year.
+Each event has it&#8217;s own weight. For example, Kairos might be worth three event
+units since it takes place over three days.</p>
 <p>Every time a user signs up for an event, his or her required chaperone event
-count will be decreased by 1. Likewise, when a user unsigns up, the count will
-increment by 1.</p>
+count will be decreased by that event&#8217;s corresponding weight. Likewise, when a user unsigns up, the count will
+increment by that weight.</p>
 <p>If a user goes past his or her requirement count, it will appear as if the user
-has reached a plateau of 0 required events, but the application is secretly
-going into negative numbers in case that data is ever requested.</p>
+has reached a plateau of 0 required events, but the application is behind the
+scenes
+going into negative numbers in case that data is ever desired.</p>
 <p>Additionally, every time a user signs up for or unsigns up for an event, the
-action is logged in the database.</p>
+action, date and time are logged in the database.</p>
 </div>
-</div>
-<div class="section" id="emails-cron-jobs">
-<h2>Emails/Cron jobs<a class="headerlink" href="#emails-cron-jobs" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="groups">
-<h2>Groups<a class="headerlink" href="#groups" title="Permalink to this headline">¶</a></h2>
-<p>Staff
-Event Admins</p>
 </div>
 </div>
 
@@ -134,12 +136,11 @@ Event Admins</p>
 <li><a class="reference internal" href="#">Chaperone App</a><ul>
 <li><a class="reference internal" href="#event-listings-page-and-event-pages">Event listings page and Event pages</a></li>
 <li><a class="reference internal" href="#types-of-users-in-the-chaperone-app">Types of users in the chaperone app</a><ul>
+<li><a class="reference internal" href="#site-administrators">Site Administrators</a></li>
 <li><a class="reference internal" href="#event-administrators">Event Administrators</a></li>
 <li><a class="reference internal" href="#regular-users">Regular users</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#emails-cron-jobs">Emails/Cron jobs</a></li>
-<li><a class="reference internal" href="#groups">Groups</a></li>
 </ul>
 </li>
 </ul>

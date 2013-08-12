@@ -50,7 +50,6 @@ class Event(models.Model):
                 ('sign_up', 'Can sign up self from an event'),
                 ('unsign_up', 'Can unsign up self from an event'),
                 ('create_event', 'Can create events'),
-                ('canAdmin', 'Can be an event admin'),
         )
 
     def __unicode__(self):

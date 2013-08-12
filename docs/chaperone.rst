@@ -43,9 +43,10 @@ There is a restricted group of users who are allowed to be event administrators.
 
 Any site administrator can add or remove users from this group.
 
-**This is a Django group, and it is called "Event Admins". If the database is
-every reset, this group needs to be re-created manually through the admin page
-verbatim or else the "Add a new event" page will not work**
+**This is a Django group and LDAP Security group, and it is called "Intranet_Event_Admin". If the database is
+ever reset, this group needs to be re-created manually through the admin page
+verbatim or a user who belongs to this security group needs to log in.
+If not, the "Add a new event" page will not work**
 
 The event admin's contact info will be posted on the event's description page,
 as well as a list of all of the other users who have signed up for the event.
@@ -66,22 +67,21 @@ Regular users
 Most users in the system will be placed here. The regular user will be able to
 view all future events, and will be able to sign up or unsign up for events.
 
+The events have a weight system. Every teacher has a fixed yearly requirement.
+At the time of writing, that requirement was 4 event units per year.
+Each event has it's own weight. For example, Kairos might be worth three event
+units since it takes place over three days.
+
 Every time a user signs up for an event, his or her required chaperone event
-count will be decreased by 1. Likewise, when a user unsigns up, the count will
-increment by 1.
+count will be decreased by that event's corresponding weight. Likewise, when a user unsigns up, the count will
+increment by that weight.
 
 If a user goes past his or her requirement count, it will appear as if the user
-has reached a plateau of 0 required events, but the application is secretly
-going into negative numbers in case that data is ever requested.
+has reached a plateau of 0 required events, but the application is behind the
+scenes
+going into negative numbers in case that data is ever desired.
 
 Additionally, every time a user signs up for or unsigns up for an event, the
-action is logged in the database.
+action, date and time are logged in the database.
 
-Emails/Cron jobs
-----------------
 
-Groups
-------
-
-Staff
-Event Admins
