@@ -39,7 +39,7 @@ def sendEmail(user):
 #adsfdas
 
 def run():
-    for user in User.objects.filter(is_active=True, userprofile__isFaculty=True):
+    for user in User.objects.filter(is_active=True):
         profile = user.get_profile()
         faculty = True
         if not faculty:
@@ -47,8 +47,11 @@ def run():
 
         if profile.eventsNeeded > 0:
             if user.email:
-                print 'Emailing:', user.username
-                sendEmail(user)
+                if user.groups.filter(name='Intranet_Chaperones').exists():
+                    print 'Emailing:', user.username
+                    sendEmail(user)
+                else:
+                    print user.username, 'does not have a requirement'
             else:
                 print '%s has no email!' % user.username
 if __name__ == '__main__':

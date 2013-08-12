@@ -122,3 +122,28 @@ very bottom. The years need to be incremented by 1 every year.
 
 It will send the ADMINS in the settings.py file email reminders when this is
 necessary.
+
+Emails
+------
+
+The chaperone system will send out a variety of emails automatically.
+
+Every month, it will go through the system and send an email reminder to all of
+the members of the Intranet_Chaperone security group that still haven't
+fulfilled their requirement.
+
+Every day, it will go through all of the events that are happening with 2 days,
+and let the registered volunteers have an email reminder
+
+When a user signs up for an event, it will email the event administrator
+letting them know who signed up, and it will send the user who signed up an
+email confirmation.
+
+Once a year, it will send an email to the site admins (Michael, David, Luis)
+with instructions on how to update the start school date and the end school
+date so it knows when the chaperone deadline is, and when to reset the user's
+yearly event counts.
+
+Once a year, it will also send an email to the designated DEADLINE_EMAIL
+variable defined in ~/bbhs_intranet/bbhs/settings.py letting them know what
+users missed the deadline for required events.

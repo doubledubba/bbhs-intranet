@@ -232,7 +232,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 def send(msg, toaddrs):
-    return
     server = SMTP('smtp.gmail.com:587')
     server.starttls()
     server.login(username,password)
