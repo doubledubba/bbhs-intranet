@@ -151,4 +151,26 @@ In case you deleted ~/bbhs_intranet or ~/bbhs-intranet/.git
 
 git clone https://github.com/luisnaranjo733/bbhs-intranet ~/bbhs_intranet
 
+You want to modify or change HTML
+---------------------------------
+
+The html templates are located in ~/bbhs_intranet/bbhs/templates
+
+You can safely make changes, but make sure you don't delete anything that looks
+like:
+
+{% stuff %} // template engine constructs, for loops, block tags, etc..
+or 
+{{ stuff }} variables
+
+If you want to get fancy look up Django's templating system. It's not hard to
+learn.
+
+You could take a look at chaperone/views.py or intranet/views.py file for
+figuring out what objects and lists are being passed to the templates before
+they are rendered in static html
+
+You want to add static files
+----------------------------
+
 
