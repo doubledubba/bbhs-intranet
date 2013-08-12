@@ -1,0 +1,60 @@
+
+body {
+	background:url(/dirtyFields/images/YosemiteWebBackground2.jpg) fixed no-repeat top left;
+    color: #333;	
+	margin:0px;
+	padding:0px;
+}
+
+#layout {
+	width:1000px;
+	font: 85%/160% "Trebuchet MS", Tahoma, Arial;
+	background-color:#6fa4c4;
+	margin-left: auto;
+ 	margin-right: auto;
+	padding:8px;
+}
+
+
+#banner h1 {
+  margin:0px;
+  padding-top:10px;
+  padding-left:10px;
+  padding-bottom:5px;
+}
+
+
+* html content {
+	border:5px solid green;
+}
+
+#banner > p.bannerClear {
+	float:none;
+   margin-top:20px;
+}
+
+#credits {
+  margin-top:5px;
+}
+
+
+#credits a {
+	color:#000;
+	text-decoration:none;	
+}
+
+#credits a:hover {
+	text-decoration:underline;
+}
+
+#content {
+        background-color:white;
+	padding:1em;
+}
+
+
+a {color:blue;text-decoration:none;}
+a:visited {color:blue;}
+a:hover {text-decoration:underline;}
+
+

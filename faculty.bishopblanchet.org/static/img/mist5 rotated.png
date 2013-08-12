@@ -1,0 +1,32 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+<title>Barracuda Web Filter</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body content-type="text/plain; charset=UTF-8">
+<span id="redir_msg" style="display: none"><p>Redirecting you to Barracuda Web Filter.</p></span><script x-barracuda="1" language="JavaScript">
+if (0) {
+  document.write('<div style="border: 1px dotted red; padding: 2px; font-family: sans; font-size: 12px; color: black; background-color: white">This portion of the requested page has been blocked.<br /><a target="_top" href="http://172.27.72.27/web/login?_bcsp=1&amp;_bceq=U2FsdGVkX1_mLLbSLSDCOW5xXYfovo3i87DFutUUT6rm0Fpc5JE_t4ThuTh9Y2xkwX56CIHnzQIEOOiL_SaliNVEcQAroNBGFWUE6n2COtve6risG2rszgWuoo7n6KbiL_2lNfgrgpOew3KfIjHCmnFxt--3DRa7nDcmkSTIH4YlYu2HTaPAUVt6UlFfkDr7_qrKrip5MPqXDPsz0XLeRcrDUHkx5_4LkwdGkFgzFOJkNLkHdVji4r2WQBjEhD5eAf5UjJutMdY8pMr8Ije5ORTBvA3VM4jWcNWOfH-YqSx4CDgq8LdPfjxY7lnZ04wb6LotWrQj7PA.">Click here for details.</a></div>');
+} else {
+  if (!0) {
+    var toploc;
+    try { toploc = top.document.location }
+    catch (err) { toploc = err };
+    if ((toploc == document.location)) {
+      document.getElementById('redir_msg').style.display = 'inline';
+      if (location.replace) {
+        location.replace('http://172.27.72.27/web/login?_bcsp=1&_bceq=U2FsdGVkX1_mLLbSLSDCOW5xXYfovo3i87DFutUUT6rm0Fpc5JE_t4ThuTh9Y2xkwX56CIHnzQIEOOiL_SaliNVEcQAroNBGFWUE6n2COtve6risG2rszgWuoo7n6KbiL_2lNfgrgpOew3KfIjHCmnFxt--3DRa7nDcmkSTIH4YlYu2HTaPAUVt6UlFfkDr7_qrKrip5MPqXDPsz0XLeRcrDUHkx5_4LkwdGkFgzFOJkNLkHdVji4r2WQBjEhD5eAf5UjJutMdY8pMr8Ije5ORTBvA3VM4jWcNWOfH-YqSx4CDgq8LdPfjxY7lnZ04wb6LotWrQj7PA.');
+      } else {
+        document.location = 'http://172.27.72.27/web/login?_bcsp=1&_bceq=U2FsdGVkX1_mLLbSLSDCOW5xXYfovo3i87DFutUUT6rm0Fpc5JE_t4ThuTh9Y2xkwX56CIHnzQIEOOiL_SaliNVEcQAroNBGFWUE6n2COtve6risG2rszgWuoo7n6KbiL_2lNfgrgpOew3KfIjHCmnFxt--3DRa7nDcmkSTIH4YlYu2HTaPAUVt6UlFfkDr7_qrKrip5MPqXDPsz0XLeRcrDUHkx5_4LkwdGkFgzFOJkNLkHdVji4r2WQBjEhD5eAf5UjJutMdY8pMr8Ije5ORTBvA3VM4jWcNWOfH-YqSx4CDgq8LdPfjxY7lnZ04wb6LotWrQj7PA.';
+      }
+    } else {
+      document.write('<div style="border: 1px dotted red; padding: 2px; font-family: sans; font-size: 12px; color: black; background-color: white">This portion of the requested page has been blocked.<br /><a target="_top" href="http://172.27.72.27/web/login?_bcsp=1&amp;_bceq=U2FsdGVkX1_mLLbSLSDCOW5xXYfovo3i87DFutUUT6rm0Fpc5JE_t4ThuTh9Y2xkwX56CIHnzQIEOOiL_SaliNVEcQAroNBGFWUE6n2COtve6risG2rszgWuoo7n6KbiL_2lNfgrgpOew3KfIjHCmnFxt--3DRa7nDcmkSTIH4YlYu2HTaPAUVt6UlFfkDr7_qrKrip5MPqXDPsz0XLeRcrDUHkx5_4LkwdGkFgzFOJkNLkHdVji4r2WQBjEhD5eAf5UjJutMdY8pMr8Ije5ORTBvA3VM4jWcNWOfH-YqSx4CDgq8LdPfjxY7lnZ04wb6LotWrQj7PA.">Click here for details.</a></div>');
+    }
+  }
+}
+</script><noscript><p>JavaScript has been disabled in your browser.</p> <p><a href="http://172.27.72.27/web/login?_bcsp=1&amp;_bceq=U2FsdGVkX1_mLLbSLSDCOW5xXYfovo3i87DFutUUT6rm0Fpc5JE_t4ThuTh9Y2xkwX56CIHnzQIEOOiL_SaliNVEcQAroNBGFWUE6n2COtve6risG2rszgWuoo7n6KbiL_2lNfgrgpOew3KfIjHCmnFxt--3DRa7nDcmkSTIH4YlYu2HTaPAUVt6UlFfkDr7_qrKrip5MPqXDPsz0XLeRcrDUHkx5_4LkwdGkFgzFOJkNLkHdVji4r2WQBjEhD5eAf5UjJutMdY8pMr8Ije5ORTBvA3VM4jWcNWOfH-YqSx4CDgq8LdPfjxY7lnZ04wb6LotWrQj7PA.">Proceed to detail/login page</a></p></noscript>
+</body>
+</html>
