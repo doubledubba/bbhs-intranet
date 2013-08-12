@@ -173,4 +173,16 @@ they are rendered in static html
 You want to add static files
 ----------------------------
 
+Add your static files to ~/bbhs_intranet/bbhs/static/
 
+cd ~/bbhs_intranet/
+sudo python manage.py collectstatic //say yes
+// you may have to restart the apache server
+
+Error: DoesNotExist at /chaperone/addEvent/
+-------------------------------------------
+
+Group matching query does not exist. Lookup parameters were {'name': 'Intranet_Event_Admin'}
+
+Create the Intranet_Event_Admin group in the admin page or log in with a user
+who is a part of that group

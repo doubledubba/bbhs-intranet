@@ -5,7 +5,6 @@ from django_auth_ldap.config import LDAPSearch, ActiveDirectoryGroupType, LDAPSe
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
-# Edit this and restart everything in order to change the default yearly
 # chaperone obligation for each user
 OBLIGATION_NUMBER = 4
 
@@ -15,6 +14,7 @@ TEMPLATE_DEBUG = True
 ADMINS = (
     ('Luis Naranjo', 'luisnaranjo733@gmail.com'),
     ('Michael Fox', 'mFox@bishopblanchet.org'),
+    ('David Foster', 'dFoster@bishopblanchet.org'),
 )
 
 MANAGERS = ADMINS
