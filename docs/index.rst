@@ -6,6 +6,7 @@ Bishop Blanchet Intranet Documentation
 
    intranet
    chaperone
+   faq
 
 Developed by `Luis Naranjo`_
 2013
