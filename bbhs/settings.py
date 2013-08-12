@@ -262,5 +262,5 @@ def sendHTMLEmail(text, html, subject, toaddrs):
 
 from datetime import datetime
 
-endOfYear = datetime(2013, 7, 1)
+endOfYear = datetime(2013, 7, 1) #year, month, day
 startOfYear = datetime(2013, 9, 1)

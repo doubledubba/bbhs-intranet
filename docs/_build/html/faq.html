@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>What to do if: &mdash; Bishop Blanchet Intranet 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Bishop Blanchet Intranet 1.0 documentation" href="index.html" />
+    <link rel="prev" title="Chaperone App" href="chaperone.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="chaperone.html" title="Chaperone App"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Bishop Blanchet Intranet 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="what-to-do-if">
+<h1>What to do if:<a class="headerlink" href="#what-to-do-if" title="Permalink to this headline">¶</a></h1>
+<p>Here are some pre-emptively forumulated FAQ&#8217;s for the admins</p>
+<div class="section" id="a-user-can-t-sign-in">
+<h2>A user can&#8217;t sign in<a class="headerlink" href="#a-user-can-t-sign-in" title="Permalink to this headline">¶</a></h2>
+<p>Check that they are in the Staff security group
+Check that their account hasn&#8217;t been disabled by an admin</p>
+</div>
+<div class="section" id="you-want-to-find-an-old-event">
+<h2>You want to find an old event<a class="headerlink" href="#you-want-to-find-an-old-event" title="Permalink to this headline">¶</a></h2>
+<p>Go in the admin page and look for them there</p>
+</div>
+<div class="section" id="you-want-to-pull-up-random-info">
+<h2>You want to pull up random info<a class="headerlink" href="#you-want-to-pull-up-random-info" title="Permalink to this headline">¶</a></h2>
+<p>Say you want some information that isn&#8217;t visible on the page, but you are
+pretty sure is stored in the database somewhere. Give me a call and I can do
+some database queries for you.</p>
+<p>For example, say you want a list of all the members of group &#8220;x&#8221;, or you want
+to see a user&#8217;s sign up/unsign up history, or you want to see a custom user
+report such as how many events does user a have in common with user b.</p>
+<p>Those are just a few of many things that can be quickly computed with django&#8217;s
+database query API in python. Feel free to take a look at the source code to
+get a feel for what data is in there and what&#8217;s not.</p>
+<p><a class="reference external" href="https://github.com/luisnaranjo733/bbhs-intranet">https://github.com/luisnaranjo733/bbhs-intranet</a></p>
+<p>The database stuff is in chaperone/models.py or intranet/models.py</p>
+<p>If you want to hack at it yourself, here is a sample query:</p>
+<p>cd ~/bbhs-intranet
+python manage.py shell
+from chaperone.models import Event, Note
+from intranet.models import UserProfile</p>
+<p>a = UserProfile.objects.get(username=&#8217;cconnors&#8217;).user
+b = UserProfile.objects.get(username=&#8217;mfreyman&#8217;).user</p>
+<p>matches = []</p>
+<dl class="docutils">
+<dt>for event in Event.objects.all():</dt>
+<dd><p class="first">volunteers = event.getVolunteers() #this is a list of volunteers
+if a in volunteers and b in volunteers:</p>
+<blockquote class="last">
+<div>matches.append(event)</div></blockquote>
+</dd>
+</dl>
+<p>print matches</p>
+</div>
+<div class="section" id="you-want-to-disable-the-email-reminders">
+<h2>You want to disable the email reminders<a class="headerlink" href="#you-want-to-disable-the-email-reminders" title="Permalink to this headline">¶</a></h2>
+<p>Just disable the cron jobs:</p>
+<p>~/bbhs_intranet/chaperone/cron/daily.py</p>
+<p>This job runs once a day, and it checks for events that are happening within
+two days.</p>
+<p>It sends an email reminder about the event to all of the signed up chaperones.</p>
+<p>~/bbhs_intranet/chaperone/cron/daily.py</p>
+<p>This runs once a month, and it goes through the users and checks to see if
+they&#8217;ve fulfilled their service requirement. If they haven&#8217;t, then it sends
+them an email to remind them to get on it.</p>
+</div>
+<div class="section" id="you-need-to-migrate-the-site">
+<h2>You need to migrate the site<a class="headerlink" href="#you-need-to-migrate-the-site" title="Permalink to this headline">¶</a></h2>
+<p>It&#8217;s a pain in the ass and I don&#8217;t advise it.</p>
+<p>sudo apt-get install git
+git clone <a class="reference external" href="https://github.com/luisnaranjo733/bbhs-intranet">https://github.com/luisnaranjo733/bbhs-intranet</a> //will download code</p>
+<p>sudo apt-get install python-pip // installing dependencies for python2.7
+sudo pip install -r requirements.txt</p>
+<p>You need to set up a dedicated python production server. I used mod_wsgi for apache.
+There are nginx options and several other python specific servers.</p>
+<p>sudo mv ~/bbhs-intranet/faculty.bishopblanchet.org /var/www/faculty.bishopblanchet.org
+you may have permission issues with this - fix with chmod</p>
+</div>
+<div class="section" id="you-need-to-reset-the-database">
+<h2>You need to reset the database<a class="headerlink" href="#you-need-to-reset-the-database" title="Permalink to this headline">¶</a></h2>
+<p>cd ~/bbhs-intranet
+sudo sh reset_db.sh
+// log in with someone who is a member of the &#8220;Staff&#8221; security group or
+// manually create a group named &#8220;Staff&#8221; in the admin page
+python populateFromLDAP.py // this will populate everyone in ou=Faculty
+python populateFromLDAP.py staff // this will populate everyone in ou=Administration</p>
+</div>
+<div class="section" id="you-want-to-change-the-default-event-requirement-number">
+<h2>You want to change the default event requirement number<a class="headerlink" href="#you-want-to-change-the-default-event-requirement-number" title="Permalink to this headline">¶</a></h2>
+<p>edit ~/bbhs_intranet/bbhs/settings.py</p>
+<p>Change OBLIGATION_NUMBER = 4
+Go to the admin page, then go to Users
+Select the admin action &#8220;Normalize Yearly Obligation&#8221; and select everyone</p>
+<p>This will reset every active user&#8217;s events done count for this year, and their events
+needed count for this year.</p>
+</div>
+<div class="section" id="you-want-to-delete-a-user">
+<h2>You want to delete a user<a class="headerlink" href="#you-want-to-delete-a-user" title="Permalink to this headline">¶</a></h2>
+<p>You should probably just disable them.
+Go to the admin page and click disable and them save.</p>
+<p>I coded it so that disabled users don&#8217;t get to do anything.</p>
+</div>
+<div class="section" id="you-want-to-send-an-email-advertisement-for-an-event">
+<h2>You want to send an email advertisement for an event<a class="headerlink" href="#you-want-to-send-an-email-advertisement-for-an-event" title="Permalink to this headline">¶</a></h2>
+<p>asdf</p>
+</div>
+<div class="section" id="you-want-to-change-the-year-end-and-year-start-reset-dates">
+<h2>You want to change the year end and year start reset dates<a class="headerlink" href="#you-want-to-change-the-year-end-and-year-start-reset-dates" title="Permalink to this headline">¶</a></h2>
+<p>Edit the very bottom of the settings file</p>
+</div>
+<div class="section" id="you-want-to-change-ldap-settings">
+<h2>You want to change LDAP settings<a class="headerlink" href="#you-want-to-change-ldap-settings" title="Permalink to this headline">¶</a></h2>
+<p>Just modify the settings.py file. It&#8217;s pretty straightforward, but let me know
+if you need any help. All relevant LDAP related variables are prefixed with
+AUTH_LDAP_*</p>
+<p>Make sure to restart the apache server for changes to take effect</p>
+</div>
+<div class="section" id="you-messed-up-deleted-the-code">
+<h2>You messed up/deleted the code<a class="headerlink" href="#you-messed-up-deleted-the-code" title="Permalink to this headline">¶</a></h2>
+<p>cd ~/bbhs_intranet/
+git checkout &#8211; .</p>
+<p>This will reset all the code in this directory to the state I left it in last.</p>
+<p>This will not change /var/www/faculty.bishopblanchet.org, so I recommend not
+touching that folder</p>
+<p>In case you deleted ~/bbhs_intranet or ~/bbhs-intranet/.git</p>
+<p>git clone <a class="reference external" href="https://github.com/luisnaranjo733/bbhs-intranet">https://github.com/luisnaranjo733/bbhs-intranet</a> ~/bbhs_intranet</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">What to do if:</a><ul>
+<li><a class="reference internal" href="#a-user-can-t-sign-in">A user can&#8217;t sign in</a></li>
+<li><a class="reference internal" href="#you-want-to-find-an-old-event">You want to find an old event</a></li>
+<li><a class="reference internal" href="#you-want-to-pull-up-random-info">You want to pull up random info</a></li>
+<li><a class="reference internal" href="#you-want-to-disable-the-email-reminders">You want to disable the email reminders</a></li>
+<li><a class="reference internal" href="#you-need-to-migrate-the-site">You need to migrate the site</a></li>
+<li><a class="reference internal" href="#you-need-to-reset-the-database">You need to reset the database</a></li>
+<li><a class="reference internal" href="#you-want-to-change-the-default-event-requirement-number">You want to change the default event requirement number</a></li>
+<li><a class="reference internal" href="#you-want-to-delete-a-user">You want to delete a user</a></li>
+<li><a class="reference internal" href="#you-want-to-send-an-email-advertisement-for-an-event">You want to send an email advertisement for an event</a></li>
+<li><a class="reference internal" href="#you-want-to-change-the-year-end-and-year-start-reset-dates">You want to change the year end and year start reset dates</a></li>
+<li><a class="reference internal" href="#you-want-to-change-ldap-settings">You want to change LDAP settings</a></li>
+<li><a class="reference internal" href="#you-messed-up-deleted-the-code">You messed up/deleted the code</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="chaperone.html"
+                        title="previous chapter">Chaperone App</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/faq.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="chaperone.html" title="Chaperone App"
+             >previous</a> |</li>
+        <li><a href="index.html">Bishop Blanchet Intranet 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Luis Naranjo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
