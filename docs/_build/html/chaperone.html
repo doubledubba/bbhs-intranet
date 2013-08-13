@@ -150,6 +150,25 @@ very bottom. The years need to be incremented by 1 every year.</p>
 <p>It will send the ADMINS in the settings.py file email reminders when this is
 necessary.</p>
 </div>
+<div class="section" id="emails">
+<h2>Emails<a class="headerlink" href="#emails" title="Permalink to this headline">¶</a></h2>
+<p>The chaperone system will send out a variety of emails automatically.</p>
+<p>Every month, it will go through the system and send an email reminder to all of
+the members of the Intranet_Chaperone security group that still haven&#8217;t
+fulfilled their requirement.</p>
+<p>Every day, it will go through all of the events that are happening with 2 days,
+and let the registered volunteers have an email reminder</p>
+<p>When a user signs up for an event, it will email the event administrator
+letting them know who signed up, and it will send the user who signed up an
+email confirmation.</p>
+<p>Once a year, it will send an email to the site admins (Michael, David, Luis)
+with instructions on how to update the start school date and the end school
+date so it knows when the chaperone deadline is, and when to reset the user&#8217;s
+yearly event counts.</p>
+<p>Once a year, it will also send an email to the designated DEADLINE_EMAIL
+variable defined in ~/bbhs_intranet/bbhs/settings.py letting them know what
+users missed the deadline for required events.</p>
+</div>
 </div>
 
 
@@ -170,6 +189,7 @@ necessary.</p>
 </li>
 <li><a class="reference internal" href="#markdown-rendering-for-event-descriptions">Markdown rendering for event descriptions</a></li>
 <li><a class="reference internal" href="#yearly-deadline">Yearly Deadline</a></li>
+<li><a class="reference internal" href="#emails">Emails</a></li>
 </ul>
 </li>
 </ul>

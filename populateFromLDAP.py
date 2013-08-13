@@ -10,10 +10,18 @@ from bbhs.settings import AUTH_LDAP_BIND_PASSWORD, AUTH_LDAP_BIND_DN, faculty_cn
 faculty_cn = 'OU=Faculty,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
 staff_cn = 'OU=Administration,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
 
-if 'staff' in argv:
+print '1:', faculty_cn
+print '2:', staff_cn
+print '3: Custom (type in dn)'
+
+response = raw_input('> ')
+
+if response == '1':
+    cn = faculty_cn
+elif response == '2':
     cn = staff_cn
 else:
-    cn = faculty_cn
+    cn = response
 
 
 fh = temp()

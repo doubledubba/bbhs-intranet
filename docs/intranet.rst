@@ -159,7 +159,7 @@ cn=Intranet_Site_Admin,ou=Intranet,ou=Technology,ou=Staff,dc=campus,dc=bishopbla
 
 To be added soon:
 
-A user will not get any email reminders of their chaperone obligation unless
+A user will not get any monthly email reminders of their chaperone obligation unless
 they are a part of this group. This security group needs to be populated with
 all of the teachers.
 

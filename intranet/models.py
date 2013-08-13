@@ -21,7 +21,6 @@ class UserProfile(models.Model):
     eventsNeeded.verbose_name = '(Chaperone) Events Needed'
     eventsDone = models.IntegerField(null=True, default=0) #permanent tally
     eventsDoneSoFar = models.IntegerField(null=True, default=0)
-    isFaculty = models.BooleanField(default=False) # for do/don't send obligation emails
 
     def __unicode__(self):
         return self.user.get_full_name() or self.user.username
