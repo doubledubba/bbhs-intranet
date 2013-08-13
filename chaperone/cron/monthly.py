@@ -47,7 +47,7 @@ def run():
 
         if profile.eventsNeeded > 0:
             if user.email:
-                if user.groups.filter(name='Intranet_Chaperones').exists():
+                if user.groups.filter(name='Chaperone_Requirement').exists():
                     print 'Emailing:', user.username
                     sendEmail(user)
                 else:

@@ -196,13 +196,9 @@ AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn",
 faculty_cn = 'OU=Faculty,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
 INTRANET_OU = 'ou=Intranet,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org'
 
-AUTH_LDAP_PROFILE_FLAGS_BY_GROUP = {
-    #'hasChaperoneReq' : 'CN=intra_chap_hasReq,' + faculty_cn
-}
-
 AUTH_LDAP_USER_FLAGS_BY_GROUP = {
     'is_superuser': 'cn=Intranet_Super_Admin,%s' % INTRANET_OU,
-    'is_staff': 'cn=Intranet_Site_Admin,%s' % INTRANET_OU
+    'is_staff': 'cn=Intranet_Admin_Access,%s' % INTRANET_OU
 }
 
 AUTH_LDAP_GROUP_TYPE = ActiveDirectoryGroupType()

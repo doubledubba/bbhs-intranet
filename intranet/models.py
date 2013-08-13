@@ -23,6 +23,12 @@ class UserProfile(models.Model):
     eventsDoneSoFar = models.IntegerField(null=True, default=0)
     eventsDoneSoFar.description = 'Events Dun So Far'
 
+    class Meta:
+        permissions = (
+                ('pull_user_reports', 'Can pull user reports'),
+        )
+
+
     def __unicode__(self):
         return self.user.get_full_name() or self.user.username
 

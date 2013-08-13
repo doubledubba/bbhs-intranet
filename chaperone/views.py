@@ -197,6 +197,7 @@ def removeUser(request, eventID):
     alert, message = event.removeVolunteer(user)
     return notify(alert, message, event.get_absolute_url(), tab=3)
     
+@permission_required('intranet.pull_user_reports', raise_exception=True)
 def userReportForm(request):
     params = {}
     if request.method == 'POST':
@@ -229,8 +230,7 @@ def userReportForm(request):
         params['alert'] = request.GET.get('alert')
         return render(request, 'chaperone/userReportForm.html', params)
 
-#from django.utils.timezone import utc
-#datetime.utcnow().replace(tzinfo=utc)
+@permission_required('intranet.pull_user_reports', raise_exception=True)
 def userReport(request, username):
     user = get_object_or_404(User, username=username)
     start = request.GET.get('start')
@@ -276,7 +276,7 @@ def addEvent(request):
             'weight': request.POST.get('weight')
         }
         if info['weight'].isdigit():
-            info['weight'] = abs(info['weight']) # so no one gives negative event bonuses
+            info['weight'] = abs(int(info['weight'])) # so no one gives negative event bonuses
         # add GET param UX feedback
         # or re-fill incomplete forms
         try:
@@ -318,7 +318,7 @@ def addEvent(request):
         return redirect(url)
         return HttpResponse('text', content_type='text/plain')
 
-    event_admins = Group.objects.get(name="Intranet_Event_Admin")
+    event_admins = Group.objects.get(name="Chaperone_Event_Manager")
     params = {
         'admins': event_admins.user_set.all()
     }
