@@ -1,5 +1,6 @@
 import os
-from sys import argv
+from sys import argv, path
+path.append('/home/luis/bbhs_intranet')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'bbhs.settings'
 from tempfile import NamedTemporaryFile as temp
 from ldif import LDIFParser

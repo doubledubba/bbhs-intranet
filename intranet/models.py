@@ -21,6 +21,7 @@ class UserProfile(models.Model):
     eventsNeeded.verbose_name = '(Chaperone) Events Needed'
     eventsDone = models.IntegerField(null=True, default=0) #permanent tally
     eventsDoneSoFar = models.IntegerField(null=True, default=0)
+    eventsDoneSoFar.description = 'Events Dun So Far'
 
     def __unicode__(self):
         return self.user.get_full_name() or self.user.username
