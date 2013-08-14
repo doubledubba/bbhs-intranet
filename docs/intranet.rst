@@ -100,6 +100,12 @@ Give this to whoever might be creating events.
 
 This allows them to access the /addEvent page
 
+Pull user reports
+-----------------
+
+This permission allows users users to pull user reports on other users in the
+chaperone app
+
 
 Groups
 ======
