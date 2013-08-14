@@ -7,9 +7,10 @@ from ldif import LDIFParser
 from django.contrib.auth.models import User, Group
 from bbhs.settings import PROJECT_ROOT, AUTH_LDAP_SERVER_URI
 from bbhs.settings import AUTH_LDAP_BIND_PASSWORD, AUTH_LDAP_BIND_DN, faculty_cn
+from django_auth_ldap.backend import LDAPBackend
 
 cn = 'OU=Administration,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
-cn = 'CN=Intranet_Super_Admin,OU=Intranet,OU=Technology,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
+cn = 'CN=Chaperone_Event_Manager,OU=Intranet,OU=Technology,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
 
 fh = temp()
 command = 'ldapsearch -a always -H %s -w %s -D "%s" -b "%s" "objectClass=*" -u -s sub member > %s'
@@ -48,6 +49,7 @@ class Parser(LDIFParser):
         username = _entry.get('sAMAccountName')
         username = deList(username)
         if username:
+            LDAPBackend().populate_user(username)
             self.username = username
 
 command = 'ldapsearch -a always -H %s -w %s -D "%s" -b "%s" "objectClass=*" -u -s sub sAMAccountName> %s'
