@@ -30,7 +30,8 @@ There are 2 main types of regular users in this app:
 Site Administrators
 *******************
 
-
+These are the people in the activities office who are going to be creating the
+events and designating who is the event administrator.
 
 
 Event Administrators

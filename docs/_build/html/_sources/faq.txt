@@ -87,6 +87,8 @@ There are nginx options and several other python specific servers.
 sudo mv ~/bbhs-intranet/faculty.bishopblanchet.org /var/www/faculty.bishopblanchet.org
 you may have permission issues with this - fix with chmod
 
+sudo apt-get install ldapsearch
+
 You need to reset the database
 -------------------------------
 

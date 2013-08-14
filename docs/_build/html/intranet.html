@@ -125,6 +125,11 @@ events</p>
 <p>Give this to whoever might be creating events.</p>
 <p>This allows them to access the /addEvent page</p>
 </div>
+<div class="section" id="pull-user-reports">
+<h2>Pull user reports<a class="headerlink" href="#pull-user-reports" title="Permalink to this headline">¶</a></h2>
+<p>This permission allows users users to pull user reports on other users in the
+chaperone app</p>
+</div>
 </div>
 <div class="section" id="groups">
 <h1>Groups<a class="headerlink" href="#groups" title="Permalink to this headline">¶</a></h1>
@@ -141,20 +146,22 @@ few extraneous groups out there and should be ignored.</p>
 For example, say a user is not part of the event admin LDAP group, but is
 made part of the event admin DJANGO group by a super user. The user will show
 up as an option as an Event Admin in the Add an Event page, and for all practical
-purposes will be an Event Admin - until he/she logs in. When the log in
-happens, the user will be stripped of event admin permissions on the site until he/she is
-actually added to the correct group on the LDAP end.</p>
+purposes will be an Event Admin - until his/her account is synced with LDAP on
+login. When that happens, the user will be stripped of event admin permissions on the site until he/she is
+actually added to the correct group on the LDAP end and the site is synced with
+LDAP.</p>
 <p>Moral of the story, make changes on the LDAP end first. After you make a
 change, get the user to log in for the changes to take effect OR manually go in
 to the admin page and update the user&#8217;s permissions (they will still be
-over-written on log in, but there won&#8217;t be any change).</p>
+over-written on log in, but there won&#8217;t be any change) OR run the sync scripts
+i&#8217;ve provided.</p>
 <p>There are 5 important security groups to consider.</p>
 <p>The following groups <strong>inherently</strong> grant user&#8217;s specific abilities <em>just by being members of them</em>.
 These abilities are described in their corresponding sections below.</p>
 <p>But if you click on the groups in the admin page and look at the permissions that they
-propagate, you&#8217;ll see that by default they grant none. You can customize what
+propagate, you&#8217;ll see that some by default they grant none. You can customize what
 additional permissions users can get here.</p>
-<p>For example, the Intranet_Site_Admin group just grants users the ability to log
+<p>For example, the Intranet_Admin_Access group just grants users the ability to log
 in to the admin page. Users who get this ability will probably want the
 ability to edit certain objects in the database too, and this is the kind of permission
 that can be customized here.</p>
@@ -165,17 +172,29 @@ that can be customized here.</p>
 for authentication. If a user doesn&#8217;t belong to this security group, the user
 can&#8217;t log in even if they have the correct username and password.</p>
 </div>
-<div class="section" id="intranet-chaperones">
-<h2>Intranet_Chaperones<a class="headerlink" href="#intranet-chaperones" title="Permalink to this headline">¶</a></h2>
-<p>cn=Intranet_Site_Admin,ou=Intranet,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org</p>
-<p>To be added soon:</p>
-<p>A user will not get any email reminders of their chaperone obligation unless
+<div class="section" id="chaperone-requirement">
+<h2>Chaperone_Requirement<a class="headerlink" href="#chaperone-requirement" title="Permalink to this headline">¶</a></h2>
+<p>cn=Chaperone_Requirement,ou=Intranet,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org</p>
+<p>A user will not get any monthly email reminders of their chaperone obligation unless
 they are a part of this group. This security group needs to be populated with
 all of the teachers.</p>
 </div>
-<div class="section" id="intranet-site-admin">
-<h2>Intranet_Site_Admin<a class="headerlink" href="#intranet-site-admin" title="Permalink to this headline">¶</a></h2>
-<p>cn=Intranet_Site_Admin,ou=Intranet,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org</p>
+<div class="section" id="chaperone-site-admin">
+<h2>Chaperone_Site_Admin<a class="headerlink" href="#chaperone-site-admin" title="Permalink to this headline">¶</a></h2>
+<p>Members of this group will be granted elevated permission to add, modify, and
+delete any Chaperone objects in the database.</p>
+<p>They will also get the ability to pull user reports.</p>
+<p>In other words they have permission to do anything that is related to the
+chaperone app.</p>
+<p>Additionally, they can edit user info in the admin page such as change a user&#8217;s
+event unit requirement.</p>
+<p>Joan Thompson is probably the only person who needs this access.</p>
+<p>Make sure to add her to the Intranet_Admin_Access so she can access the admin
+page.</p>
+</div>
+<div class="section" id="intranet-admin-access">
+<h2>Intranet_Admin_Access<a class="headerlink" href="#intranet-admin-access" title="Permalink to this headline">¶</a></h2>
+<p>cn=Intranet_Admin_Access,ou=Intranet,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org</p>
 <p>Joining this group grants users the permission to log in to the admin page at
 <a class="reference external" href="http://faculty.bishpoblanchet.org/admin/">http://faculty.bishpoblanchet.org/admin/</a>, but nothing more (by default).</p>
 </div>
@@ -189,9 +208,9 @@ this group is the ability to log in to the admin page (which is essential for a
 <strong>a super user also needs to be a member of
 the Intranet_Site_Admin group.</strong></p>
 </div>
-<div class="section" id="intranet-event-admin">
-<h2>Intranet_Event_Admin<a class="headerlink" href="#intranet-event-admin" title="Permalink to this headline">¶</a></h2>
-<p>cn=Intranet_Event_Admin,ou=Intranet,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org</p>
+<div class="section" id="chaperone-event-manager">
+<h2>Chaperone_Event_Manager<a class="headerlink" href="#chaperone-event-manager" title="Permalink to this headline">¶</a></h2>
+<p>cn=Chaperone_Event_Manager,ou=Intranet,ou=Technology,ou=Staff,dc=campus,dc=bishopblanchet,dc=org</p>
 <p>Joining this group allows users to be Event Administrators. All members of this
 group will show up in the dropdown menu for Event Administrator in the &#8220;Add a
 new Event&#8221; page.</p>
@@ -219,14 +238,16 @@ new Event&#8221; page.</p>
 <li><a class="reference internal" href="#can-sign-up-self-from-an-event">Can sign up self from an event</a></li>
 <li><a class="reference internal" href="#can-unsign-up-self-from-an-event">Can unsign up self from an event</a></li>
 <li><a class="reference internal" href="#can-create-events">Can create events</a></li>
+<li><a class="reference internal" href="#pull-user-reports">Pull user reports</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#groups">Groups</a><ul>
 <li><a class="reference internal" href="#staff">Staff</a></li>
-<li><a class="reference internal" href="#intranet-chaperones">Intranet_Chaperones</a></li>
-<li><a class="reference internal" href="#intranet-site-admin">Intranet_Site_Admin</a></li>
+<li><a class="reference internal" href="#chaperone-requirement">Chaperone_Requirement</a></li>
+<li><a class="reference internal" href="#chaperone-site-admin">Chaperone_Site_Admin</a></li>
+<li><a class="reference internal" href="#intranet-admin-access">Intranet_Admin_Access</a></li>
 <li><a class="reference internal" href="#intranet-super-admin">Intranet_Super_Admin</a></li>
-<li><a class="reference internal" href="#intranet-event-admin">Intranet_Event_Admin</a></li>
+<li><a class="reference internal" href="#chaperone-event-manager">Chaperone_Event_Manager</a></li>
 </ul>
 </li>
 </ul>
