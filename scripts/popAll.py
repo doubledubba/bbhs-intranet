@@ -56,7 +56,10 @@ def getResponse():
         print 'You didn\'t select a DN for me to sync!'
         exit(1)
 
-response = getResponse()
+if len(argv) == 1:
+    response = getResponse()
+else:
+    response = int(argv[1])
 cn = DNs[response]
 
 
@@ -123,10 +126,11 @@ print '=' * 72
 for user in usernames:
     print ' * ' + user
 
-try:
-    raw_input("Hit ENTER to contine.")
-except KeyboardInterrupt:
-    exit(1)
+if not len(argv) > 1:
+    try:
+        raw_input("Hit ENTER to contine.")
+    except KeyboardInterrupt:
+        exit(1)
 
 for username in usernames:
     LDAPBackend().populate_user(username)
