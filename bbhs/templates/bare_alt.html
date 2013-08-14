@@ -76,11 +76,15 @@
                <a href="/chaperone" class="dropdown-toggle" data-toggle="dropdown">Chaperone <b class="caret"></b></a>
                <ul class="dropdown-menu">
                  <li><a href="/chaperone">Event Listings</a></li>
+                 <li><a href="/user/{{ user }}">Profile</a></li>
                	{% if user.is_staff%}
                  <li class="divider"></li>
                  <li class="nav-header">Admin links</li>
                  <li><a href="/chaperone/userReport">User Report</a></li>
                  <li><a href="/chaperone/addEvent">Add Event</a></li>
+                 {% if user.is_superuser %}
+                 <li><a href="/groups/">Groups</a></li>
+                 {% endif %}
                  {% endif %}
                </ul>
              </li>
