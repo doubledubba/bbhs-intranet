@@ -273,17 +273,17 @@ def groupUserReport(request):
     users = []
     user_list = UserProfile.objects.filter(user__is_active=True).order_by('-eventsNeeded')
     if value == 'completed':
-        params['title'] = 'Displaying all users who have completed their yearly requirement'
+        params['title'] = 'Displaying all users who HAVE completed their yearly requirement'
         for profile in user_list:
             if profile.completedRequirement():
                 users.append(profile)
     elif value == 'unCompleted':
-        params['title'] = 'Displaying all users who have not completed their yearly requirement'
+        params['title'] = 'Displaying all users who HAVE NOT completed their yearly requirement'
         for profile in user_list:
             if not profile.completedRequirement():
                 users.append(profile)
     elif value == 'all':
-        params['title'] = 'Displaying all users who have a yearly requirement'
+        params['title'] = 'Displaying ALL users who have a yearly requirement'
         users = user_list
     else:
         raise Http404
