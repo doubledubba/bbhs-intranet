@@ -25,6 +25,13 @@ DNs = {
         5: Intranet_Admin_Access,
 }
 
+print '''PS: For some reason, the active directory doesn\'t show changes until about
+30 seconds after the changes were applied. Make sure the sync works, and if it
+doesn't, then wait for a bit.
+
+Select a security group for me to sync
+'''
+
 print '1:', Chaperone_Requirement
 print '2:', Chaperone_Event_Manager
 print '3:', Chaperone_Site_Admin
@@ -32,7 +39,6 @@ print '4:', Intranet_Super_Admin
 print '5:', Intranet_Admin_Access
 
 def getResponse():
-    print 'Hit Ctrl + C to exit'
     try:
         while True:
             response = raw_input('> ')
@@ -47,14 +53,12 @@ def getResponse():
             elif response == '5':
                 return 5
     except KeyboardInterrupt:
-        print 'You didn\'t choose a dn for me to sync!'
+        print 'You didn\'t select a DN for me to sync!'
         exit(1)
 
 response = getResponse()
 cn = DNs[response]
 
-print 'About to sync every user in the "%s" security group.' % cn
-raw_input("Hit ENTER to contine.")
 
 
 fh = temp()
@@ -94,7 +98,7 @@ class Parser(LDIFParser):
         username = _entry.get('sAMAccountName')
         username = deList(username)
         if username:
-            LDAPBackend().populate_user(username)
+            
             self.username = username
 
 command = 'ldapsearch -a always -H %s -w %s -D "%s" -b "%s" "objectClass=*" -u -s sub sAMAccountName> %s'
@@ -112,6 +116,20 @@ for cn in users:
 
     fh.seek(0)
     fh.close()
+
+print '\nAbout to sync every user in the "%s" security group.' % cn
+print 'USERS'
+print '=' * 72
+for user in usernames:
+    print ' * ' + user
+
+try:
+    raw_input("Hit ENTER to contine.")
+except KeyboardInterrupt:
+    exit(1)
+
+for username in usernames:
+    LDAPBackend().populate_user(username)
 
 from pprint import pprint
 
