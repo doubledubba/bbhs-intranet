@@ -12,6 +12,7 @@ from django.contrib.auth.models import User, Group
 from markdown import markdown
 
 from chaperone.models import Event, Note
+from intranet.models import UserProfile
 from query import get_query
 from datetime import datetime
 from urllib import urlencode
@@ -270,23 +271,20 @@ def groupUserReport(request):
     else:
         params = {}
     users = []
+    user_list = UserProfile.objects.filter(user__is_active=True).order_by('-eventsNeeded')
     if value == 'completed':
         params['title'] = 'Displaying all users who have completed their yearly requirement'
-        for user in User.objects.filter(is_active=True):
-            profile = user.get_profile()
+        for profile in user_list:
             if profile.completedRequirement():
                 users.append(profile)
     elif value == 'unCompleted':
         params['title'] = 'Displaying all users who have not completed their yearly requirement'
-        for user in User.objects.filter(is_active=True):
-            profile = user.get_profile()
+        for profile in user_list:
             if not profile.completedRequirement():
                 users.append(profile)
     elif value == 'all':
         params['title'] = 'Displaying all users who have a yearly requirement'
-        for user in User.objects.filter(is_active=True):
-            profile = user.get_profile()
-            users.append(profile)
+        users = user_list
     else:
         raise Http404
     params['users'] = users
