@@ -15,6 +15,7 @@
     <thead>
         <tr>
             <th>Name</th>
+            <th class="numeric">Weight</th>
             <th class="numeric">Admin</th>
             <th class="numeric">Date</th>
             <th class="numeric">Volunteers Needed</th>
@@ -32,6 +33,7 @@
                     {{ event.name }}
                 </a>
             </td>
+            <td>{{ event.weight }}</td>
             {% if event.admin.get_full_name %}
             <td>{{ event.admin.get_full_name }}</td>
             {% else %}

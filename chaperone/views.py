@@ -242,7 +242,6 @@ def userReport(request, username):
     except ValueError:
         range = False
     events = []
-    print dir(start), type(start), repr(start)
     for event in Event.objects.all():
         if not event.signedUp(user):
             continue
@@ -257,10 +256,42 @@ def userReport(request, username):
             end = ''
 
     count = len(events)
+    user = user.get_profile()
     params = {'user': user, 'events': events,
             'start': start, 'end': end, 'count': count}
     return render(request, 'chaperone/userReport.html', params)
 
+
+@permission_required('intranet.pull_user_reports', raise_exception=True)
+def groupUserReport(request):
+    value = request.GET.get('groupReportType')
+    if not value:
+        raise Http404
+    else:
+        params = {}
+    users = []
+    if value == 'completed':
+        params['title'] = 'Displaying all users who have completed their yearly requirement'
+        for user in User.objects.filter(is_active=True):
+            profile = user.get_profile()
+            if profile.completedRequirement():
+                users.append(profile)
+    elif value == 'unCompleted':
+        params['title'] = 'Displaying all users who have not completed their yearly requirement'
+        for user in User.objects.filter(is_active=True):
+            profile = user.get_profile()
+            if not profile.completedRequirement():
+                users.append(profile)
+    elif value == 'all':
+        params['title'] = 'Displaying all users who have a yearly requirement'
+        for user in User.objects.filter(is_active=True):
+            profile = user.get_profile()
+            users.append(profile)
+    else:
+        raise Http404
+    params['users'] = users
+
+    return render(request, 'chaperone/groupUserReport.html', params)
 
 @permission_required('chaperone.create_event')
 @login_required
@@ -292,6 +323,7 @@ def addEvent(request):
 
         info['admin'] = get_object_or_404(User, pk=info['admin'])
         event = Event(**info)
+        event.signUp(info['admin'])
         event.save()
 
         i = 1
@@ -312,6 +344,7 @@ def addEvent(request):
         for date in dates:
             info['date'] = date
             event = Event(**info)
+            event.signUp(info['admin'])
             event.save()
         
         url = '/chaperone/eventAdded/?' + urlencode({'i': i})

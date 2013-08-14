@@ -136,8 +136,6 @@ class Event(models.Model):
     def signUp(self, user):
         volunteerPks = self.getPks()
         username = user.get_full_name() or str(user)
-     #   if user == self.admin:
-      #      return 'error', 'Sorry, %s is already the event administrator!' % username
         if user.pk in volunteerPks:
             return 'error', 'Sorry, %s is already signed up' % username
         if self.volunteersNeeded > 0:

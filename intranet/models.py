@@ -21,7 +21,12 @@ class UserProfile(models.Model):
     eventsNeeded.verbose_name = '(Chaperone) Events Needed'
     eventsDone = models.IntegerField(null=True, default=0) #permanent tally
     eventsDoneSoFar = models.IntegerField(null=True, default=0)
-    eventsDoneSoFar.description = 'Events Dun So Far'
+
+    def original_requirement(self):
+        return self.eventsDoneSoFar + self.eventsNeeded
+
+    def completedRequirement(self):
+        return self.eventsNeeded <= 0
 
     class Meta:
         permissions = (

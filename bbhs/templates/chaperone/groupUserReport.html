@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<b>{{ title }}</b> <br> <br>
+
+  <table class="table table-bordered">
+     <thead>
+       <tr>
+         <th>User</th>
+         <th>Yearly Events Needed</th>
+         <th>Yearly Events Done</th>
+         <th>Total Events Done</th> 
+       </tr>
+     </thead>
+     <tbody>
+{% for user in users %}
+			<tr>
+				<td><a href="{{ user.get_absolute_url }}">{{ user }}</a></td>
+				<td>{{ user.eventsNeeded }}</td>
+				<td>{{ user.eventsDoneSoFar }}</td>
+				<td>{{ user.eventsDone }}</td>
+			</tr>
+{% endfor %}
+     </tbody>
+   </table>
+   {{ users }}
+
+{% endblock body %}
