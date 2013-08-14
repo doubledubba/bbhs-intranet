@@ -36,20 +36,13 @@
       src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
      </script> 
     <script type="text/javascript">
-      $('#datetimepicker').datetimepicker({
+      var picker = $('#datetimepicker').datetimepicker({
         format: 'MM/dd/yyyy HH:mm:ss PP',
         language: 'en-us',
         pick12HourFormat: true
       });
-
-/*
-			    <div id="datetimepicker" class="input-append date">
-			      <input type="text" style="width:95%;clear:both;" name="date"></input>
-			      <span class="add-on">
-			        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-			      </span>
-			    </div>
-			    */
+			    
+		picker.setLocalDate(new Date(1998, 10, 11, 4, 30));			    
 			    
    fields = 0;
 	function addInput() {
@@ -125,14 +118,15 @@ function decrementValue2() {
 			<label>Admin</label>
 			<select name="admin">
 				{% for admin in admins %}
-				<option value="{{ admin.pk }}">{{ admin }}</option>
+				<option value="{{ admin.pk }}">{% firstof admin.get_full_name admin.username %}</option>
 				{% endfor %}
 			</select>
 			
 			
 			<label>Date</label>
 			    <div id="datetimepicker" class="input-append date">
-			      <input type="text" style="width:95%;clear:both;" name="date"></input>
+			      <input type="text" style="width:95%;clear:both;" name="date"
+			      value="{{ startOfYear }}"></input>
 			      <span class="add-on">
 			        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 			      </span>

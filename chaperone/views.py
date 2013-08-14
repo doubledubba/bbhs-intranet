@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import permission_required
 
 from django.contrib.auth.models import User, Group
 from markdown import markdown
+from bbhs.settings import startOfYear, endOfYear
 
 from chaperone.models import Event, Note
 from intranet.models import UserProfile
@@ -198,6 +199,9 @@ def removeUser(request, eventID):
     alert, message = event.removeVolunteer(user)
     return notify(alert, message, event.get_absolute_url(), tab=3)
     
+
+fmt = '%m/%d/%Y %I:%M:%S %p'
+
 @permission_required('intranet.pull_user_reports', raise_exception=True)
 def userReportForm(request):
     params = {}
@@ -229,6 +233,8 @@ def userReportForm(request):
         params = {'TAH': formatTAH(signUpTAH)}
         params['message'] = request.GET.get('message')
         params['alert'] = request.GET.get('alert')
+        params['startOfYear'] = startOfYear.strftime(fmt)
+        params['endOfYear'] = endOfYear.strftime(fmt)
         return render(request, 'chaperone/userReportForm.html', params)
 
 @permission_required('intranet.pull_user_reports', raise_exception=True)
@@ -291,6 +297,7 @@ def groupUserReport(request):
 
     return render(request, 'chaperone/groupUserReport.html', params)
 
+
 @permission_required('chaperone.create_event')
 @login_required
 def addEvent(request):
@@ -347,11 +354,11 @@ def addEvent(request):
         
         url = '/chaperone/eventAdded/?' + urlencode({'i': i})
         return redirect(url)
-        return HttpResponse('text', content_type='text/plain')
 
     event_admins = Group.objects.get(name="Chaperone_Event_Manager")
     params = {
-        'admins': event_admins.user_set.all()
+        'admins': event_admins.user_set.all(),
+        'startOfYear': datetime.now().strftime(fmt)
     }
     return render(request, 'chaperone/addEvent.html', params)
 
