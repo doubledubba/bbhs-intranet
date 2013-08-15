@@ -195,4 +195,7 @@ who is a part of that group
 What happens to people who miss the deadline?
 ---------------------------------------------
 
-There will be consequences.
+There will be an email that will go out to whoever the DEADLINE_EMAIL variable
+is set to in ~/bbhs_intranet/bbhs/settings.py that will contain a list of the
+users who missed the chaperone requirement deadline, and their information.
+

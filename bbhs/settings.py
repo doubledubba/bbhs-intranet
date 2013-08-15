@@ -3,15 +3,18 @@ import os
 import ldap
 from django_auth_ldap.config import LDAPSearch, ActiveDirectoryGroupType, LDAPSearchUnion
 
+DEBUG = True
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 # chaperone obligation for each user
 OBLIGATION_NUMBER = 4
-DEADLINE_EMAIL = 'kSanders@bishopblanchet.org'
-DEADLINE_EMAIL = 'luisnaranjo733@gmail.com'
+
+if not DEBUG:
+    DEADLINE_EMAIL = 'kSanders@bishopblanchet.org'
+else:
+    DEADLINE_EMAIL = 'luisnaranjo733@gmail.com'
 
 
-DEBUG = True
 TEMPLATE_DEBUG = True
 
 ADMINS = (
@@ -19,6 +22,9 @@ ADMINS = (
     ('Michael Fox', 'mFox@bishopblanchet.org'),
     ('David Foster', 'dFoster@bishopblanchet.org'),
 )
+
+if DEBUG:
+    ADMINS = (('Luis Naranjo', 'luisnaranjo733@gmail.com'),)
 
 MANAGERS = ADMINS
 

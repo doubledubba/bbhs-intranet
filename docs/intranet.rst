@@ -10,6 +10,28 @@ The idea is that within the intranet, there are several "apps" that can be used
 by staff members. Right now, we only have a chaperone app, but we are
 looking at expanding the intranet with more apps in the future.
 
+LDAP Authentication
+===================
+
+The intranet makes extensive use of the BBHS Active Directory for user
+authentication.
+
+It's important to note that the user that is being used by the site for binding
+is:
+
+'CN=Luis Naranjo,OU=Technology,OU=Staff,DC=campus,DC=bishopblanchet,DC=org'
+
+and the password is a certain type of baked goods that happened to be the
+default password in the first Tech Apprentice class.
+
+So don't move that user, change his password, or change his permissions unless
+you change them in the code too.
+
+If you do change them in the code, you would have to modify the
+~/bbhs_intranet/bbhs/settings.py file.
+
+Make sure you restart the apache2 service.
+
 Types of users
 ==============
 
