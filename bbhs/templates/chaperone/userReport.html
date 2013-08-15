@@ -2,17 +2,17 @@
 
 {% block body %}
 
-<legend>{{ user.user.get_full_name }} ({{ user.user.username }})</legend>
+<legend>{{ USER.user.get_full_name }} ({{ USER.user.username }})</legend>
 
-<b>Original requirement this year:</b> {{ user.original_requirement }}<br>
-<b>Event units still needed this year:</b> {{ user.eventsNeeded}}<br>
-<b>Event units completed this year:</b> {{ user.eventsDoneSoFar }}<br>
-<b>Total events completed:</b> {{ user.eventsDone }}<br>
+<b>Original requirement this year:</b> {{ USER.original_requirement }}<br>
+<b>Event units still needed this year:</b> {{ USER.eventsNeeded}}<br>
+<b>Event units completed this year:</b> {{ USER.eventsDoneSoFar }}<br>
+<b>Total events completed:</b> {{ USER.eventsDone }}<br>
 
 
 <br>
 <p>
-Displaying {{ count }} event{{ count|pluralize }} of {% firstof user.user.get_full_name user.user.username %}
+Displaying {{ count }} event{{ count|pluralize }} of {% firstof USER.user.get_full_name USER.user.USERname %}
 {% if start and end %}
 from {{ start }} to {{ end }}
 {% endif %}

@@ -269,7 +269,7 @@ def userReport(request, username):
 
     count = len(events)
     user = user.get_profile()
-    params = {'user': user, 'events': events,
+    params = {'USER': user, 'events': events,
             'start': start, 'end': end, 'count': count}
     return render(request, 'chaperone/userReport.html', params)
 
