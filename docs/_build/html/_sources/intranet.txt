@@ -225,17 +225,59 @@ new Event" page.
 Scripts
 =======
 
+I wrote a few administrative scripts that will come in handy.
+They are located in ~/bbhs_intranet/scripts/
+
 syncUser.py
 -----------
+
+This script will synchronize the selected user's information from the active
+directory with the intranet database.
+
+Run this script immediately after making changes to the LDAP groups in order to
+apply the changes immediately on the intranet side.
+
+If you don't, then the changes won't happen until the user who has had his/her
+permissions modified next logs in.
+
+For some reason, the AD is a bit laggy in updating information and it sometimes
+won't update it's query responses for about 30 seconds after the change.
+
+Make sure the changes have in fact taken place, and if not, then keep running
+this script till they do.
+
+Call this script like so::
+
+$ python syncUser.py luisadmin
 
 syncGroup.py
 ------------
 
+This script does the exact same thing as syncUser.py, but it is designed to be
+used for groups instead of individual users.
+
+You can sync ou's and security groups with this script.
+
+Just run it and follow the instructions it gives you.
+
 reset.py
 --------
 
+This is a python script I wrote for resetting certain parts of the website.
+
+For example, say you want to erase all of the events in the database, or all of
+the users, etc...
+
+
 manual_reset_db.sh
 ------------------
+
+This script is a hard reset.
+
+Itactually deletes the database and creates a new one.
+
+Only use this if the database is somehow totally hosed and you don't mind
+losing your data.
 
 Other
 -----

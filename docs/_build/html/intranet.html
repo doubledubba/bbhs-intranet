@@ -220,17 +220,43 @@ new Event&#8221; page.</p>
 </div>
 <div class="section" id="scripts">
 <h1>Scripts<a class="headerlink" href="#scripts" title="Permalink to this headline">¶</a></h1>
+<p>I wrote a few administrative scripts that will come in handy.
+They are located in ~/bbhs_intranet/scripts/</p>
 <div class="section" id="syncuser-py">
 <h2>syncUser.py<a class="headerlink" href="#syncuser-py" title="Permalink to this headline">¶</a></h2>
+<p>This script will synchronize the selected user&#8217;s information from the active
+directory with the intranet database.</p>
+<p>Run this script immediately after making changes to the LDAP groups in order to
+apply the changes immediately on the intranet side.</p>
+<p>If you don&#8217;t, then the changes won&#8217;t happen until the user who has had his/her
+permissions modified next logs in.</p>
+<p>For some reason, the AD is a bit laggy in updating information and it sometimes
+won&#8217;t update it&#8217;s query responses for about 30 seconds after the change.</p>
+<p>Make sure the changes have in fact taken place, and if not, then keep running
+this script till they do.</p>
+<p>Call this script like so:</p>
+<div class="highlight-python"><pre>$ python syncUser.py luisadmin</pre>
+</div>
 </div>
 <div class="section" id="syncgroup-py">
 <h2>syncGroup.py<a class="headerlink" href="#syncgroup-py" title="Permalink to this headline">¶</a></h2>
+<p>This script does the exact same thing as syncUser.py, but it is designed to be
+used for groups instead of individual users.</p>
+<p>You can sync ou&#8217;s and security groups with this script.</p>
+<p>Just run it and follow the instructions it gives you.</p>
 </div>
 <div class="section" id="reset-py">
 <h2>reset.py<a class="headerlink" href="#reset-py" title="Permalink to this headline">¶</a></h2>
+<p>This is a python script I wrote for resetting certain parts of the website.</p>
+<p>For example, say you want to erase all of the events in the database, or all of
+the users, etc...</p>
 </div>
 <div class="section" id="manual-reset-db-sh">
 <h2>manual_reset_db.sh<a class="headerlink" href="#manual-reset-db-sh" title="Permalink to this headline">¶</a></h2>
+<p>This script is a hard reset.</p>
+<p>Itactually deletes the database and creates a new one.</p>
+<p>Only use this if the database is somehow totally hosed and you don&#8217;t mind
+losing your data.</p>
 </div>
 <div class="section" id="other">
 <h2>Other<a class="headerlink" href="#other" title="Permalink to this headline">¶</a></h2>
