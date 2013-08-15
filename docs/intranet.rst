@@ -160,6 +160,10 @@ This security group contains all of BBHS's staff. It is also the requirement
 for authentication. If a user doesn't belong to this security group, the user
 can't log in even if they have the correct username and password.
 
+All members that authenticate via LDAP will be members of this group.
+
+All members of this group get permission to sign up, and unsign up from events.
+
 Chaperone_Requirement
 ---------------------
 
@@ -217,5 +221,9 @@ cn=Chaperone_Event_Manager,ou=Intranet,ou=Technology,ou=Staff,dc=campus,dc=bisho
 Joining this group allows users to be Event Administrators. All members of this
 group will show up in the dropdown menu for Event Administrator in the "Add a
 new Event" page.
+
+Scripts
+=======
+
 
 

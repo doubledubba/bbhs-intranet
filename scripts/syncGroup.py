@@ -31,9 +31,9 @@ DNs = {
 
 print '''PS: For some reason, the active directory doesn\'t show changes until about
 30 seconds after the changes were applied. Make sure the sync works, and if it
-doesn't, then wait for a bit.
+doesn't, then wait for a bit and try again.
 
-Select a security group for me to sync
+Select a security group or organizationl unit for me to sync
 '''
 
 print '1:', Chaperone_Requirement
