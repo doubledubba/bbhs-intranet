@@ -26,13 +26,12 @@ def turnOffRender(modelAdmin, request, querySet):
     querySet.update(markdown=False)
 
 def eventAd(modelAdmin, request, querySet):
-    users = UserProfile.objects.filter(eventsNeeded__gt=0,
-            user__is_active=True)
+    users = UserProfile.objects.filter(user__is_active=True)
     for event in querySet:
         for user in users:
             email = user.user.email
-            if not email: continue
-            if event.signedUp(user):
+            if event.signedUp(user) or not email:
+                print 'skipped', email
                 continue
             params = {'user': user, 'event': event}
             params['body'] = markdown(event.description) if event.markdown else event.description
@@ -44,7 +43,8 @@ def eventAd(modelAdmin, request, querySet):
             t = Template(TextTemplate)
             c = Context(params)
             text = t.render(c)
-            sendHTMLEmail(text, html, 'Chaperone obligation', email)
+            print email
+            sendHTMLEmail(text, html, 'Event Volunteer Request', email)
 
 
 def eventReminder(modelAdmin, request, querySet):

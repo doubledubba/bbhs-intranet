@@ -225,5 +225,30 @@ new Event" page.
 Scripts
 =======
 
+syncUser.py
+-----------
+
+syncGroup.py
+------------
+
+reset.py
+--------
+
+manual_reset_db.sh
+------------------
+
+Other
+-----
+
+There are a few other scripts here that were used for development and/or are
+obsolete. 
+
+They won't do any harm, but don't use them anyways.
+
+They are:
+    * defaults.py
+    * permissions.py
+    * popFaculty.py
+
 
 
