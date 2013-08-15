@@ -101,6 +101,11 @@ def eventPage(request, eventID):
     params['sign_up'] = request.user.has_perm('chaperone.sign_up')
     params['unsign_up'] = request.user.has_perm('chaperone.unsign_up')
 
+    volunteers = event.getVolunteers() or []
+    if event.admin in volunteers:
+        volunteers.remove(event.admin)
+    params['volunteers'] = volunteers
+
     if params['add_chaperones']:
         signUpTAH = []
         for user in User.objects.filter(is_active=True):

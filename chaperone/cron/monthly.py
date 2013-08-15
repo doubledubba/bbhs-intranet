@@ -40,18 +40,15 @@ def sendEmail(user):
 
 def run():
     for user in User.objects.filter(is_active=True):
-        profile = user.get_profile()
-        faculty = True
-        if not faculty:
+        if not user.groups.filter(name='Chaperone_Requirement').exists():
+            #print 'Skipping:', user
             continue
+        profile = user.get_profile()
 
         if profile.eventsNeeded > 0:
             if user.email:
-                if user.groups.filter(name='Chaperone_Requirement').exists():
-                    print 'Emailing:', user.username
-                    sendEmail(user)
-                else:
-                    print user.username, 'does not have a requirement'
+                print 'Emailing: %s at %s' % (user.username, user.email)
+                sendEmail(user)
             else:
                 print '%s has no email!' % user.username
 if __name__ == '__main__':

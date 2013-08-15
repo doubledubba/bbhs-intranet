@@ -21,7 +21,7 @@
             {% if view_chaperones %}
             <h5>Volunteers Signed Up</h5>
             <ul>
-            {% for user in event.getVolunteers %}
+            {% for user in volunteers %}
             <li><a href="{{ user.get_absolute_url }}"> <!-- This should be a
                 userprofile -->
                 {{ user }} 

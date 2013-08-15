@@ -207,7 +207,7 @@ The only exception to the unfettered power that comes from being a member of
 this group is the ability to log in to the admin page (which is essential for a
 "super user"). To be able to do that, 
 **a super user also needs to be a member of
-the Intranet_Site_Admin group.**
+the Intranet_Admin_Acess group.**
 
 Chaperone_Event_Manager
 -----------------------

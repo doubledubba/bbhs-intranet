@@ -16,6 +16,8 @@ Chaperone_Event_Manager = 'CN=Chaperone_Event_Manager,' + BASE_CN
 Chaperone_Site_Admin = 'CN=Chaperone_Site_Admin,' + BASE_CN
 Intranet_Super_Admin = 'CN=Intranet_Super_Admin,' + BASE_CN
 Intranet_Admin_Access = 'CN=Intranet_Admin_Access,' + BASE_CN
+Everyone = 'DC=campus,DC=bishopblanchet,DC=org'
+Staff = 'OU=Staff,' + Everyone
 
 DNs = {
         1: Chaperone_Requirement,
@@ -23,6 +25,8 @@ DNs = {
         3: Chaperone_Site_Admin,
         4: Intranet_Super_Admin,
         5: Intranet_Admin_Access,
+        6: Everyone,
+        7: Staff,
 }
 
 print '''PS: For some reason, the active directory doesn\'t show changes until about
@@ -37,6 +41,9 @@ print '2:', Chaperone_Event_Manager
 print '3:', Chaperone_Site_Admin
 print '4:', Intranet_Super_Admin
 print '5:', Intranet_Admin_Access
+print '6:', Staff
+print '6:', Everyone
+print '7:', Staff
 
 def getResponse():
     try:
@@ -52,6 +59,10 @@ def getResponse():
                 return 4
             elif response == '5':
                 return 5
+            elif response == '6':
+                return 6
+            elif response == '7':
+                return 7
     except KeyboardInterrupt:
         print 'You didn\'t select a DN for me to sync!'
         exit(1)
