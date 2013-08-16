@@ -11,6 +11,8 @@ Bishop Blanchet Intranet Documentation
 Developed by `Luis Naranjo`_
 2013
 
+Source code: https://github.com/luisnaranjo733/bbhs-intranet
+
 .. _Luis Naranjo: luisnaranjo733@gmail.com
 
 
