@@ -337,7 +337,7 @@ def addEvent(request):
 
         info['admin'] = get_object_or_404(User, pk=info['admin'])
         event = Event(**info)
-        event.signUp(info['admin'])
+        #event.signUp(info['admin'])
         event.save()
 
         i = 1

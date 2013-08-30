@@ -143,8 +143,9 @@ class Event(models.Model):
         if user.pk in volunteerPks:
             return 'error', 'Sorry, %s is already signed up' % username
         if self.volunteersNeeded > 0:
-            if user is not self.admin:
-                self.volunteersNeeded -= 1
+           # if user is not self.admin:
+           #     self.volunteersNeeded -= 1
+           self.volunteersNeeded -= 1
         else:
             return 'error', 'Sorry, no more volunteers needed'
         if volunteerPks:
