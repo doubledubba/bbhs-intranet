@@ -5,7 +5,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-from django.utils.timezone import utc
+from django.utils.timezone import utc, get_default_timezone
 from django.contrib.auth.decorators import permission_required
 
 from django.contrib.auth.models import User, Group
@@ -23,6 +23,8 @@ tabs = {
     2: '',
     3: ''
 }
+
+tz = get_default_timezone()
 
 regex = re.compile(r'\([^)]+\)')
 def parseUsername(username):
@@ -321,8 +323,18 @@ def addEvent(request):
         # add GET param UX feedback
         # or re-fill incomplete forms
         try:
-            info['date'] = datetime.strptime(info['date'], '%m/%d/%Y %I:%M:%S %p').replace(tzinfo=utc)
-        except ValueError:
+            date =  datetime.strptime(info['date'], '%m/%d/%Y %I:%M:%S %p')
+            if date.hour > 16:
+                new_hour = (date.hour + 7) - 23
+                new_hour -= 1
+            else:
+                new_hour = date.hour + 7
+            print 'Event:', info['name']
+            print 'Hour:', date.hour
+            print 'New Hour:', new_hour
+            date = date.replace(hour=new_hour, tzinfo=utc)
+            info['date'] = date
+        except SyntaxError:
             return HttpResponse('Invalid format!', content_type='text/plain')
 
         try:
