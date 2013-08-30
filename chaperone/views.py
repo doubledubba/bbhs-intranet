@@ -324,15 +324,7 @@ def addEvent(request):
         # or re-fill incomplete forms
         try:
             date =  datetime.strptime(info['date'], '%m/%d/%Y %I:%M:%S %p')
-            if date.hour > 16:
-                new_hour = (date.hour + 7) - 23
-                new_hour -= 1
-            else:
-                new_hour = date.hour + 7
-            print 'Event:', info['name']
-            print 'Hour:', date.hour
-            print 'New Hour:', new_hour
-            date = date.replace(hour=new_hour, tzinfo=utc)
+            date = date.replace(tzinfo=tz)
             info['date'] = date
         except SyntaxError:
             return HttpResponse('Invalid format!', content_type='text/plain')
@@ -356,7 +348,7 @@ def addEvent(request):
                 i += 1
                 # check for strptime correct format
                 try:
-                    date = datetime.strptime(date, '%m/%d/%Y %I:%M:%S %p').replace(tzinfo=utc)
+                    date = datetime.strptime(date, '%m/%d/%Y %I:%M:%S %p').replace(tzinfo=tz)
                 except ValueError:
                     print 'Invalid format!'
                 dates.append(date)
