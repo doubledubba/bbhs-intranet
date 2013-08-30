@@ -41,7 +41,7 @@
             {% endif %}
             <td>{{ event.date }}</td>
             <td>{{ event.volunteersNeeded }}</td>
-            <td>{% firstof event.showVolunteerLinks "None" %}</td>
+            <td>{% firstof event.countVolunteers "None" %}</td>
  
         </tr>
         {% endfor %}

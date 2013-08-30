@@ -116,6 +116,10 @@ class Event(models.Model):
             except ValueError: pass
         return links
 
+    def countVolunteers(self):
+        pks = self.getPks()
+        return len(pks)
+
     def expired(self, now=datetime.utcnow().replace(tzinfo=utc)):
         ''' Returns True if the event has already passed.
 
