@@ -358,7 +358,7 @@ def addEvent(request):
         for date in dates:
             info['date'] = date
             event = Event(**info)
-            event.signUp(info['admin'])
+            #event.signUp(info['admin'])
             event.save()
         
         url = '/chaperone/eventAdded/?' + urlencode({'i': i})
