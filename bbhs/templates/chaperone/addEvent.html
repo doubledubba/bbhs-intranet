@@ -36,32 +36,52 @@
       src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
      </script> 
     <script type="text/javascript">
-      $('#datetimepicker').datetimepicker({
-        format: 'MM/dd/yyyy HH:mm:ss PP',
-        language: 'en-us',
-        pick12HourFormat: true
-      });
 			    		    
-			    
-   fields = 0;
-	function addInput() {
-		fields += 1;
-		id = "datetimepicker" + fields.toString();
-		id = 'datetimepickers';
-		string = '<div id="' + id + '" class="input-append date">\n';
-		string += '<input type="text" style="width:95%;clear:both;" name="date"></input>\n';
-		string += '<span class="add-on">\n';
-		string += '<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>\n';
-		string += '</span>\n';
-		string += '</div>';
-		document.getElementById('dates').innerHTML += string;
-		console.log(string);
-	}	
+
+pickerParams = {
+    format: 'MM/dd/yyyy HH:mm:ss PP',
+    language: 'en-us',
+    pick12HourFormat: true,
+}
+
+      $('#datetimepicker').datetimepicker(pickerParams);
+fields = 1;
+function addInput() {
+    var dates  = document.getElementById('dates');
+
+    var main = document.createElement('div');
+    main.setAttribute('id', 'datetimepicker' + fields);
+    main.setAttribute('class', 'input-append date');
+
+    var inputE = document.createElement('input');
+    inputE.setAttribute('type', 'text');
+    inputE.setAttribute('style', 'width:95%;clear:both;');
+    inputE.setAttribute('name', 'date' + fields);
+
+    var spanE = document.createElement('span');
+    spanE.setAttribute('class', 'add-on');
+    var spanE_i = document.createElement('i');
+    spanE_i.setAttribute('data-time-icon', 'icon-time');
+    spanE_i.setAttribute('data-date-icon', 'icon-calendar');
+    spanE_i.setAttribute('class', 'icon-calendar');
+
+    spanE.appendChild(spanE_i);
+
+    main.appendChild(inputE);
+    main.appendChild(spanE);
+
+    dates.appendChild(main);
+
+    $('#datetimepicker' + fields).datetimepicker(pickerParams);
+
+    fields += 1;
+}
+
 
 	i = 1;
 	function addInputs() {
-		main = document.getElementById('dates');
-		child = document.createElement('input');
+		var main = document.getElementById('dates');
+		var child = document.createElement('input');
 		child.setAttribute('type', 'text');
 		child.setAttribute('name', 'date' + i.toString());
 		main.appendChild(child);
@@ -132,7 +152,7 @@ function decrementValue2() {
 			    </div>
 			<div id="dates">    
 			</div>
-			<input type="button" class="btn" value="Add more dates" onclick="addInputs()">
+			<input type="button" class="btn" value="Add more dates" onclick="addInput()">
 			<br><br>
 			
 			
