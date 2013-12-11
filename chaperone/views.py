@@ -1,4 +1,4 @@
-import re
+import re, os
 from datetime import datetime
 
 from django.http import HttpResponse, Http404
@@ -7,10 +7,12 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.utils.timezone import utc, get_default_timezone
 from django.contrib.auth.decorators import permission_required
+from django.template import Context, Template
 
 from django.contrib.auth.models import User, Group
 from markdown import markdown
 from bbhs.settings import startOfYear, endOfYear
+from bbhs.settings import sendHTMLEmail, sendTextEmail, PROJECT_ROOT
 
 from chaperone.models import Event, Note
 from intranet.models import UserProfile
@@ -25,6 +27,15 @@ tabs = {
 }
 
 tz = get_default_timezone()
+
+TEMPLATE_DIR = os.path.join(PROJECT_ROOT, 'templates')
+TEMPLATE_DIR = os.path.join(TEMPLATE_DIR, 'email')
+
+with open(os.path.join(TEMPLATE_DIR, 'unsignedUp.html'), 'r') as fh:
+    unsignedUpHTML = fh.read()
+
+with open(os.path.join(TEMPLATE_DIR, 'unsignedUp.html'), 'r') as fh:
+    unsignedUpText = fh.read()
 
 regex = re.compile(r'\([^)]+\)')
 def parseUsername(username):
@@ -80,7 +91,7 @@ def index(request):
         params['latency'] = (datetime.now() - start).total_seconds()
         params['n'] = len(found_entries)
     if request.user.groups.filter(name="Chaperone_Site_Admin").exists():
-        params['events'] = Event.objects.all()
+        params['events'] = Event.objects.all().order_by('date')
     return render(request, 'chaperone/index.html', params)
 
 @login_required
@@ -204,6 +215,22 @@ def removeUser(request, eventID):
         return redirect(url)
     user = User.objects.get(pk=userPk)
     alert, message = event.removeVolunteer(user)
+
+    params = {
+        'event': event
+    }
+
+    t = Template(unsignedUpText)
+    c = Context(params)
+    html = t.render(c)
+
+    t = Template(unsignedUpHTML)
+    c = Context(params)
+    text = t.render(c)
+
+    subject = "Removed from chaperone event"
+    sendHTMLEmail(text, html, subject, user.email)
+
     return notify(alert, message, event.get_absolute_url(), tab=3)
     
 
