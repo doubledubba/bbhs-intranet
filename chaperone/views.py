@@ -79,8 +79,8 @@ def index(request):
         params['events'] = found_entries
         params['latency'] = (datetime.now() - start).total_seconds()
         params['n'] = len(found_entries)
-
-
+    if request.user.groups.filter(name="Chaperone_Site_Admin").exists():
+        params['events'] = Event.objects.all()
     return render(request, 'chaperone/index.html', params)
 
 @login_required
