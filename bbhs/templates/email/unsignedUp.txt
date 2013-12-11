@@ -1,0 +1,10 @@
+Thank you!
+You've been removed from the "{{ event.name }}" event on {{ event.date }}!
+
+We are no longer asking you to chaperone at this event.
+
+This event was worth {{ event.weight }} service requirement unit{{ event.weight|pluralize }}
+
+The event administrator is {{ event.admin }}
+
+{{ event.get_description | safe }}
